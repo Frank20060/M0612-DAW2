@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesión 2 - DOM</title>
+    <style>
+        body{
+            display: flex;                
+            flex-direction: column;       
+            align-items: center;          
+            justify-content: center;      
+            padding: 20px 50px;
+            background-color: beige;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            gap: 30px;
+            
+
+        }
+        .btnSeleccionar{
+            
+            width: 200px;
+            height: 100px;
+            background: #a0522d;
+            color: #fffbe6;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 18px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btnSeleccionar:hover{
+            background: #7c3f18;
+            transform: scale(1.07);
+        }   
+
+        .shadow{
+
+            box-shadow: 2px 2px 6px black;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff8e1;
+            box-shadow: 0 2px 12px #00000033;
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 420px;
+        }
+        th, td {
+            padding: 14px 22px;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+        th {
+            background: #a0522d;
+            color: #fffbe6;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        tr:nth-child(even) {
+            background: #f5e9d7;
+        }
+        tr:nth-child(odd) {
+            background: #fff8e1;
+        }
+        td button.borrar {
+            background: #a0522d;
+            color: #fffbe6;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            
+        }
+        td button.borrar:hover {
+            background: #7c3f18;
+            transform: scale(1.07);
+        }
+        .btnGenerar:hover {
+            background: #7c3f18;
+            transform: scale(1.07);
+        }
+        .btnGenerar{
+
+
+            width: fit-content;
+            height: fit-content;
+            padding: 20px;
+            background: #a0522d;
+            color: #fffbe6;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .editar{
+            background: #a0522d;
+            color: #fffbe6;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 18px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        td button.editar:hover {
+            background: #7c3f18;
+            transform: scale(1.07);
+        }
+    </style>
+</head>
+<body>
+    <h1>Sesión 2 - DOM</h1>
+    <button class="btnSeleccionar">Selecciona</button>
+
+
+
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th></th>
+            <th></th>
+            
+        <tbody>
+            
+        </tbody>
+    </table>
+    <button class="btnGenerar">generar tabla</button>
+    <script src="script.js"></script>
+</body>
+</html>

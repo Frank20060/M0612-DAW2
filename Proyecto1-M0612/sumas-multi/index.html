@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            justify-items: center;
+        }
+        body>div{
+
+            border: 3px, dotted, rgba(0, 0, 80, 0.836);
+            padding: 10px;
+            
+
+
+        }
+        h1{
+            color: rgba(0, 0, 80, 0.836);
+            
+        }
+        #resultadoSuma{
+
+            border: 1px, solid, black;
+            width: fit-content;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            
+        }
+        #operacipones{
+
+            display: flex;
+            justify-content: space-around;
+            gap: 100px;
+        }
+        #mostrarSuma{
+
+            justify-items : center;
+
+        }
+        #mostrarMult{
+
+            justify-items : center;
+
+        }
+        #mostrarMult p{
+
+            border: 1px, solid, black;
+            padding: 10px;
+            margin: 0px;
+            justify-items: center;
+        }
+        #tablaMult{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Mi primer dia DAW2
+    </h1>
+    <h2>Operaciones</h2>
+    <div id="operacipones">
+        <div id="mostrarSuma">
+            <input type="number" id="num1">
+            <input type="number" id="num2">
+            <button>Sumar</button>
+
+            <div id="resultadoSuma">
+
+                <p>ResultadoSuma</p>
+
+            </div>
+        </div>
+        <div id="mostrarMult">
+
+            <input type="num" id="numMult">
+            <Button id="botonMult">Hacer tabla de multiplicar</Button>
+            <div id="tablaMult">
+
+            </div>    
+        </div>
+    </div>
+    
+
+    <script>
+        // Variable de ejemplo, imprime un saludo en la consola
+        let jaimito = "Hola buenas tardes";
+        console.log(jaimito);
+
+        // Selecciona el botón de suma y le añade un evento para ejecutar la función sumar al hacer click
+        const btnSumar = document.querySelector("button");
+        btnSumar.addEventListener("click", sumar);
+
+        // Selecciona el div donde se mostrará el resultado de la suma
+        const divResult = document.querySelector("#resultadoSuma");
+
+        // Función para sumar los valores de dos inputs y mostrar el resultado
+        function sumar() {
+            const num1 = document.querySelector("#num1");
+            const num2 = document.querySelector("#num2");
+            // Muestra el resultado de la suma en el div
+            divResult.innerHTML = `<p> El resultado de la suma es ${(parseInt(num1.value) + parseInt(num2.value))} </p>`;
+            // Limpia los inputs
+            num1.value = null;
+            num2.value = null;
+        }
+
+        // Selecciona el botón y el input para la tabla de multiplicar
+        const btnMult = document.querySelector("#botonMult");
+        const xMult = document.querySelector("#numMult");
+        // Añade evento para ejecutar la función hacerTablaMult al hacer click
+        btnMult.addEventListener("click", hacerTablaMult);
+        // Selecciona el div donde se mostrará la tabla de multiplicar
+        const divResultMult = document.querySelector("#tablaMult");
+
+        // Función para crear y mostrar la tabla de multiplicar del número introducido
+        function hacerTablaMult() {
+            divResultMult.innerHTML = null; // Limpia el div
+            if (xMult.value < 1) {
+                // Si el número es menor que 1, muestra mensaje de error
+                divResultMult.innerHTML = `<p> El numero no puede ser menor a 0 </p>`;
+            } else if (xMult.value > 10) {
+                // Si el número es mayor que 10, muestra mensaje de error
+                divResultMult.innerHTML = `<p> El numero no puede ser mayor a 10 </p>`;
+            } else {
+                // Si el número es válido, genera la tabla de multiplicar
+                for (let i = 0; i <= 10; i++) {
+                    divResultMult.innerHTML += `<p> ${xMult.value} x ${i} = ${parseInt(xMult.value)*i} </p>`;
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>

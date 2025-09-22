@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JuegoDados</title>
+    <style>
+        .dado{
+
+            border: 2px, solid, black;
+            border-radius: 10%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Juego de los dados</h1>
+
+    <div id="ponerBoton">
+
+    </div>
+    
+    
+    <div id="Resultados"></div>
+
+
+    <script>
+        /*  Mi solucion  */
+            let turnoA = true;
+            const espacioJuego = document.querySelector("#ponerBoton")
+            espacioJuego.innerHTML = turnoA ? `<button id = "botonTirar">Turno Jugador A</button>` : `<button id = "botonTirar">Turno Jugador B</button>`
+            const divResult  =  document.querySelector("#Resultados");
+            let btnJuego = document.querySelector("#botonTirar")
+            btnJuego.addEventListener("click", TirarDado)
+            function TirarDado(){
+                turnoA ?  turnoA = false : turnoA = true;
+                console.log(turnoA ? "Turno Jugador A" : "Turno Jugador B")
+                btnJuego.innerHTML = turnoA ? "Turno Jugador A" : "Turno Jugador B"
+                let resulTirada = Math.floor(Math.random() * (6 - 1 + 1)) + 1;    ////Generar numero random del 1 al 6
+                divResult.innerHTML = turnoA ? `<p>Ha tirado Jugador B - Resultado : <div class= dado><p>${resulTirada}</p></div></p>` : `<p>Ha tirado Jugador A- Resultado : <div class= dado><p>${resulTirada}</p></div></p>`
+            }
+        
+        ////No va no se por que ----- Solucion Profesor
+       /* const divBoton = document.querySelector("#ponerBoton")
+        const botonA = `<button id="botonA>BotónA</button>`
+        const botonB = `<button id="botonB>BotónB</button>`
+        const textoA = `<p id ="texto"> Has pulsado el botón A </p>`
+        const textoB = `<p id ="texto"> Has pulsado el botón B </p>`
+
+        let turnoA = true;
+
+        divBoton.innerHTML = turnoA ? botonA : botonB;
+
+        const divTexto = document.getElementById("Resultados")
+
+        divBoton.addEventListener("click", function (){
+
+            turnoA != turnoA;
+            divBoton.innerHTML = turnoA ? botonA : botonB;
+            divBoton.innerHTML = turnoA ? textoB : textoA;
+
+        });*/
+
+    </script>
+    
+</body>
+</html>

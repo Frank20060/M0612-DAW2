@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesión 1</title>
+    <style>
+        body{
+            color: aliceblue;
+            background-color: rgba(0, 0, 0, 0.637);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <h1>Sesión 1</h1>
+    
+    <div id="mensaje" style="display: flex; align-items: center; gap: 20px;"></div>
+
+
+    <script>
+
+        const HAY_USUARIO = true;
+        const USUARIO = "Frank"
+
+        const textInfo = 
+            `
+            <h3>Usuario: </h3>
+            <p>${USUARIO}</p>
+            `
+        const textoNoUsuario = "<p>No existe usuario</p>";
+        const divMensaje = document.querySelector("#mensaje")
+        
+        /*
+        if(HAY_USUARIO){
+            divMensaje.innerHTML = textInfo
+        }else{
+            divMensaje.innerHTML = textoNoUsuario
+        }
+        */
+
+        divMensaje.innerHTML = HAY_USUARIO ? textInfo : textoNoUsuario; ////Es lo mismo que el if de arriba pero acortado   ----SE LLAMA TERNARIO----
+
+    </script>
+</body>
+</html>
