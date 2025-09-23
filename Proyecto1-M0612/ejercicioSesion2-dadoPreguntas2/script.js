@@ -118,10 +118,19 @@ const contPreguntas = document.querySelector("#contPreguntas")
 let contador=0;
 let estado = false;
 let estadoDado=true;
-
+let ganar = false;
 const porcentaje = document.querySelector("#pProgreso")
 const barraProgreso = document.querySelector(".progress-fill")
+const reloj = document.querySelector("#contador")
+let segundos = 0;
+setInterval(() =>{
+    if(!ganar){
+        segundos++
+        reloj.innerHTML = `⏱️ ${segundos}s`
 
+    }
+
+}, 1000);
 
 btntirarDado.addEventListener("click", function(){
 
@@ -130,31 +139,34 @@ btntirarDado.addEventListener("click", function(){
     if(estadoDado){
         if (POSICION<20){
 
-        contador++;
-        contPreguntas.innerHTML = `Pregunta ${contador} de 10`
-        spanDado.innerHTML = valorDado;
-        POSICION += valorDado;
-        if(POSICION<20){
-            spanPosicionPly1.innerHTML = POSICION;
-            porcentaje.innerHTML = `${POSICION*100/20} %`;
-            document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
-            estado = true;
+            contador++;
+            contPreguntas.innerHTML = `Pregunta ${contador} de 10`
+            spanDado.innerHTML = valorDado;
+            POSICION += valorDado;
+            if(POSICION<20){
+                spanPosicionPly1.innerHTML = POSICION;
+                porcentaje.innerHTML = `${POSICION*100/20} %`;
+                document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
+                estado = true;
+            }else{
+                POSICION = 20
+                spanPosicionPly1.innerHTML = POSICION;
+                porcentaje.innerHTML = `${POSICION*100/20} %`;
+                document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
+                estado = true;
 
-        }else{
-            POSICION = 20
-            spanPosicionPly1.innerHTML = POSICION;
-            porcentaje.innerHTML = `${POSICION*100/20} %`;
-            document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
-
-        }
-        enunciado.innerHTML = preguntas[POSICION-1].enunciado;
-        btn1.innerHTML = preguntas[POSICION-1].opciones[0];
-        btn2.innerHTML = preguntas[POSICION-1].opciones[1];
-        btn3.innerHTML = preguntas[POSICION-1].opciones[2];
-
-        }else{
-
+            }
+            enunciado.innerHTML = preguntas[POSICION-1].enunciado;
+            btn1.innerHTML = preguntas[POSICION-1].opciones[0];
+            btn2.innerHTML = preguntas[POSICION-1].opciones[1];
+            btn3.innerHTML = preguntas[POSICION-1].opciones[2];
             
+        }else{
+            enunciado.innerHTML = "Has llegado al final, felicidades";
+            btn1.innerHTML = "";
+            btn2.innerHTML = "";
+            btn3.innerHTML = "";
+            ganar = true;
         }
     }
     
@@ -163,10 +175,20 @@ btntirarDado.addEventListener("click", function(){
 btn1.addEventListener("click", function(){
     if(estado){
         if(preguntas[POSICION-1].correcta == 0){
-            POSICION += 1;
-            porcentaje.innerHTML = `${POSICION*100/20} %`;
-            document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
-            console.log("Has acertado");
+            
+            if (POSICION >= 20){
+                enunciado.innerHTML = "Has llegado al final, felicidades";
+                btn1.innerHTML = "";
+                btn2.innerHTML = "";
+                btn3.innerHTML = "";
+            ganar = true;
+            }else{
+                POSICION += 1;
+                porcentaje.innerHTML = `${POSICION*100/20} %`;
+                document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
+                console.log("Has acertado");
+
+            }
         }else{
             if(POSICION != 0){
                 POSICION -= 1;
@@ -183,10 +205,21 @@ btn1.addEventListener("click", function(){
 btn2.addEventListener("click", function(){
    if(estado){
         if(preguntas[POSICION-1].correcta == 1){
-            POSICION += 1;
-            porcentaje.innerHTML = `${POSICION*100/20} %`;
-            document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
-            console.log("Has acertado");
+            
+            if (POSICION >= 20){
+                enunciado.innerHTML = "Has llegado al final, felicidades";
+                btn1.innerHTML = "";
+                btn2.innerHTML = "";
+                btn3.innerHTML = "";
+                
+            ganar = true;
+            }else{
+                POSICION += 1;
+                porcentaje.innerHTML = `${POSICION*100/20} %`;
+                document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
+                console.log("Has acertado");
+
+            }
         }else{
             if(POSICION != 0){
                 POSICION -= 1;
@@ -203,10 +236,22 @@ btn2.addEventListener("click", function(){
 btn3.addEventListener("click", function(){
     if(estado){
         if(preguntas[POSICION-1].correcta == 2){
-            POSICION += 1;
-            porcentaje.innerHTML = `${POSICION*100/20} %`;
-            document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
-            console.log("Has acertado");
+            
+            
+            if (POSICION >= 20){
+        
+                enunciado.innerHTML = "Has llegado al final, felicidades";
+                btn1.innerHTML = "";
+                btn2.innerHTML = "";
+                btn3.innerHTML = "";
+                ganar = true;
+            }else{
+                POSICION += 1;
+                porcentaje.innerHTML = `${POSICION*100/20} %`;
+                document.querySelector('.progress-fill').style.width = (POSICION*100/20) + '%';
+                console.log("Has acertado");
+
+            }
 
         }else{
             if(POSICION != 0){
@@ -222,6 +267,7 @@ btn3.addEventListener("click", function(){
     estado = false;
     estadoDado = true;
 })
+
 
 
 
