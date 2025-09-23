@@ -67,20 +67,22 @@ console.log(jugadoresBeti[1].skill[1].valor)
 const tabla = document.querySelector("tbody");
 
 const btnGenerar = document.querySelector(".btnGenerar")
-btnGenerar.addEventListener("click", function (){
+btnGenerar.addEventListener("click", () => renderTabla(jugadoresBeti))
+    
+function renderTabla(datos){
     tabla.innerHTML = ""
     for(let i=0; i<5; i++){
         tabla.innerHTML += `
         <tr>
             <td>${i}</td>
-            <td>${jugadoresBeti[i].nombre}</td>
-            <td>${jugadoresBeti[i].apellido}</td>
-            <td><button class="borrar" id="${i}">Borrar</button></td>
-            <td><button class="editar" id="${i}">Editar</button></td>
+            <td>${datos[i].nombre}</td>
+            <td>${datos[i].apellido}</td>
+            <td><button class="borrar" dataid="${i}">Borrar</button></td>
+            <td><button class="editar" dataid="${i}">Editar</button></td>
         </tr>
         `
     }        
-})
+}
 
 const tbodyTablaJugadores = document.querySelector("tbody")
 
@@ -92,7 +94,8 @@ tbodyTablaJugadores.addEventListener("click", function(event){   ///Se pone even
     if(event.target.classList.contains("borrar")){
 
         console.log("BORRAR")
-
+        const nuevoPersonas = ////Aqui va el filtro para que no muestre el elemento que sobra
+        renderTabla(nuevoPersonas)
 
     }
     if(event.target.classList.contains("editar")){

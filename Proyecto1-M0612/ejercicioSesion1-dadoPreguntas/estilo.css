@@ -1,0 +1,76 @@
+body{
+
+    background-color: rgba(240, 240, 166, 0.816);
+    justify-items: center;
+
+}
+header h1{
+
+    font-family: "Bitcount Grid Double", system-ui;
+    color:rgba(44, 24, 99, 0.823);
+    font-size: 70px;
+    text-shadow: 2px 2px 4px gray;
+}
+main{
+    justify-items: center;
+    
+}
+#controlesJuego{
+    display: flex;
+    gap: 10px;
+    justify-items: center;
+    margin-bottom: 50px;
+}
+#controlesJuego button{
+    
+    border-radius: 10px;
+    width: 100px;
+
+}
+.blue{
+    background-color: rgba(151, 151, 228, 0.646);
+    border: 1px, solid, rgba(119, 119, 224, 0.867);
+}
+.rojo{
+
+    background-color: rgba(153, 29, 29, 0.737);
+    color: white;
+    border: 0px;
+
+}
+#controlesJuego div{    /*DADO*/
+    border: 2px, solid, rgba(112, 157, 112);
+    border-radius: 5px;
+    justify-items: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(112, 157, 112, 0.679);
+    
+
+}
+#controlesJuego>div>p{
+    margin: 0px;
+    
+}
+
+#mensajes{
+
+    justify-content: center;
+    justify-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+
+}
+#pregunta{
+
+    font-size: 25px;
+
+}
+#fin{
+
+    font-size: 50px;
+    color: rgb(0, 110, 40);
+
+}
+
