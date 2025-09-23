@@ -123,10 +123,14 @@ const porcentaje = document.querySelector("#pProgreso")
 const barraProgreso = document.querySelector(".progress-fill")
 const reloj = document.querySelector("#contador")
 let segundos = 0;
-setInterval(() =>{
+const contadorTimpo = setInterval(() =>{
     if(!ganar){
         segundos++
         reloj.innerHTML = `⏱️ ${segundos}s`
+
+    }else{
+
+        clearInterval(contadorTimpo);
 
     }
 
@@ -181,7 +185,7 @@ btn1.addEventListener("click", function(){
                 btn1.innerHTML = "";
                 btn2.innerHTML = "";
                 btn3.innerHTML = "";
-            ganar = true;
+                ganar = true;
             }else{
                 POSICION += 1;
                 porcentaje.innerHTML = `${POSICION*100/20} %`;
