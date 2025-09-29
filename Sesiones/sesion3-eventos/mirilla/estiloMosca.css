@@ -1,0 +1,40 @@
+*{
+    margin: 0px;
+    padding: 0px;
+
+}
+.tablonDeJuegos{
+
+    background-color: green;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+}
+.mirilla{
+    background-color: rgb(189, 189, 189);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    position: absolute;
+
+}
+.balon{
+
+    background-color: rgb(190, 72, 72);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    background-image: url(https://images.vexels.com/media/users/3/158409/isolated/preview/b0af06a4c1a8e7a31ce379250130d26c-pelota-de-futbol-pentagono-silueta.png);
+
+
+}
+button{
+
+    width: 4em;
+    height: 4em;
+
+}
