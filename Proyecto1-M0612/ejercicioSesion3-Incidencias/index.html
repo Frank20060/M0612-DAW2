@@ -19,15 +19,15 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">5</div>
-              <div class="text-muted">Total Incidencias</div>
+              <div class="display-5 fw-bold totalIncidencias" >5</div>
+              <div class="text-muted ">Total Incidencias</div>
             </div>
           </div>
         </div>
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">2</div>
+              <div class="display-5 fw-bold abiertas">2</div>
               <div class="text-muted">Abiertas</div>
             </div>
           </div>
@@ -35,7 +35,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">2</div>
+              <div class="display-5 fw-bold proceso">2</div>
               <div class="text-muted">En Proceso</div>
             </div>
           </div>
@@ -43,7 +43,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">1</div>
+              <div class="display-5 fw-bold cerradas">1</div>
               <div class="text-muted">Cerradas</div>
             </div>
           </div>
@@ -111,7 +111,7 @@
                   <td>Juan García</td>
                   <td>2025-09-20</td>
                   <td>
-                    <button class="btn btn-sm btn-success" disabled>Editar</button>
+                    <button class="btn btn-sm btn-success" disabled >Editar</button>
                     <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
                   </td>
                 </tr>
@@ -172,33 +172,66 @@
           </div>
         </div>
       </div>
-
-      <!-- Mensaje si no hay datos -->
-      <!-- <div class="alert alert-info mt-4 text-center">
-        No hay incidencias que coincidan con los filtros aplicados.
-      </div> -->
     </div>
+
+
+
+    <!-- Modal -->
+    
+    <div class="modal fade modalFormCrear" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Nueva incidencia</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formIncidencia" autocomplete="off" action="#">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="2" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado" required>
+              <option value="abierto">Abierto</option>
+              <option value="en_proceso">En Proceso</option>
+              <option value="cerrado">Cerrado</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="prioridad" class="form-label">Prioridad</label>
+            <select class="form-select" id="prioridad" name="prioridad" required>
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="asignado" class="form-label">Asignado</label>
+            <input type="text" class="form-control" id="asignado" name="asignado" required>
+          </div>
+          <div class="mb-3">
+            <label for="fechaCreacion" class="form-label">Fecha de creación</label>
+            <input type="date" class="form-control" id="fechaCreacion" name="fechaCreacion" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 enviarFormulario">Guardar incidencia</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
     <!-- Bootstrap JS (opcional, només per components interactius) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    script src="script.js"></script>
+    <script src="script.js"></script>
   </body>
   <!-- Modal -->
 
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title fs-5" id="staticBackdropLabel">Nueva incidencia</h1>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-    </div>
-    <div class="modal-body">
-      Formulario para añadir una nueva incidencia (pendiente de implementar).
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Enviar</button>
-    </div>
-    </div>
-  </div>
-</div>
+ 
 </html>
