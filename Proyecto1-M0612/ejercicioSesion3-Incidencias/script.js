@@ -1,5 +1,5 @@
 ////Array
-let incidencias = [
+let listaIncidencias = [
   {
     id: 1,
     titulo: "Error de inicio de sesión",
@@ -68,11 +68,18 @@ const contCerradas = document.querySelector(".cerradas")
 const form = document.getElementById("formIncidencia")
 const body = document.querySelector("body")
 const modalCrear = new bootstrap.Modal(document.querySelector(".modalFormCrear"))
+
+const limpFiltros = document.querySelector("#limpiarfiltro")
+const filtEstado = document.querySelector("#filtreEstat")
+const filtPrioridad = document.querySelector("#filtrePrioritat")
+
 ////////
-renderTabla()
 
 
-function renderTabla() {
+renderTabla(listaIncidencias);
+
+
+function renderTabla(incidencias) {
   let html = "";
   if (incidencias.length === 0) {
     html = `<tr><td colspan="8" class="text-center">No hay datos para mostrar.</td></tr>`;
@@ -80,20 +87,20 @@ function renderTabla() {
     for (let i = 0; i < incidencias.length; i++) {
       let claseEstado = "";
       if (incidencias[i].estado === "abierto") {
-        claseEstado = "bg-warning";
+        claseEstado = "bg-warning text-dark";
       } else if (incidencias[i].estado === "en_proceso") {
         claseEstado = "bg-info text-dark";
       } else if (incidencias[i].estado === "cerrado") {
-        claseEstado = "bg-success";
+        claseEstado = "bg-success text-dark";
       }
 
       let clasePrioridad = "";
       if (incidencias[i].prioridad === "alta") {
-        clasePrioridad = "bg-danger";
+        clasePrioridad = "bg-danger text-dark";
       } else if (incidencias[i].prioridad === "media") {
         clasePrioridad = "bg-warning text-dark";
       } else if (incidencias[i].prioridad === "baja") {
-        clasePrioridad = "bg-primary";
+        clasePrioridad = "bg-primary text-dark";
       }
 
       html += `
@@ -106,28 +113,29 @@ function renderTabla() {
           <td>${incidencias[i].asignado}</td>
           <td>${incidencias[i].fechaCreacion}</td>
           <td>
-            <button class="btn btn-sm btn-success editar" data-id="${incidencias[i].id}">Editar</button>
+            <button class="btn btn-sm btn-success editar" data-bs-toggle="modal" data-bs-target="#modalEditar" data-id="${incidencias[i].id}">Editar</button>
             <button class="btn btn-sm btn-danger eliminar" data-id="${incidencias[i].id}">Eliminar</button>
           </td>
         </tr>
       `;
     }
   }
-
-
-
-  totInci.innerHTML = incidencias.length;
-  incidenciasAbiertas = incidencias.filter((elemento)=> elemento.estado == 'abierto'); 
+  ///modalEditar
+  totInci.innerHTML = listaIncidencias.length;
+  incidenciasAbiertas = listaIncidencias.filter((elemento)=> elemento.estado == 'abierto'); 
   contAbiertas.innerHTML = incidenciasAbiertas.length;
-  incidenciasProceso = incidencias.filter((elemento)=> elemento.estado == 'en_proceso');
+  incidenciasProceso = listaIncidencias.filter((elemento)=> elemento.estado == 'en_proceso');
   contProcesos.innerHTML = incidenciasProceso.length
-  incidenciasCerradas = incidencias.filter((elemento)=> elemento.estado == 'cerrado');
+  incidenciasCerradas = listaIncidencias.filter((elemento)=> elemento.estado == 'cerrado');
   contCerradas.innerHTML = incidenciasCerradas.length
 
 
   bodyTabla.innerHTML = html;
 }
 
+
+
+////Eventos botones editar y eliminar
 bodyTabla.addEventListener("click", function(e){
 
   if(e.target.classList.contains("editar")){
@@ -141,29 +149,76 @@ bodyTabla.addEventListener("click", function(e){
   }
 
 })
+
+//Funcion eliminar
+
 function eliminar(x){
 
   console.log(x)
   //Con un filto pongo unicamente en el array los elementos que no tengan el id de el boton eliminar que se ha presionado
-  incidencias = incidencias.filter((elemento)=> elemento.id != x);
+  listaIncidencias = listaIncidencias.filter((elemento)=> elemento.id != x);
   // Pongo los ids bien
-  incidencias.forEach((elemento, idx = 0) => {
+  listaIncidencias.forEach((elemento, idx = 0) => {
     elemento.id = idx + 1;
   });
-  renderTabla();
+  renderTabla(listaIncidencias);
   
 }
-function editar(x){
-  console.log(x)
+
+//Funcion editar
+
+function editar(eventID){
+  console.log(eventID)
+  ///Busco el id de la incidencia que quiero editar
+  const incidenciaEditar = listaIncidencias.find((elemento)=> elemento.id == eventID);
+  console.log(incidenciaEditar)
+  
+  //Relleno el formulario con los datos de la incidencia
+  const idEditar = eventID; 
+  document.getElementById("tituloEditar").value = incidenciaEditar.titulo, 
+  document.getElementById("descripcionEditar").value = incidenciaEditar.descripcion,
+  document.getElementById("estadoEditar").value = incidenciaEditar.estado,
+  document.getElementById("prioridadEditar").value = incidenciaEditar.prioridad,
+  document.getElementById("asignadoEditar").value = incidenciaEditar.asignado,
+  document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion
+  ///Editr el arrat
+  body.addEventListener("click", function(event){
+    if(event.target.classList.contains("enviarFormularioEditar")){
+      event.preventDefault();
+      console.log("Efitar Array")
+      // Recoger los valores del formulario
+      const IncidenciaEditada = {
+        id: idEditar,
+        titulo: document.getElementById("tituloEditar").value,
+        descripcion: document.getElementById("descripcionEditar").value,
+        estado: document.getElementById("estadoEditar").value,
+        prioridad: document.getElementById("prioridadEditar").value,
+        asignado: document.getElementById("asignadoEditar").value,
+        fechaCreacion: document.getElementById("fechaCreacionEditar").value
+      };
+      
+    listaIncidencias[idEditar-1] = "";
+    listaIncidencias[idEditar-1] = IncidenciaEditada;
+    renderTabla(listaIncidencias);
+    // Limpia el formulario
+    form.reset()
+    modalCrear.hide()
+    }
+});
 }
+
+
+
+
 ////Enviar formulario
+
 body.addEventListener("click", function(event){
   if(event.target.classList.contains("enviarFormulario")){
     event.preventDefault();
     console.log("Enviar formulario")
     // Recoger los valores del formulario
     const nuevaIncidencia = {
-      id: incidencias.length + 1,
+      id: listaIncidencias.length + 1,
       titulo: document.getElementById("titulo").value,
       descripcion: document.getElementById("descripcion").value,
       estado: document.getElementById("estado").value,
@@ -172,11 +227,35 @@ body.addEventListener("click", function(event){
       fechaCreacion: document.getElementById("fechaCreacion").value
     };
     
-  incidencias.push(nuevaIncidencia);
-  renderTabla();
+  listaIncidencias.push(nuevaIncidencia);
+  renderTabla(listaIncidencias);
   // Limpia el formulario
   form.reset()
   modalCrear.hide()
   }
 });
 
+
+/////Limpiar filtros
+limpFiltros.addEventListener("click", function(){
+    filtEstado.value = "";
+    filtPrioridad.value = "";
+    renderTabla(listaIncidencias);
+})
+
+/////Filtros
+filtEstado.addEventListener("change", aplicarFiltros)
+filtPrioridad.addEventListener("change", aplicarFiltros)
+
+function aplicarFiltros(){
+
+    incidenciasFiltradas = listaIncidencias;
+    
+    if(filtEstado.value){
+        incidenciasFiltradas = incidenciasFiltradas.filter((elemento)=> elemento.estado == filtEstado.value);
+    }
+    if(filtPrioridad.value){
+        incidenciasFiltradas = incidenciasFiltradas.filter((elemento)=> elemento.prioridad == filtPrioridad.value);
+    }
+    renderTabla(incidenciasFiltradas);
+}
