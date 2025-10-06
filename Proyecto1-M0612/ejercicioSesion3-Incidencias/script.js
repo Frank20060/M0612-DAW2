@@ -1,4 +1,6 @@
-////Array
+// ------------------------------------------------------
+// ARRAY INICIAL DE INCIDENCIAS (DATOS DE EJEMPLO)
+// ------------------------------------------------------
 let listaIncidencias = [
   {
     id: 1,
@@ -56,36 +58,44 @@ let listaIncidencias = [
   },
 ];
 
-///Variables
-console.log("hols")
+// ------------------------------------------------------
+// VARIABLES
+// ------------------------------------------------------
+
+const bodyTabla = document.querySelector("tbody"); // Cuerpo de la tabla donde se insertan las filas
+const totInci = document.querySelector(".totalIncidencias"); // Contador de incidencias totales
+const contAbiertas = document.querySelector(".abiertas"); // Contador de incidencias abiertas
+const contProcesos = document.querySelector(".proceso"); // Contador de incidencias en proceso
+const contCerradas = document.querySelector(".cerradas"); // Contador de incidencias cerradas
+const form = document.getElementById("formIncidencia"); // Formulario de creación de incidencias
+const body = document.querySelector("body"); // Etiqueta body (usada para delegar eventos globales)
+const modalCrear = new bootstrap.Modal(document.querySelector(".modalFormCrear")); // Modal de creación
+const modalEditar = new bootstrap.Modal(document.querySelector(".modalFormEditar")); // Modal de edición
+const limpFiltros = document.querySelector("#limpiarfiltro"); // Botón para limpiar filtros
+const filtEstado = document.querySelector("#filtreEstat"); // Selector de filtro por estado
+const filtPrioridad = document.querySelector("#filtrePrioritat"); // Selector de filtro por prioridad
 
 
-const bodyTabla = document.querySelector("tbody")
-const totInci= document.querySelector(".totalIncidencias")
-const contAbiertas = document.querySelector(".abiertas")
-const contProcesos = document.querySelector(".proceso")
-const contCerradas = document.querySelector(".cerradas")
-const form = document.getElementById("formIncidencia")
-const body = document.querySelector("body")
-const modalCrear = new bootstrap.Modal(document.querySelector(".modalFormCrear"))
-
-const limpFiltros = document.querySelector("#limpiarfiltro")
-const filtEstado = document.querySelector("#filtreEstat")
-const filtPrioridad = document.querySelector("#filtrePrioritat")
-
-////////
-
-
+//Renderizar la tabla inicialmente con todas las incidencias
 renderTabla(listaIncidencias);
 
+// ------------------------------------------------------
+// FUNCIÓN QUE GENERA EL HTML DE LA TABLA
+// ------------------------------------------------------
 
 function renderTabla(incidencias) {
   let html = "";
+
+  // Si no hay incidencias, mostrar mensaje vacío
   if (incidencias.length === 0) {
     html = `<tr><td colspan="8" class="text-center">No hay datos para mostrar.</td></tr>`;
   } else {
+    // Recorrer las incidencias y generar una fila por cada una
     for (let i = 0; i < incidencias.length; i++) {
       let claseEstado = "";
+      let clasePrioridad = "";
+
+      // Asignar color según el estado
       if (incidencias[i].estado === "abierto") {
         claseEstado = "bg-warning text-dark";
       } else if (incidencias[i].estado === "en_proceso") {
@@ -94,7 +104,7 @@ function renderTabla(incidencias) {
         claseEstado = "bg-success text-dark";
       }
 
-      let clasePrioridad = "";
+      // Asignar color según la prioridad
       if (incidencias[i].prioridad === "alta") {
         clasePrioridad = "bg-danger text-dark";
       } else if (incidencias[i].prioridad === "media") {
@@ -103,6 +113,7 @@ function renderTabla(incidencias) {
         clasePrioridad = "bg-primary text-dark";
       }
 
+      // Generar HTML de cada fila de la tabla
       html += `
         <tr>
           <td>${incidencias[i].id}</td>
@@ -120,103 +131,82 @@ function renderTabla(incidencias) {
       `;
     }
   }
-  ///modalEditar
+
+  // Actualizar contadores
   totInci.innerHTML = listaIncidencias.length;
-  incidenciasAbiertas = listaIncidencias.filter((elemento)=> elemento.estado == 'abierto'); 
+  incidenciasAbiertas = listaIncidencias.filter((elemento) => elemento.estado == "abierto");
   contAbiertas.innerHTML = incidenciasAbiertas.length;
-  incidenciasProceso = listaIncidencias.filter((elemento)=> elemento.estado == 'en_proceso');
-  contProcesos.innerHTML = incidenciasProceso.length
-  incidenciasCerradas = listaIncidencias.filter((elemento)=> elemento.estado == 'cerrado');
-  contCerradas.innerHTML = incidenciasCerradas.length
+  incidenciasProceso = listaIncidencias.filter((elemento) => elemento.estado == "en_proceso");
+  contProcesos.innerHTML = incidenciasProceso.length;
+  incidenciasCerradas = listaIncidencias.filter((elemento) => elemento.estado == "cerrado");
+  contCerradas.innerHTML = incidenciasCerradas.length;
 
-
+  // Insertar las filas en la tabla
   bodyTabla.innerHTML = html;
 }
 
+// ------------------------------------------------------
+// EVENTOS DE LOS BOTONES EDITAR Y ELIMINAR EN LA TABLA
+// ------------------------------------------------------
 
-
-////Eventos botones editar y eliminar
-bodyTabla.addEventListener("click", function(e){
-
-  if(e.target.classList.contains("editar")){
-    
+bodyTabla.addEventListener("click", function (e) {
+  if (e.target.classList.contains("editar")) {
+    // Si se pulsa "Editar", obtener el id y llamar a la función editar()
     editar(e.target.getAttribute("data-id"));
-
-  }else{
-
+  } else if (e.target.classList.contains("eliminar")) {
+    // Si se pulsa "Eliminar", obtener el id y llamar a la función eliminar()
     eliminar(e.target.getAttribute("data-id"));
-
   }
+});
 
-})
+// ------------------------------------------------------
+// FUNCIÓN PARA ELIMINAR UNA INCIDENCIA
+// ------------------------------------------------------
 
-//Funcion eliminar
+function eliminar(x) {
+  // Filtrar el array para eliminar la incidencia seleccionada
+  listaIncidencias = listaIncidencias.filter((elemento) => elemento.id != x);
 
-function eliminar(x){
-
-  console.log(x)
-  //Con un filto pongo unicamente en el array los elementos que no tengan el id de el boton eliminar que se ha presionado
-  listaIncidencias = listaIncidencias.filter((elemento)=> elemento.id != x);
-  // Pongo los ids bien
+  // Reasignar los IDs para mantener la secuencia
   listaIncidencias.forEach((elemento, idx = 0) => {
     elemento.id = idx + 1;
   });
+
+  // Volver a renderizar la tabla actualizada
   renderTabla(listaIncidencias);
-  
 }
 
-//Funcion editar
+// ------------------------------------------------------
+// FUNCIÓN PARA CARGAR DATOS EN EL FORMULARIO DE EDICIÓN
+// ------------------------------------------------------
 
-function editar(eventID){
-  console.log(eventID)
-  ///Busco el id de la incidencia que quiero editar
-  const incidenciaEditar = listaIncidencias.find((elemento)=> elemento.id == eventID);
-  console.log(incidenciaEditar)
-  
-  //Relleno el formulario con los datos de la incidencia
-  const idEditar = eventID; 
-  document.getElementById("tituloEditar").value = incidenciaEditar.titulo, 
-  document.getElementById("descripcionEditar").value = incidenciaEditar.descripcion,
-  document.getElementById("estadoEditar").value = incidenciaEditar.estado,
-  document.getElementById("prioridadEditar").value = incidenciaEditar.prioridad,
-  document.getElementById("asignadoEditar").value = incidenciaEditar.asignado,
-  document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion
-  ///Editr el arrat
-  body.addEventListener("click", function(event){
-    if(event.target.classList.contains("enviarFormularioEditar")){
-      event.preventDefault();
-      console.log("Efitar Array")
-      // Recoger los valores del formulario
-      const IncidenciaEditada = {
-        id: idEditar,
-        titulo: document.getElementById("tituloEditar").value,
-        descripcion: document.getElementById("descripcionEditar").value,
-        estado: document.getElementById("estadoEditar").value,
-        prioridad: document.getElementById("prioridadEditar").value,
-        asignado: document.getElementById("asignadoEditar").value,
-        fechaCreacion: document.getElementById("fechaCreacionEditar").value
-      };
-      
-    listaIncidencias[idEditar-1] = "";
-    listaIncidencias[idEditar-1] = IncidenciaEditada;
-    renderTabla(listaIncidencias);
-    // Limpia el formulario
-    form.reset()
-    modalCrear.hide()
-    }
-});
+let editareventoID = "";
+
+function editar(eventID) {
+  editareventoID = eventID;
+
+  // Buscar la incidencia a editar
+  const incidenciaEditar = listaIncidencias.find((e) => e.id == eventID);
+
+  // Rellenar los campos del formulario del modal con los datos actuales
+  document.getElementById("tituloEditar").value = incidenciaEditar.titulo;
+  document.getElementById("descripcionEditar").value = incidenciaEditar.descripcion;
+  document.getElementById("estadoEditar").value = incidenciaEditar.estado;
+  document.getElementById("prioridadEditar").value = incidenciaEditar.prioridad;
+  document.getElementById("asignadoEditar").value = incidenciaEditar.asignado;
+  document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion;
 }
 
+// ------------------------------------------------------
+// EVENTOS DE LOS BOTONES DE LOS MODALES (CREAR Y EDITAR)
+// ------------------------------------------------------
 
-
-
-////Enviar formulario
-
-body.addEventListener("click", function(event){
-  if(event.target.classList.contains("enviarFormulario")){
+body.addEventListener("click", function (event) {
+  // Botón para enviar formulario de creación
+  if (event.target.classList.contains("enviarFormulario")) {
     event.preventDefault();
-    console.log("Enviar formulario")
-    // Recoger los valores del formulario
+
+    // Crear nueva incidencia con los valores del formulario
     const nuevaIncidencia = {
       id: listaIncidencias.length + 1,
       titulo: document.getElementById("titulo").value,
@@ -224,38 +214,74 @@ body.addEventListener("click", function(event){
       estado: document.getElementById("estado").value,
       prioridad: document.getElementById("prioridad").value,
       asignado: document.getElementById("asignado").value,
-      fechaCreacion: document.getElementById("fechaCreacion").value
+      fechaCreacion: document.getElementById("fechaCreacion").value,
     };
-    
-  listaIncidencias.push(nuevaIncidencia);
-  renderTabla(listaIncidencias);
-  // Limpia el formulario
-  form.reset()
-  modalCrear.hide()
+
+    // Agregar la nueva incidencia al array
+    listaIncidencias.push(nuevaIncidencia);
+
+    // Volver a renderizar la tabla y limpiar el formulario
+    renderTabla(listaIncidencias);
+    form.reset();
+    modalCrear.hide();
+  }
+
+  // Botón para enviar formulario de edición
+  if (event.target.classList.contains("enviarFormularioEditar")) {
+    event.preventDefault();
+
+    // Crear objeto con los valores editados
+    const incidenciaEditada = {
+      id: editareventoID,
+      titulo: document.getElementById("tituloEditar").value,
+      descripcion: document.getElementById("descripcionEditar").value,
+      estado: document.getElementById("estadoEditar").value,
+      prioridad: document.getElementById("prioridadEditar").value,
+      asignado: document.getElementById("asignadoEditar").value,
+      fechaCreacion: document.getElementById("fechaCreacionEditar").value,
+    };
+
+    // Reemplazar la incidencia modificada en el array
+    if (editareventoID !== -1) {
+      listaIncidencias[editareventoID - 1] = incidenciaEditada;
+    }
+
+    // Actualizar la tabla y cerrar el modal
+    renderTabla(listaIncidencias);
+    modalEditar.hide();
   }
 });
 
+// ------------------------------------------------------
+// LIMPIAR FILTROS
+// ------------------------------------------------------
 
-/////Limpiar filtros
-limpFiltros.addEventListener("click", function(){
-    filtEstado.value = "";
-    filtPrioridad.value = "";
-    renderTabla(listaIncidencias);
-})
+limpFiltros.addEventListener("click", function () {
+  filtEstado.value = "";
+  filtPrioridad.value = "";
+  renderTabla(listaIncidencias);
+});
 
-/////Filtros
-filtEstado.addEventListener("change", aplicarFiltros)
-filtPrioridad.addEventListener("change", aplicarFiltros)
+// ------------------------------------------------------
+// FILTRADO DE INCIDENCIAS
+// ------------------------------------------------------
 
-function aplicarFiltros(){
+filtEstado.addEventListener("change", aplicarFiltros);
+filtPrioridad.addEventListener("change", aplicarFiltros);
 
-    incidenciasFiltradas = listaIncidencias;
-    
-    if(filtEstado.value){
-        incidenciasFiltradas = incidenciasFiltradas.filter((elemento)=> elemento.estado == filtEstado.value);
-    }
-    if(filtPrioridad.value){
-        incidenciasFiltradas = incidenciasFiltradas.filter((elemento)=> elemento.prioridad == filtPrioridad.value);
-    }
-    renderTabla(incidenciasFiltradas);
+function aplicarFiltros() {
+  let incidenciasFiltradas = listaIncidencias;
+
+  // Filtrar por estado si se selecciona
+  if (filtEstado.value) {
+    incidenciasFiltradas = incidenciasFiltradas.filter((elemento) => elemento.estado == filtEstado.value);
+  }
+
+  // Filtrar por prioridad si se selecciona
+  if (filtPrioridad.value) {
+    incidenciasFiltradas = incidenciasFiltradas.filter((elemento) => elemento.prioridad == filtPrioridad.value);
+  }
+
+  // Mostrar el resultado filtrado en la tabla
+  renderTabla(incidenciasFiltradas);
 }
