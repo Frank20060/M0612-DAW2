@@ -1,6 +1,8 @@
 // ------------------------------------------------------
 // ARRAY INICIAL DE INCIDENCIAS (DATOS DE EJEMPLO)
 // ------------------------------------------------------
+
+
 let listaIncidencias = [
   {
     id: 1,
@@ -58,9 +60,11 @@ let listaIncidencias = [
   },
 ];
 
+
 // ------------------------------------------------------
 // VARIABLES
 // ------------------------------------------------------
+
 
 const bodyTabla = document.querySelector("tbody"); // Cuerpo de la tabla donde se insertan las filas
 const totInci = document.querySelector(".totalIncidencias"); // Contador de incidencias totales
@@ -79,16 +83,18 @@ const filtPrioridad = document.querySelector("#filtrePrioritat"); // Selector de
 //Renderizar la tabla inicialmente con todas las incidencias
 renderTabla(listaIncidencias);
 
+
 // ------------------------------------------------------
 // FUNCIÓN QUE GENERA EL HTML DE LA TABLA
 // ------------------------------------------------------
+
 
 function renderTabla(incidencias) {
   let html = "";
 
   // Si no hay incidencias, mostrar mensaje vacío
   if (incidencias.length === 0) {
-    html = `<tr><td colspan="8" class="text-center">No hay datos para mostrar.</td></tr>`;
+    html = `<tr><td colspan="8" class="text-center">No hay datos para mostrar</td></tr>`;
   } else {
     // Recorrer las incidencias y generar una fila por cada una
     for (let i = 0; i < incidencias.length; i++) {
@@ -145,9 +151,11 @@ function renderTabla(incidencias) {
   bodyTabla.innerHTML = html;
 }
 
+
 // ------------------------------------------------------
 // EVENTOS DE LOS BOTONES EDITAR Y ELIMINAR EN LA TABLA
 // ------------------------------------------------------
+
 
 bodyTabla.addEventListener("click", function (e) {
   if (e.target.classList.contains("editar")) {
@@ -159,9 +167,11 @@ bodyTabla.addEventListener("click", function (e) {
   }
 });
 
+
 // ------------------------------------------------------
 // FUNCIÓN PARA ELIMINAR UNA INCIDENCIA
 // ------------------------------------------------------
+
 
 function eliminar(x) {
   // Filtrar el array para eliminar la incidencia seleccionada
@@ -176,11 +186,14 @@ function eliminar(x) {
   renderTabla(listaIncidencias);
 }
 
+
 // ------------------------------------------------------
 // FUNCIÓN PARA CARGAR DATOS EN EL FORMULARIO DE EDICIÓN
 // ------------------------------------------------------
 
+
 let editareventoID = "";
+
 
 function editar(eventID) {
   editareventoID = eventID;
@@ -197,9 +210,11 @@ function editar(eventID) {
   document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion;
 }
 
+
 // ------------------------------------------------------
 // EVENTOS DE LOS BOTONES DE LOS MODALES (CREAR Y EDITAR)
 // ------------------------------------------------------
+
 
 body.addEventListener("click", function (event) {
   // Botón para enviar formulario de creación
@@ -252,9 +267,11 @@ body.addEventListener("click", function (event) {
   }
 });
 
+
 // ------------------------------------------------------
 // LIMPIAR FILTROS
 // ------------------------------------------------------
+
 
 limpFiltros.addEventListener("click", function () {
   filtEstado.value = "";
@@ -262,9 +279,11 @@ limpFiltros.addEventListener("click", function () {
   renderTabla(listaIncidencias);
 });
 
+
 // ------------------------------------------------------
 // FILTRADO DE INCIDENCIAS
 // ------------------------------------------------------
+
 
 filtEstado.addEventListener("change", aplicarFiltros);
 filtPrioridad.addEventListener("change", aplicarFiltros);
