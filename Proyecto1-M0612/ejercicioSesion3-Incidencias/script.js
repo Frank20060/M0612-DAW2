@@ -206,12 +206,12 @@ function editar(eventID) {
   const incidenciaEditar = listaIncidencias.find((e) => e.id == eventID);
 
   // Rellenar los campos del formulario del modal con los datos actuales
-  document.getElementById("tituloEditar").value = incidenciaEditar.titulo;
-  document.getElementById("descripcionEditar").value = incidenciaEditar.descripcion;
-  document.getElementById("estadoEditar").value = incidenciaEditar.estado;
-  document.getElementById("prioridadEditar").value = incidenciaEditar.prioridad;
-  document.getElementById("asignadoEditar").value = incidenciaEditar.asignado;
-  document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion;
+  document.getElementById("tituloEditar").value = incidenciaEditar.titulo.trim();
+  document.getElementById("descripcionEditar").value = incidenciaEditar.descripcion.trim();
+  document.getElementById("estadoEditar").value = incidenciaEditar.estado.trim();
+  document.getElementById("prioridadEditar").value = incidenciaEditar.prioridad.trim();
+  document.getElementById("asignadoEditar").value = incidenciaEditar.asignado.trim();
+  document.getElementById("fechaCreacionEditar").value = incidenciaEditar.fechaCreacion.trim();
 }
 
 
@@ -224,16 +224,47 @@ body.addEventListener("click", function (event) {
   // Botón para enviar formulario de creación
   if (event.target.classList.contains("enviarFormulario")) {
     event.preventDefault();
+    
+    // Crear nueva incidencia con los valores del formulario -- Con alerta
+    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
+      if (respuesta) {
+          alert("El archivo se ha añadido.");
+          crearRegistro()
+          form.reset();
+          modalCrear.hide();
+      } else {
+          alert("El archivo no se ha añadido.");
+          modalCrear.hide();
+      }
+  }
 
-    // Crear nueva incidencia con los valores del formulario
-    const nuevaIncidencia = {
+  // Botón para enviar formulario de edición -- Con alerta
+  if (event.target.classList.contains("enviarFormularioEditar")) {
+    event.preventDefault();
+    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
+      if (respuesta) {
+          alert("El archivo se ha editado.");
+          editarAnadirTabla()
+          modalEditar.hide();
+      } else {
+          alert("El archivo no se ha editado.");
+          modalEditar.hide();
+      }
+
+    // Crear objeto con los valores editados
+    
+  }
+});
+function crearRegistro(){
+
+  const nuevaIncidencia = {
       id: listaIncidencias.length + 1,
-      titulo: document.getElementById("titulo").value,
-      descripcion: document.getElementById("descripcion").value,
-      estado: document.getElementById("estado").value,
-      prioridad: document.getElementById("prioridad").value,
-      asignado: document.getElementById("asignado").value,
-      fechaCreacion: document.getElementById("fechaCreacion").value,
+      titulo: document.getElementById("titulo").value.trim(),
+      descripcion: document.getElementById("descripcion").value.trim(),
+      estado: document.getElementById("estado").value.trim(),
+      prioridad: document.getElementById("prioridad").value.trim(),
+      asignado: document.getElementById("asignado").value.trim(),
+      fechaCreacion: document.getElementById("fechaCreacion").value.trim(),
     };
 
     // Agregar la nueva incidencia al array
@@ -246,29 +277,16 @@ body.addEventListener("click", function (event) {
       aplicarFiltros() 
     }
     form.reset();
-    modalCrear.hide();
-  }
-
-  // Botón para enviar formulario de edición
-  if (event.target.classList.contains("enviarFormularioEditar")) {
-    event.preventDefault();
-    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
-      if (respuesta) {
-          alert("El archivo se ha editado.");
-          
-      } else {
-          alert("El archivo no se ha editado.");
-      }
-
-    // Crear objeto con los valores editados
-    const incidenciaEditada = {
+}
+function editarAnadirTabla(){
+  const incidenciaEditada = {
       id: editareventoID,
-      titulo: document.getElementById("tituloEditar").value,
-      descripcion: document.getElementById("descripcionEditar").value,
-      estado: document.getElementById("estadoEditar").value,
-      prioridad: document.getElementById("prioridadEditar").value,
-      asignado: document.getElementById("asignadoEditar").value,
-      fechaCreacion: document.getElementById("fechaCreacionEditar").value,
+      titulo: document.getElementById("tituloEditar").value.trim(),
+      descripcion: document.getElementById("descripcionEditar").value.trim(),
+      estado: document.getElementById("estadoEditar").value.trim(),
+      prioridad: document.getElementById("prioridadEditar").value.trim(),
+      asignado: document.getElementById("asignadoEditar").value.trim(),
+      fechaCreacion: document.getElementById("fechaCreacionEditar").value.trim(),
     };
 
     // Reemplazar la incidencia modificada en el array
@@ -283,11 +301,7 @@ body.addEventListener("click", function (event) {
     }else{
       aplicarFiltros() 
     }
-
-    
-    modalEditar.hide();
-  }
-});
+}
 
 
 // ------------------------------------------------------
