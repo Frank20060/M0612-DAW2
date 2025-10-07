@@ -183,7 +183,11 @@ function eliminar(x) {
   });
 
   // Volver a renderizar la tabla actualizada
-  renderTabla(listaIncidencias);
+  if(filtEstado.value == "" && filtPrioridad.value == ""){
+    renderTabla(listaIncidencias);
+  }else{
+    aplicarFiltros() 
+  }
 }
 
 
@@ -236,7 +240,11 @@ body.addEventListener("click", function (event) {
     listaIncidencias.push(nuevaIncidencia);
 
     // Volver a renderizar la tabla y limpiar el formulario
-    renderTabla(listaIncidencias);
+    if(filtEstado.value == "" && filtPrioridad.value == ""){
+      renderTabla(listaIncidencias);
+    }else{
+      aplicarFiltros() 
+    }
     form.reset();
     modalCrear.hide();
   }
@@ -262,7 +270,14 @@ body.addEventListener("click", function (event) {
     }
 
     // Actualizar la tabla y cerrar el modal
-    renderTabla(listaIncidencias);
+
+    if(filtEstado.value == "" && filtPrioridad.value == ""){
+      renderTabla(listaIncidencias);
+    }else{
+      aplicarFiltros() 
+    }
+
+    
     modalEditar.hide();
   }
 });
@@ -287,9 +302,9 @@ limpFiltros.addEventListener("click", function () {
 
 filtEstado.addEventListener("change", aplicarFiltros);
 filtPrioridad.addEventListener("change", aplicarFiltros);
-
+let incidenciasFiltradas = listaIncidencias;
 function aplicarFiltros() {
-  let incidenciasFiltradas = listaIncidencias;
+  incidenciasFiltradas = listaIncidencias;
 
   // Filtrar por estado si se selecciona
   if (filtEstado.value) {
