@@ -163,7 +163,14 @@ bodyTabla.addEventListener("click", function (e) {
     editar(e.target.getAttribute("data-id"));
   } else if (e.target.classList.contains("eliminar")) {
     // Si se pulsa "Eliminar", obtener el id y llamar a la función eliminar()
-    eliminar(e.target.getAttribute("data-id"));
+    const respuesta = confirm("¿Estás seguro de que quieres eliminar esta incidencia?");
+    if (respuesta) {
+        alert("Incidencia Eliminada.");
+        eliminar(e.target.getAttribute("data-id"));
+    } else {
+        alert("No se ha eliminado la incidencia.");
+    }
+    
   }
 });
 
@@ -226,14 +233,14 @@ body.addEventListener("click", function (event) {
     event.preventDefault();
     
     // Crear nueva incidencia con los valores del formulario -- Con alerta
-    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
+    const respuesta = confirm("¿Estás seguro de que quieres añadir esta incidencia?");
       if (respuesta) {
-          alert("El archivo se ha añadido.");
+          alert("La incidencia se ha añadido.");
           crearRegistro()
           form.reset();
           modalCrear.hide();
       } else {
-          alert("El archivo no se ha añadido.");
+          alert("La incidencia no se ha añadido.");
           modalCrear.hide();
       }
   }
@@ -241,13 +248,13 @@ body.addEventListener("click", function (event) {
   // Botón para enviar formulario de edición -- Con alerta
   if (event.target.classList.contains("enviarFormularioEditar")) {
     event.preventDefault();
-    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
+    const respuesta = confirm("¿Estás seguro de que quieres editar esta incidencia?");
       if (respuesta) {
-          alert("El archivo se ha editado.");
+          alert("La incidencia se ha editado.");
           editarAnadirTabla()
           modalEditar.hide();
       } else {
-          alert("El archivo no se ha editado.");
+          alert("La incidencia no se ha editado.");
           modalEditar.hide();
       }
 
