@@ -2,8 +2,13 @@
 // ARRAY INICIAL DE INCIDENCIAS (DATOS DE EJEMPLO)
 // ------------------------------------------------------
 
+import {renderTabla} from "./funciones/auxiliares.js"; // Importar funciones auxiliares
+import {prueba} from "./funciones/crud.js"; // Importar funciones CRUD
 
-let listaIncidencias = [
+
+prueba();
+
+export let listaIncidencias = [
   {
     id: 1,
     titulo: "Error de inicio de sesión",
@@ -66,90 +71,25 @@ let listaIncidencias = [
 // ------------------------------------------------------
 
 
-const bodyTabla = document.querySelector("tbody"); // Cuerpo de la tabla donde se insertan las filas
-const totInci = document.querySelector(".totalIncidencias"); // Contador de incidencias totales
-const contAbiertas = document.querySelector(".abiertas"); // Contador de incidencias abiertas
-const contProcesos = document.querySelector(".proceso"); // Contador de incidencias en proceso
-const contCerradas = document.querySelector(".cerradas"); // Contador de incidencias cerradas
-const form = document.getElementById("formIncidencia"); // Formulario de creación de incidencias
-const body = document.querySelector("body"); // Etiqueta body (usada para delegar eventos globales)
-const modalCrear = new bootstrap.Modal(document.querySelector(".modalFormCrear")); // Modal de creación
-const modalEditar = new bootstrap.Modal(document.querySelector(".modalFormEditar")); // Modal de edición
-const limpFiltros = document.querySelector("#limpiarfiltro"); // Botón para limpiar filtros
-const filtEstado = document.querySelector("#filtreEstat"); // Selector de filtro por estado
-const filtPrioridad = document.querySelector("#filtrePrioritat"); // Selector de filtro por prioridad
+export const bodyTabla = document.querySelector("tbody"); // Cuerpo de la tabla donde se insertan las filas
+export const totInci = document.querySelector(".totalIncidencias"); // Contador de incidencias totales
+export const contAbiertas = document.querySelector(".abiertas"); // Contador de incidencias abiertas
+export const contProcesos = document.querySelector(".proceso"); // Contador de incidencias en proceso
+export const contCerradas = document.querySelector(".cerradas"); // Contador de incidencias cerradas
+export const form = document.getElementById("formIncidencia"); // Formulario de creación de incidencias
+export const body = document.querySelector("body"); // Etiqueta body (usada para delegar eventos globales)
+export const modalCrear = new bootstrap.Modal(document.querySelector(".modalFormCrear")); // Modal de creación
+export const modalEditar = new bootstrap.Modal(document.querySelector(".modalFormEditar")); // Modal de edición
+export const limpFiltros = document.querySelector("#limpiarfiltro"); // Botón para limpiar filtros
+export const filtEstado = document.querySelector("#filtreEstat"); // Selector de filtro por estado
+export const filtPrioridad = document.querySelector("#filtrePrioritat"); // Selector de filtro por prioridad
 
 
 //Renderizar la tabla inicialmente con todas las incidencias
 renderTabla(listaIncidencias);
 
 
-// ------------------------------------------------------
-// FUNCIÓN QUE GENERA EL HTML DE LA TABLA
-// ------------------------------------------------------
 
-
-function renderTabla(incidencias) {
-  let html = "";
-
-  // Si no hay incidencias, mostrar mensaje vacío
-  if (incidencias.length === 0) {
-    html = `<tr><td colspan="8" class="text-center">No hay datos para mostrar</td></tr>`;
-  } else {
-    // Recorrer las incidencias y generar una fila por cada una
-    for (let i = 0; i < incidencias.length; i++) {
-      let claseEstado = "";
-      let clasePrioridad = "";
-
-      // Asignar color según el estado
-      if (incidencias[i].estado === "abierto") {
-        claseEstado = "bg-warning text-dark";
-      } else if (incidencias[i].estado === "en_proceso") {
-        claseEstado = "bg-info text-dark";
-      } else if (incidencias[i].estado === "cerrado") {
-        claseEstado = "bg-success text-dark";
-      }
-
-      // Asignar color según la prioridad
-      if (incidencias[i].prioridad === "alta") {
-        clasePrioridad = "bg-danger text-dark";
-      } else if (incidencias[i].prioridad === "media") {
-        clasePrioridad = "bg-warning text-dark";
-      } else if (incidencias[i].prioridad === "baja") {
-        clasePrioridad = "bg-primary text-dark";
-      }
-
-      // Generar HTML de cada fila de la tabla
-      html += `
-        <tr>
-          <td>${incidencias[i].id}</td>
-          <td>${incidencias[i].titulo}</td>
-          <td>${incidencias[i].descripcion}</td>
-          <td><span class="badge ${claseEstado}">${incidencias[i].estado.charAt(0).toUpperCase() + incidencias[i].estado.slice(1)}</span></td>
-          <td><span class="badge ${clasePrioridad}">${incidencias[i].prioridad.charAt(0).toUpperCase() + incidencias[i].prioridad.slice(1)}</span></td>
-          <td>${incidencias[i].asignado}</td>
-          <td>${incidencias[i].fechaCreacion}</td>
-          <td>
-            <button class="btn btn-sm btn-success editar" data-bs-toggle="modal" data-bs-target="#modalEditar" data-id="${incidencias[i].id}">Editar</button>
-            <button class="btn btn-sm btn-danger eliminar" data-id="${incidencias[i].id}">Eliminar</button>
-          </td>
-        </tr>
-      `;
-    }
-  }
-
-  // Actualizar contadores
-  totInci.innerHTML = listaIncidencias.length;
-  incidenciasAbiertas = listaIncidencias.filter((elemento) => elemento.estado == "abierto");
-  contAbiertas.innerHTML = incidenciasAbiertas.length;
-  incidenciasProceso = listaIncidencias.filter((elemento) => elemento.estado == "en_proceso");
-  contProcesos.innerHTML = incidenciasProceso.length;
-  incidenciasCerradas = listaIncidencias.filter((elemento) => elemento.estado == "cerrado");
-  contCerradas.innerHTML = incidenciasCerradas.length;
-
-  // Insertar las filas en la tabla
-  bodyTabla.innerHTML = html;
-}
 
 
 // ------------------------------------------------------
@@ -252,6 +192,13 @@ body.addEventListener("click", function (event) {
   // Botón para enviar formulario de edición
   if (event.target.classList.contains("enviarFormularioEditar")) {
     event.preventDefault();
+    const respuesta = confirm("¿Estás seguro de que quieres editar este archivo?");
+      if (respuesta) {
+          alert("El archivo se ha editado.");
+          
+      } else {
+          alert("El archivo no se ha editado.");
+      }
 
     // Crear objeto con los valores editados
     const incidenciaEditada = {
