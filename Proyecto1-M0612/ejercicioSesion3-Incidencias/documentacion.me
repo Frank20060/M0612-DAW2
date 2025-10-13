@@ -1,0 +1,61 @@
+# Documentación del Gestor de Incidencias
+
+## Estructura de datos
+
+La aplicación utiliza un array principal llamado `listaIncidencias` que almacena todas las incidencias. Cada incidencia es un objeto con la siguiente estructura:
+
+```
+{
+  id: Número (identificador único de la incidencia),
+  titulo: String (título de la incidencia),
+  descripcion: String (descripción detallada),
+  estado: String (puede ser 'abierto', 'en_proceso' o 'cerrado'),
+  prioridad: String (puede ser 'alta', 'media' o 'baja'),
+  fechaCreacion: String (fecha en formato dd-mm-yyyy),
+  asignado: String (nombre de la persona responsable)
+}
+```
+
+Este array se utiliza para mostrar, filtrar, editar y eliminar incidencias en la interfaz.
+
+## Flujo de la aplicación
+
+1. **Inicialización**
+   - Al cargar la página, se renderiza la tabla con todas las incidencias del array `listaIncidencias`.
+   - Se actualizan los contadores de estadísticas (total, abiertas, en proceso, cerradas).
+
+2. **Creación de incidencias**
+   - El usuario pulsa el botón "Nueva Incidencia" y se abre un modal con el formulario.
+   - Al enviar el formulario, se valida que todos los campos estén completos y correctos.
+   - Si la validación es correcta y el usuario confirma, se añade la nueva incidencia al array y se actualiza la tabla.
+
+3. **Edición de incidencias**
+   - El usuario pulsa el botón "Editar" en una fila de la tabla.
+   - Se abre el modal de edición con los datos actuales de la incidencia.
+   - Al enviar el formulario, se valida y, si el usuario confirma, se actualiza la incidencia en el array y en la tabla.
+
+4. **Eliminación de incidencias**
+   - El usuario pulsa el botón "Eliminar" en una fila de la tabla.
+   - Se pide confirmación y, si acepta, se elimina la incidencia del array y se actualiza la tabla.
+
+5. **Filtrado de incidencias**
+   - El usuario puede filtrar la tabla por estado y prioridad usando los selectores.
+   - Al cambiar los filtros, se muestra solo el subconjunto de incidencias que cumple los criterios seleccionados.
+
+6. **Limpieza de filtros**
+   - El usuario puede restablecer los filtros para mostrar todas las incidencias.
+
+
+## Información adicional
+
+Los datos de la lista se almacenan en el localStorage del navegador.
+Si existen datos guardados, la aplicación utiliza esa información; en caso contrario, emplea el ejemplo definido al principio del documento JavaScript.
+Cada vez que se modifica el array, también se actualiza el contenido guardado en el localStorage mediante la función `guardarIncidenciasEnLocalStorage()`.
+
+
+## Notas adicionales
+
+- El sistema utiliza modales de Bootstrap para la creación y edición de incidencias.
+- La validación de los formularios incluye comprobación de campos obligatorios y formato de fecha.
+- El array de incidencias puede ser extendido para persistencia en localStorage en futuras versiones.
+- El código está comentado para facilitar su comprensión y mantenimiento.
