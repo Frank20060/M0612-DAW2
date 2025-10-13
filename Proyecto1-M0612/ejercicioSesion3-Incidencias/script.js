@@ -3,7 +3,9 @@
 // ------------------------------------------------------
 
 
-export let listaIncidencias = [
+
+
+let listaIncidencias = [
   {
     id: 1,
     titulo: "Error de inicio de sesión",
@@ -60,7 +62,26 @@ export let listaIncidencias = [
   },
 ];
 
+/*  Probamos cosas  ---- Implementar en un futuro
 
+console.log(listaIncidencias)
+
+let textoObj = JSON.stringify(listaIncidencias)  ///Convierte un objeto a texto
+
+console.log(textoObj)
+
+localStorage.setItem("incidencias", textoObj)  ///Guarda en localStorage
+
+
+const dbData = localStorage.getItem("incidencias")  ///Recupera del localStorage
+
+console.log(dbData)
+
+listaIncidencias = JSON.parse(dbData)  ///Convierte el texto recuperado a objeto
+
+console.log(listaIncidencias)
+
+  */
 // ------------------------------------------------------
 // VARIABLES
 // ------------------------------------------------------
@@ -347,3 +368,7 @@ function aplicarFiltros() {
   // Mostrar el resultado filtrado en la tabla
   renderTabla(incidenciasFiltradas);
 }
+
+
+
+

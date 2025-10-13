@@ -24,3 +24,22 @@ const fechaHora = fecha2[1].split(":")
 const fechaFecha = fecha2[0].split("-")
 
 console.log(fechaFecha[2] +" del " + fechaFecha[1] + " de " + fechaFecha[0] + " a las " + fechaHora[0] + " horas y " + fechaHora[1]+ " minutos")
+
+
+///Algunas cosas  d de json y arrays de objetos
+
+const incidencias = [
+    {
+        id: 1,
+        descripcion: "El sistema no arranca",
+        estado: "abierta"
+    },
+    {
+        id: 2,
+        descripcion: "No puedo acceder a mi cuenta",
+        estado: "cerrada"
+    }
+]
+
+
+ 
