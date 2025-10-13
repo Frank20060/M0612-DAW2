@@ -61,7 +61,7 @@ let listaIncidencias = [
 ];
 
 /*
-  Ejemplo de cómo guardar y recuperar incidencias en localStorage.
+  Guardar y recuperar incidencias en localStorage.
   Esto permite persistir los datos aunque se recargue la página.
   No está implementado en la lógica principal, pero sirve como referencia para futuras mejoras.
 */
