@@ -372,7 +372,7 @@ function editarAnadirTabla(){
     estado: document.getElementById("estadoEditar").value.trim(),
     prioridad: document.getElementById("prioridadEditar").value.trim(),
     asignado: document.getElementById("asignadoEditar").value.trim(),
-    fechaCreacion: fechaFormateada,
+    fechaCreacion: document.getElementById("fechaCreacionEditar").value,
   };
   // Reemplazar la incidencia modificada en el array
   if (editareventoID !== -1) {
