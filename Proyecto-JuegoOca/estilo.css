@@ -5,7 +5,7 @@
     cursor: default;
 }
 body{
-    background-color: rgba(21, 65, 23, 0.829);
+    background-color: rgba(34, 107, 38, 0.925);
 
 }
 body>h1{
@@ -27,7 +27,7 @@ body>h1{
     background-position: center;
     width: 1000px;
     height: 800px;
-    background-color: rgb(115, 197, 38);
+    background-color: rgb(197, 197, 148);
     position: relative;
 
 }
@@ -38,7 +38,7 @@ body>h1{
     padding: 20px;
 }
 .jugador1{
-    background-color: rgb(97, 97, 206);
+    background-color: rgb(90, 157, 245);
     justify-self: left;
 }
 .jugador2{  
@@ -52,12 +52,17 @@ body>h1{
     padding: 10px;
     font-size: 16px;
     border: transparent;
-    
     border-radius: 8px;
-    
     color: white;
     transition: all 0.3s ease;
+    width: 120px;
 
+}
+.btnDado1:disabled{
+    background-color: rgb(16, 22, 71);
+}
+.btnDado2:disabled{
+    background-color: rgb(97, 23, 23);
 }
 .btnDado1{
     background-color: rgb(58, 77, 253);
@@ -72,6 +77,10 @@ body>h1{
     cursor: pointer;
 
 }
+.jugador h1{
+    text-align: center;
+    font-size: 40px;
+}
 .jugador div{
     display: flex;
     flex-direction: column;
@@ -83,8 +92,18 @@ footer p{
     color: white;
 }
 .dado{
-
-    width: 100px;
-    height: 100px;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
     margin-top: 10px;
+}
+.tirando{
+    animation: girar 0.5s ease;
+}
+@keyframes girar{
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(90deg);}
+    50%{transform: rotate(180deg);}
+    75%{transform: rotate(270deg);}
+    100%{transform: rotate(360deg);}
 }

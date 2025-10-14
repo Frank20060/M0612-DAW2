@@ -30,17 +30,26 @@ btnDado2.addEventListener('click', () => tirarDado(2));   //x es 1 o 2 dependien
 //Funciones
 
 function tirarDado(x){
+    
     let valorDado = Math.floor(Math.random() * 6) + 1;
     if (x == 1){
-        jugador1.valorDado = valorDado;
-        dadoJdr1.innerHTML = `<img src="img/dadosNegro/${valorDado}.svg" alt="Dado del Juegor 1">`;
-        btnDado1.disabled = true;
-        btnDado2.disabled = false;
+        
+        dadoJdr1.classList.add('tirando');
+        setTimeout(() => {
+            dadoJdr1.classList.remove('tirando');
+            jugador1.valorDado = valorDado;
+            dadoJdr1.innerHTML = `<img src="img/dadosNegro/${valorDado}.svg" alt="Dado del Juegor 1">`;
+            btnDado1.disabled = true;
+            btnDado2.disabled = false;
+        }, 500);
     } else {
-        jugador2.valorDado = valorDado;
-        dadoJdr2.innerHTML = `<img src="img/dadosRojos/${valorDado}.svg" alt="Dado del Juegor 2">`;
-        btnDado2.disabled = true;
-        btnDado1.disabled = false;
-    }
-    
+        dadoJdr2.classList.add('tirando');
+        setTimeout(() => {
+            dadoJdr2.classList.remove('tirando');
+            jugador2.valorDado = valorDado;
+            dadoJdr2.innerHTML = `<img src="img/dadosRojos/${valorDado}.svg" alt="Dado del Juegor 2">`;
+            btnDado2.disabled = true;
+            btnDado1.disabled = false;
+        }, 500);
+    }   
 }
