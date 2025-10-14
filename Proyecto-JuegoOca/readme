@@ -1,0 +1,16 @@
+# Proyecto Juego de la Oca
+
+## Sesión 1
+
+**Progreso hasta ahora:**
+- Diseño del proyecto (HTML y CSS) definido.
+- Los dados funcionan con sus respectivos botones.
+- Los botones se adaptan a los turnos (sin tener en cuenta las casillas).
+- Las fichas estan creadas.
+- creada el array de las casillas con sus acciones
+
+**Pendiente (entre otras cosas):**
+- Implementar la lógica principal del juego.
+- Movimiento de las fichas..
+- Que las fichas se puedan comer entre ellas..
+- Preguntas.
