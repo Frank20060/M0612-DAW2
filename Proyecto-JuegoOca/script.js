@@ -44,11 +44,11 @@ const casillas = [
 ];
 
 let jugador1 = {
-    posicion: 0,
+    posicion: 1,
     valorDado: 1,
 };
 let jugador2 = {
-    posicion: 0,
+    posicion: 1,
     valorDado: 1,
 };
 
@@ -74,21 +74,23 @@ function tirarDado(x){
     if (x == 1){
         
         dadoJdr1.classList.add('tirando');
+        btnDado1.disabled = true;
+        
         setTimeout(() => {
             dadoJdr1.classList.remove('tirando');
             jugador1.valorDado = valorDado;
             dadoJdr1.innerHTML = `<img src="img/dadosNegro/${valorDado}.svg" alt="Dado del Juegor 1">`;
-            btnDado1.disabled = true;
             btnDado2.disabled = false;
         }, 500);
     } else {
         dadoJdr2.classList.add('tirando');
+        btnDado2.disabled = true;
         setTimeout(() => {
             dadoJdr2.classList.remove('tirando');
             jugador2.valorDado = valorDado;
             dadoJdr2.innerHTML = `<img src="img/dadosRojos/${valorDado}.svg" alt="Dado del Juegor 2">`;
-            btnDado2.disabled = true;
             btnDado1.disabled = false;
         }, 500);
     }   
 }
+
