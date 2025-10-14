@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+    background-color: rgba(21, 65, 23, 0.829);
+
+}
+body>h1{
+    text-align: center;
+    margin: 20px;
+    
+    color: rgb(0, 0, 0);
+    color: white;
+}
+.contenedorJuego{
+    display: flex;
+    flex-direction: row;
+    
+}
+.divTablero{
+
+    background-image: url("img/tablero.png");
+    background-size: cover;
+    background-position: center;
+    width: 1000px;
+    height: 800px;
+    background-color: rgb(115, 197, 38);
+    position: relative;
+
+}
+.jugador1{
+    width: 420px;
+    background-color: rgb(97, 97, 206);
+    justify-self: left;
+    color: black;
+    justify-items: center;
+    padding: 20px;
+}
+.jugador2{
+    width: 420px;
+    background-color: rgb(223, 107, 107);
+    justify-self: right;
+    color: black;
+    justify-items: center;
+    padding: 20px;    
+    
+}
+.jugador button{
+
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: transparent;
+    
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+
+}
+.btnDado1{
+    background-color: rgb(58, 77, 253);
+}
+.btnDado2{
+    background-color: rgb(253, 58, 58);
+}
+.jugador button:hover{
+
+    box-shadow: 2px 2px 5px black;
+    transform: scale(1.05);
+    
+
+}
+
+footer p{
+    text-align: center;
+    align-items: center;
+    color: white;
+}

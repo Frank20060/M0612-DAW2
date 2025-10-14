@@ -77,9 +77,6 @@ function guardarIncidenciasEnLocalStorage() {
   localStorage.setItem("incidencias", JSON.stringify(listaIncidencias));
 }
 
-
-
-
 // ------------------------------------------------------
 // VARIABLES GLOBALES Y REFERENCIAS A ELEMENTOS DEL DOM
 // ------------------------------------------------------
