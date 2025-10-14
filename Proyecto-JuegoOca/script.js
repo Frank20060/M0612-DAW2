@@ -1,7 +1,46 @@
 /// Variavles
+/// Estructura del tablero
 
+/*      Añadir las posiciones top y left para cada casilla
+, top: x, left: y
+*/
 const casillas = [
-
+    { numero: 1, tipo: 'normal' },
+    { numero: 2, tipo: 'avanza', destino: 21},
+    { numero: 3, tipo: 'normal' },
+    { numero: 4, tipo: 'normal' },
+    { numero: 5, tipo: 'perdeTurno' },
+    { numero: 6, tipo: 'normal' },
+    { numero: 7, tipo: 'avanzaEstrella', destino: 11 },
+    { numero: 8, tipo: 'normal' },
+    { numero: 9, tipo: 'normal' },
+    { numero: 10, tipo: 'normal' },
+    { numero: 11, tipo: 'normal' },
+    { numero: 12, tipo: 'vuelveInicio', destino: 1 },
+    { numero: 13, tipo: 'normal' },
+    { numero: 14, tipo: 'suerte', destino: 29 },
+    { numero: 15, tipo: 'normal' },
+    { numero: 16, tipo: 'normal' },
+    { numero: 17, tipo: 'normal' },
+    { numero: 18, tipo: 'perdeTurno' },
+    { numero: 19, tipo: 'normal' },
+    { numero: 20, tipo: 'normal' },
+    { numero: 21, tipo: 'normal' },
+    { numero: 22, tipo: 'avanza', destino: 24 },
+    { numero: 23, tipo: 'normal' },
+    { numero: 24, tipo: 'normal' },
+    { numero: 25, tipo: 'malaSuerte', destino: 9 },
+    { numero: 26, tipo: 'normal' },
+    { numero: 27, tipo: 'normal' },
+    { numero: 28, tipo: 'normal' },
+    { numero: 29, tipo: 'normal' },
+    { numero: 30, tipo: 'retrocede', destino: 27 },
+    { numero: 31, tipo: 'tiraOtraVez' },
+    { numero: 32, tipo: 'normal' },
+    { numero: 33, tipo: 'retrocede', destino: 20 },
+    { numero: 34, tipo: 'normal' },
+    { numero: 35, tipo: 'normal' },
+    { numero: 36, tipo: 'meta' }
 ];
 
 let jugador1 = {
