@@ -1,0 +1,208 @@
+#Juego de la serpiente -- Ejercicio examen
+
+1. Crea una funció que generi el tauler com una matriu.
+2. Crea una funció que generi una serp amb n nodes.
+3. Crea una funció que generi n pomes en posicions aleatòries (assegurant que no apareguin sobre la serp).
+4. Crea una funció idèntica per generar n obstacles.
+5. Pinta el tauler amb la serp, les pomes i els obstacles.
+6. Crea l’animació amb moviment inicial cap a l’esquerra.
+7. Afegeix control amb les tecles de fletxes per modificar el moviment.
+8. Implementa la detecció de col·lisions:
+    Si col·lisiona amb una poma, desapareix.
+    Si col·lisiona amb un obstacle, fi de la partida.
+    Si col·lisiona amb un node de la serp, fi de la partida.
+    Si col·lisiona amb les parets, fi de la partida.
+9. Si es mengen totes les pomes, reinicia el joc amb noves condicions:
+    Augment d’un node de la serp.
+    Augment del nombre d’obstacles.
+    Augment de la velocitat.
+10. Control i visualització de punts (+1 per poma, +10 per nivell).
+
+
+----- Añadir cosas en la array en posiciones
+
+
+unshift/push - add an element to the beginning/end of an array                  unshift -> [array] <- push
+shift/pop - remove and return the first/last element of an array                shift   <- [array] -> pop
+
+
+----- Interval
+
+
+setInterval(function() {
+  
+    Lo que hace el intervalo
+
+}, 100<--[El tiempo que cada intervalo]);
+
+--Pausar -> Clear interval
+
+------Desabilitar un boton -> disabled
+
+#1- Hacer la array
+
+#2- Hacer la serpiente
+
+#3- Hacer las manzanas
+
+#4- Hacer las obstaculos
+
+#5- Render tabla
+
+#6- Animacion movimiento -- SetInterval -> movimiento constante
+
+#7- Control teclas  -- Cambiar dirección
+
+#8- Colisiones
+
+#9- Si te comes las manzanas
+
+#10- Puntos 
+
+
+
+
+
+
+
+
+//Declaramos las variables
+
+let matriz = [];
+let numeroEnemigos=5;
+let enemigos =[]
+let pacman = { c: 0, f: 0}
+let maxFil = 4
+let maxCol = 6
+let rellenar = "";
+let ganar = false;
+let puntos = 0;
+const tablero = document.querySelector(".tablero")
+const contadorPuntos = document.querySelector(".contadorPuntos")
+generarMatriz()
+generarFantasmas();
+renderizarMatriz();
+generarCome()
+
+
+///Movimiento 
+window.addEventListener('keydown', function(event){
+    matriz[pacman.f][pacman.c] =""
+    console.log('Tecla presionada: ' + event.key); 
+    if(!ganar){
+        if(event.key == "ArrowLeft" || event.key == "a" ){
+            if(pacman.c>0){
+                pacman.c--;
+                generarCome()
+
+            }
+        }
+        if(event.key == "ArrowRight" || event.key == "d"){
+        
+            if(pacman.c < (maxCol-1)){
+                pacman.c++;
+                generarCome()
+
+            }
+
+        }
+        if(event.key == "ArrowUp" || event.key == "w"){
+            if(pacman.f>0){
+                pacman.f--;
+                generarCome()
+
+            }
+        }
+        
+        if(event.key == "ArrowDown" || event.key == "s"){
+            if(pacman.f < (maxFil-1)){
+                pacman.f++;
+                generarCome()
+
+            }
+        }
+        for(let i = 0; i<numeroEnemigos; i++){
+            if(enemigos[i].c == pacman.c && enemigos[i].f == pacman.f ){  ///Para que no se repitan las posicioes de los enemigos
+                if(enemigos[i].v){
+                    puntos ++;
+                    contadorPuntos.innerHTML = `Puntos: ${puntos}`
+                    enemigos[i].v = false
+                    if(puntos == numeroEnemigos){
+
+                        tablero.innerHTML = `<h1 class="victoria">VICTORIA</h1>`
+                        console.log("has ganado")
+                        ganar = true
+                    }
+                    
+                }
+            
+                
+            }
+
+        }
+    }
+    
+    
+}) ;
+
+function generarFantasmas(){
+
+    for(let i = 0; i<numeroEnemigos; i++){
+        enemigos[i] = {c: ""},{f: ""}, {v: true};
+        enemigos[i].c = Math.floor(Math.random()*maxCol);
+        enemigos[i].f = Math.floor(Math.random()*maxFil);
+        enemigos[i].v = true
+        let auxiliar = i;
+        for(let j = i-1; j>=0; j--){
+            if(enemigos[auxiliar].c == enemigos[j].c && enemigos[auxiliar].f == enemigos[j].f ){  ///Para que no se repitan las posicioes de los enemigos
+                i --;
+            }
+        }
+        if(enemigos[i].c == 0&& enemigos[i].f ==0 ){    ///Para que los enemigos no aparezcan en la casilla donde aparece al principio el jugador
+
+           i--
+
+        }
+        
+        matriz[enemigos[i].f][enemigos[i].c] = `<img src="img/heladoDeVainilla.webp" alt="helado de vainilla enemigo">`
+        console.log("enemigo " + i + " posicion " + enemigos[i].f +""+ enemigos[i].c)
+    }
+    renderizarMatriz()
+
+}
+function generarCome(){
+
+    
+    matriz[pacman.f][pacman.c] =`<img src="img/original_PacMan.png" alt="PacMan">`
+    renderizarMatriz();
+    
+}
+
+function generarMatriz(){
+    
+    for (let fila = 0; fila < maxFil; fila++){
+        matriz[fila] = [];
+        for (let col = 0; col < maxCol; col++){
+
+            matriz[fila][col] = "";
+            console.log(matriz[fila][col])
+        }
+    }
+};
+
+function renderizarMatriz(){
+    rellenar = "";
+    for (let fila = 0; fila < maxFil; fila++){
+                rellenar += "<div class='divFila'>"
+            for (let col = 0; col < maxCol; col++){
+
+                rellenar += `<div class = "celda"> ${matriz[fila][col]} </div>`
+            }
+        rellenar += "</div>"
+        tablero.innerHTML = rellenar
+        
+    }
+};
+
+
+
