@@ -28,11 +28,36 @@ header h1{
     text-align: center;
     color: rgb(0, 0, 0);
     color: white;
+    text-shadow: 2px 2px 5px black;
 }
 .contenedorJuego{
     display: flex;
     flex-direction: row;
     
+}
+.chivatoTurnos{
+
+    color:  white;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px black;
+    
+
+
+}
+.reiniciar{
+    background-color: transparent;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: transparent;
+    border-radius: 8px;
+    color:  transparent;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+.reiniciar:not(:disabled){
+    background-color: yellow;
+    color:  black;
 }
 
 
@@ -139,6 +164,7 @@ header h1{
     flex-direction: column;
     align-items: center;
 }
+
 footer p{
     text-align: center;
     align-items: center;
@@ -159,4 +185,16 @@ footer p{
     50%{transform: rotate(180deg);}
     75%{transform: rotate(270deg);}
     100%{transform: rotate(360deg);}
+}
+
+
+.preguntas{
+    margin-top: 20px;
+    padding: 30px;
+}
+
+.botonesCuestionario button{
+
+    color: black;
+
 }

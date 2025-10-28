@@ -17,8 +17,12 @@
 
 
 
-***Pendiente Actualizado***
+***Pendiente Actualizado -27/10- ***
 
--Perder Turno
--Preguntas casillas normales
--Mensaje de victoria
+
+- Reutilitzar el sistema de preguntes de la pràctica anterior
+- Implementar preguntes aleatòries en caselles sense regles
+- Implementar penalització per resposta incorrecta (retrocés d’1 casella)
+- Mostrar missatge de victòria
+- Implementar opció de nova partida
+- Implementar indicadors de torn
