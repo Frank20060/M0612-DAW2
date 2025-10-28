@@ -26,3 +26,8 @@
 - Mostrar missatge de victòria
 - Implementar opció de nova partida
 - Implementar indicadors de torn
+
+
+*** Acabadoooo ***
+
+tiene algunos errores, como que si caen los dos jugadores en perder un turno no se selecciona bien a quien le toca tirar o que cunado retrocedes al fallar una pregunta no se lee la casilla en la que estas, pero es lo que me ha dado tiempo ha hacer
