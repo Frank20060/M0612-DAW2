@@ -148,6 +148,8 @@ btnReiniciar.addEventListener('click', function() {
 
 
 //Funciones
+
+//tirar el dado
 function tirarDado(x){
     
     let valorDado = Math.floor(Math.random() * 6) + 1;
@@ -185,6 +187,8 @@ function tirarDado(x){
             
     }   
 }
+
+//cambiar de turno -- respetando las perdidas de turno o turnos dobles
 function cabioTurno(jugador) {
     if (auxganar) {
         // Si alguien ganó, desactivar ambos dados
@@ -224,7 +228,7 @@ function cabioTurno(jugador) {
 
 
 
-
+//mover ficha
 function mover(jugador){
        
     if(jugador == 1){
@@ -248,6 +252,8 @@ function mover(jugador){
     }
 }
 
+//Comprobar la casilla en la que la ficha y hacer la accion
+
 let posicionJugador
 function comprobarAccion(jugador){
     
@@ -268,7 +274,7 @@ function comprobarAccion(jugador){
             // Elegimos una pregunta aleatoria
             const preguntaAleatoria = preguntas[Math.floor(Math.random() * preguntas.length)];
 
-            // Construimos el HTML de la pregunta (3 botones sin bucle)
+            // Construimos el HTML de la pregunta 
             const htmlPregunta = `
                 <div class="cuestionario">
                     <h2>${preguntaAleatoria.pregunta}</h2>
@@ -303,13 +309,11 @@ function comprobarAccion(jugador){
                         // Retrocedemos la ficha visualmente
                         if (jugador == 1) {
                             jugador1.posicion = jugador1.posicion - 1;
-                            ficha1.style.left = `${casillas[jugador1.posicion].left}px`;
-                            ficha1.style.top = `${casillas[jugador1.posicion].top}px`;
+                            moverEspecial(1)
 
                         } else {
                             jugador2.posicion = jugador2.posicion - 1;
-                            ficha2.style.left = `${casillas[jugador2.posicion].left + 20}px`;
-                            ficha2.style.top = `${casillas[jugador2.posicion].top}px`;
+                            moverEspecial(2)
                             
                         }
                     }
@@ -390,6 +394,8 @@ function comprobarAccion(jugador){
     }
 
 }
+
+///Funcion para los movimientos especiales que hace la ficha en las casillas especiales, como avanzar o retroceder 
 
 function moverEspecial(jugador){
 
