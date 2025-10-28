@@ -309,11 +309,13 @@ function comprobarAccion(jugador){
                         // Retrocedemos la ficha visualmente
                         if (jugador == 1) {
                             jugador1.posicion = jugador1.posicion - 1;
-                            moverEspecial(1)
+                            ficha1.style.left = `${casillas[jugador1.posicion].left}px`;
+                            ficha1.style.top = `${casillas[jugador1.posicion].top}px`;
 
                         } else {
                             jugador2.posicion = jugador2.posicion - 1;
-                            moverEspecial(2)
+                            ficha2.style.left = `${casillas[jugador2.posicion].left + 20}px`;
+                            ficha2.style.top = `${casillas[jugador2.posicion].top}px`;
                             
                         }
                     }
