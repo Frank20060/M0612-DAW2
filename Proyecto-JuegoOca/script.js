@@ -155,8 +155,6 @@ function tirarDado(x){
     let valorDado = Math.floor(Math.random() * 6) + 1;
     if (x == 1){
             dadoJdr1.classList.add('tirando');
-            btnDado1.disabled = true;
-            
             setTimeout(() => {
                 dadoJdr1.classList.remove('tirando');
                 jugador1.valorDado = valorDado;
@@ -166,13 +164,11 @@ function tirarDado(x){
                 }
                 dadoJdr1.innerHTML = `<img src="img/dadosNegro/${valorDado}.svg" alt="Dado del Juegor 1">`;
                 mover(1)
-                cabioTurno(1)
-                
             }, 500);
         
     } else {
             dadoJdr2.classList.add('tirando');
-            btnDado2.disabled = true;
+            
             setTimeout(() => {
                 dadoJdr2.classList.remove('tirando');
                 jugador2.valorDado = valorDado;
@@ -182,7 +178,6 @@ function tirarDado(x){
                 }
                 dadoJdr2.innerHTML = `<img src="img/dadosRojos/${valorDado}.svg" alt="Dado del Juegor 2">`;
                 mover(2)
-                cabioTurno(2)
             }, 500);
             
     }   
@@ -265,7 +260,7 @@ function comprobarAccion(jugador){
     switch(casillas[posicionJugador].tipo){
 
         case 'inicio':
-            console.log('Casilla: inicio');
+            console.log('Casilla: inicio'); 
             break;
 
         case 'normal':
@@ -279,9 +274,9 @@ function comprobarAccion(jugador){
                 <div class="cuestionario">
                     <h2>${preguntaAleatoria.pregunta}</h2>
                     <div class="botonesCuestionario">
-                        <button value="${preguntaAleatoria.opciones[0]}">${preguntaAleatoria.opciones[0]}</button>
-                        <button value="${preguntaAleatoria.opciones[1]}">${preguntaAleatoria.opciones[1]}</button>
-                        <button value="${preguntaAleatoria.opciones[2]}">${preguntaAleatoria.opciones[2]}</button>
+                        <button id="${preguntaAleatoria.opciones[0]}">${preguntaAleatoria.opciones[0]}</button>
+                        <button id="${preguntaAleatoria.opciones[1]}">${preguntaAleatoria.opciones[1]}</button>
+                        <button id="${preguntaAleatoria.opciones[2]}">${preguntaAleatoria.opciones[2]}</button>
                     </div>
                 </div>
             `;
@@ -299,10 +294,13 @@ function comprobarAccion(jugador){
             contenedorBotones.addEventListener("click", (event) => {
                 if(event.target.tagName === 'BUTTON'){
 
-                    const respuestaSeleccionada = event.target.value;
+                    const respuestaSeleccionada = event.target.id;
 
                     if (respuestaSeleccionada == preguntaAleatoria.respuestaCorrecta) {
                         espacio.innerHTML = "<p>✅ ¡Correcto!</p>";
+                        
+                        // Esperamos 1s para que el jugador vea el mensaje, luego limpiamos y cambiamos turno
+                        
                     } else {
                         espacio.innerHTML = "<p>❌ Incorrecto. Retrocedes una casilla.</p>";
 
@@ -318,25 +316,32 @@ function comprobarAccion(jugador){
                             ficha2.style.top = `${casillas[jugador2.posicion].top}px`;
                             
                         }
-                    }
 
+                        
+                    }
                     // Esperamos 1s para que el jugador vea el mensaje, luego limpiamos y cambiamos turno
-                    setTimeout(() => {
-                        espacio.innerHTML = "";
-                        cabioTurno(jugador); // pasa turno al siguiente jugador
-                    }, 1000);
+                        setTimeout(() => {
+                            espacio.innerHTML = "";
+                            cabioTurno(jugador); // pasa turno al siguiente jugador
+                        }, 1000);
+
+                    
                 }
-            }); // listener solo se ejecuta una vez
+            });
             break;
 
         case 'avanza':
             console.log('Casilla: avanza');
             moverEspecial(jugador)
+            
+            cabioTurno(jugador)
+
             break;
 
         case 'avanzaEstrella':
             console.log('Casilla: avanzaEstrella');
             moverEspecial(jugador)
+            cabioTurno(jugador)
             break;
 
         case 'perdeTurno':
@@ -350,27 +355,32 @@ function comprobarAccion(jugador){
                 btnDado2.disabled = true;
                 btnDado1.disabled = false; // solo jugador 1 puede tirar
             }
+            cabioTurno(jugador)
             break;
 
 
         case 'suerte':
             console.log('Casilla: suerte');
             moverEspecial(jugador)
-            break;
+            btnDado1.disabled = true;
+            btnDado2.disabled = true; break;
 
         case 'vuelveInicio':
             console.log('Casilla: vuelveInicio');
             moverEspecial(jugador)
+            cabioTurno(jugador)
             break;
 
         case 'malaSuerte':
             console.log('Casilla: malaSuerte');
             moverEspecial(jugador)
+            cabioTurno(jugador)
             break;
 
         case 'retrocede':
             console.log('Casilla: retrocede');
             moverEspecial(jugador)
+            cabioTurno(jugador)
             break;
 
         case 'tiraOtraVez':
@@ -384,11 +394,13 @@ function comprobarAccion(jugador){
                 btnDado1.disabled = true;
                 btnDado2.disabled = false; // solo jugador 1 puede tirar
             }
+            cabioTurno(jugador)
             break;
             
         case 'meta':
             ganar(jugador)
             console.log('Casilla: meta');
+            cabioTurno(jugador)
             break;
 
         default:
