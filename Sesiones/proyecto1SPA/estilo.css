@@ -1,0 +1,110 @@
+/* Reset básico para que los porcentajes funcionen respecto al viewport */
+html, body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Header fijo arriba ocupando 20% del alto de la ventana */
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15vh; /* 20% de la altura del viewport */
+    background-color: #ece817a4;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Footer fijo abajo ocupando 20% del alto de la ventana */
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15vh;
+    background-color: #ece817a4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Main ocupa el espacio entre header y footer y hace scroll si hace falta */
+main{
+    position: absolute;
+    top: 15vh;    /* justo después del header */
+    bottom: 15vh; /* justo antes del footer */
+    left: 0;
+    right: 0;
+    overflow: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+/* Imágenes responsivas dentro del main */
+img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    list-style: none;
+    justify-content: center; /* ← esto lo centra horizontalmente */
+    align-items: center; /* ← esto lo centra verticalmente */
+    margin: 0;
+    padding: 0;
+}
+.menu li{
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.menu li:hover{
+    
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.678);
+    font-size: 1.5em;
+}
+nav{
+
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+
+}
+button{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: aliceblue;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+button:hover{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.678);
+    font-size: 1.2em;
+    padding: 7px;
+}
+main p{
+    width: 400px;
+}
+
+        
