@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salón</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="mostrarOcultar">Ocultar Menu</button>
+            <ul>
+                <li><a href="#" class="seleccionado">Salón</a></li>
+                <li><a href="#">Inventario</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="menu-izquierda">
+           
+            <div class="mesaSeleccionada">
+                <h1>Mesa seleccionada: </h1>
+                <p class="libre">Estado:  Libre</p>
+                <div class="listaPedido">
+                    <h2>Pedido:</h2>
+                    <ul>
+                        <li>2 Heineken</li>
+                    </ul>
+                </div>
+                <button>Limpiar Mesa</button>
+            </div>
+
+            <div class="cartaCervezas">
+                <h1>Carta Cervezas</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio por unidad</th>
+                            <th>Graduación alcohólica</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Estrella Damm</td>
+                            <td>2,00 €</td>
+                            <td>5.4%</td>
+                            <td><img src="URL-de-tu-foto-estrella" width="60"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Mahou 5 Estrellas</td>
+                            <td>2,10 €</td>
+                            <td>5.5%</td>
+                            <td><img src="URL-de-tu-foto-mahou" width="60"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Heineken</td>
+                            <td>2,20 €</td>
+                            <td>5.0%</td>
+                            <td><img src="URL-de-tu-foto-heineken" width="60"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Ambar Especial</td>
+                            <td>1,90 €</td>
+                            <td>5.2%</td>
+                            <td><img src="URL-de-tu-foto-ambar" width="60"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Guinness Draught</td>
+                            <td>3,00 €</td>
+                            <td>4.2%</td>
+                            <td><img src="URL-de-tu-foto-guinness" width="60"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div>
+            <div class="anadir">
+                <form id="pedidoForm" class="cartaCervezas rowForm">
+                    <select id="cerveza" name="Mesa">
+                        <option value="">--Mesa--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    
+                    <select id="cerveza" name="cerveza">
+                        <option value="">--Selecciona una--</option>
+                        <option value="estrella_damm">Estrella Damm</option>
+                        <option value="mahou_5_estrellas">Mahou 5 Estrellas</option>
+                        <option value="heineken">Heineken</option>
+                        <option value="ambar_especial">Ambar Especial</option>
+                        <option value="guinness_draught">Guinness Draught</option>
+                    </select>
+
+                    <input type="number" id="cantidad" name="cantidad" min="1" value="1">
+
+                    <button >Añadir</button>
+                </form>
+
+
+            </div>
+            <div class="salon">
+        
+                <div class="mesa" id="1">
+                    <h2>Mesa 1</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mesa" id="2">
+                    <h2>Mesa 2</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mesa " id="3">
+                    <h2>Mesa 3</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mesa " id="4">
+                    <h2>Mesa 4</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mesa " id="5">
+                    <h2>Mesa 5</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mesa" id="6">
+                    <h2>Mesa 6</h2>
+                    <p class="libre">Estado:  Libre</p>
+                    <div>
+                        
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+}
+
+:root {     /*Lee he dicho a chat GPT que me de colores chulos que me apetece usar*/
+  --principal: #0e0e0f;         /* Fondo general muy oscuro */
+  --secundaria: #1a1a1d;        /* Paneles, tarjetas, zonas interiores */
+  --acento-amarillo: #f5c518;   /* Toques de atención, botones, hover */
+  --texto: #e6e6e6;             /* Texto claro */
+  --texto-secundario: #b3b3b3;  /* Texto menos importante */
+
+  /* Marrón elegante para mesas (rollo madera bien cuidada) */
+  --mesa-marron: #7a4f2d;       /* Color principal de la mesa */
+  --mesa-marron-claro: #9a6a3a; /* Borde, brillo */
+  --mesa-marron-oscuro: #5a371f;/* Sombra, detalles */
+
+  /* Extras útiles */
+  --ok: #61d67c;                /* Verde suave para “listo / pagado” */
+  --alerta: #e45757;            /* Rojo para errores o avisos */
+}
+
+body{
+    background-color: var(--secundaria);
+    color: var(--texto);
+    font-family: 'Lato';
+    width: 100vw;
+    
+}
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: var(--principal);
+    align-items: center;
+    align-content: center;
+    border: 2px solid var(--texto);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+}
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+nav ul{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-left: 20px;
+    list-style: none;
+    align-content: center;
+}
+nav .seleccionado{
+    color: var(--acento-amarillo);
+    height: 100%;
+}
+nav a{
+    text-decoration: none;
+    color: var(--texto);
+    font-weight: 600;
+    display: inline-block;  
+    transition: transform 0.2s ease; 
+}
+nav a:hover{
+    color: var(--texto-secundario);
+    transform: translateY(-2px);
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10vh;
+}
+
+.mostrarOcultar{
+    width: 35vw;
+    height: 10vh;
+    background-color: var(--texto);
+    color: var(--principal);
+    border: none;
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 20px;
+    transition: all 0.2s ease;
+}
+.mostrarOcultar:hover{
+    font-weight: 800;
+    font-size: 23px;
+    background-color: var(--texto-secundario);
+}
+
+/*MENU IZQUIERDA*/
+
+.menu-izquierda{
+    width:35vw;
+    background-color: var(--principal);
+    display: flex;
+    flex-direction: column;  
+    border-collapse: collapse;
+}
+.menu-izquierda>div{
+    border: 2px solid var(--texto);
+}
+
+.mesaSeleccionada{
+    padding: 20px 10px;
+    gap:20px;
+    height: fit-content;
+    padding-bottom: 20px;
+    
+}
+.mesaSeleccionada h1{
+    font-size: 25px;
+}
+.libre {
+    color: var(--ok);
+}
+.ocupado{
+    color: var(--alerta);
+}
+
+
+/*Tabla cervezas*/
+.cartaCervezas{
+    height: fit-content;
+    padding: 20px;
+}
+table {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    border-collapse: collapse;
+    background-color: var(--secundaria);
+    color: var(--texto);
+    font-family: 'Lato';
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+thead th {
+    font-size: 15px;
+    background-color: var(--principal);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+tbody tr:hover {
+    background-color: var(--mesa-marron);
+    color: var(--texto);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+
+img {
+    border-radius: 4px;
+}
+
+
+/*SALON */
+
+.salon {
+    flex: 1; 
+    height: 100%;
+    width: 65vw;
+    padding: 30px ;
+    display: flex;
+    flex-wrap: wrap;      
+    gap: 20px;            
+    justify-content: center;
+    padding: 20px auto 0px auto;
+    background-color: var(--principal);
+    border: 2px solid var(--texto);
+}
+
+.mesa {
+    background-color: var(--mesa-marron);
+    color: var(--texto);
+    width: 25%;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+}
+
+.mesa:hover {
+    transform: translateY(-4px) scale(1.03);
+}
+
+/* Titulos de cada mesa */
+.mesa h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Estado libre/ocupado */
+.mesa p {
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Lista de pedido */
+.mesa ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/*FORM AÑADIR*/
+.anadir{
+    border: 2px solid var(--texto);
+}
+.rowForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--secundaria);
+    padding: 10px 20px;
+    height: 10vh;
+    width: fit-content; /* o 100% si quieres que ocupe todo el ancho */
+    margin: 20px auto;
+    
+}
+
+.rowForm select,
+.rowForm input[type="number"] {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--texto);
+    background-color: var(--principal);
+    color: var(--texto);
+    font-family: 'Lato';
+    font-size: 14px;
+    height: 90%; /* para que encaje en la altura del form */
+}
+
+.rowForm button {
+    height: 90%;
+    border-radius: 10px;
+    width: 100px;
+    border:none;
+    font-family: 'Lato';
+    background-color: var(--texto);
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.rowForm button:hover {
+    background-color: var(--texto-secundario);
+}
