@@ -1,0 +1,483 @@
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Gestión de Pedidos - Bar</title>
+		<style>
+			* {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+                    Ubuntu, Cantarell, sans-serif;
+                background-color: #121212; /* Fondo oscuro */
+                padding: 20px;
+                color: #e2e2e2; /* Texto claro */
+            }
+
+            .container {
+                display: flex;
+                gap: 20px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            /* Columna Izquierda */
+            .columna-izquierda {
+                width: 400px;
+                background-color: #1e1e1e; /* Caja oscura */
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+                transition: all 0.3s ease;
+            }
+
+            .columna-izquierda.oculta {
+                display: none;
+            }
+
+            .btn-toggle {
+                background-color: #444;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-bottom: 15px;
+                font-size: 14px;
+            }
+
+            .btn-toggle:hover {
+                background-color: #555;
+            }
+
+            .columna-izquierda h2 {
+                color: #fff;
+                margin-bottom: 15px;
+                font-size: 24px;
+            }
+
+            .tabla-cervezas {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .tabla-cervezas th {
+                background-color: #2a2a2a;
+                text-align: left;
+                border-bottom: 2px solid #3a3a3a;
+                font-weight: 600;
+                color: #cfcfcf;
+            }
+
+            .tabla-cervezas td {
+                padding: 12px;
+                border-bottom: 1px solid #333;
+            }
+
+            .tabla-cervezas tr:hover {
+                background-color: #2a2a2a;
+            }
+
+            .foto-cerveza {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 4px;
+                background-color: #292929;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #aaa;
+                font-size: 12px;
+            }
+
+            /* Columna Derecha */
+            .columna-derecha {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            /* Barra de Control */
+            .barra-control {
+                background-color: #1e1e1e;
+                padding: 20px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            .barra-control select,
+            .barra-control button {
+                padding: 10px 15px;
+                border: 1px solid #444;
+                border-radius: 4px;
+                font-size: 14px;
+                background-color: #2b2b2b;
+                color: #eee;
+            }
+
+            .barra-control .btn-pedido {
+                background-color: #0d6efd;
+                color: white;
+                border: none;
+                padding: 10px 30px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .barra-control .btn-pedido:hover {
+                background-color: #0a58ca;
+            }
+
+            /* Área de Mesas */
+            .area-mesas {
+                background-color: #1e1e1e;
+                padding: 30px;
+                border-radius: 8px;
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .mesa {
+                width: 200px;
+                height: 200px;
+                background-color: #2a2a2a;
+                border-radius: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                position: relative;
+                overflow-y: auto;
+            }
+
+            .mesa:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+            }
+
+            .mesa-label {
+                font-weight: 600;
+                color: #0d6efd;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+            .pedidos-mesa {
+                width: 100%;
+                text-align: center;
+                font-size: 12px;
+                color: #ccc;
+            }
+
+            .pedido-item {
+                margin: 5px 0;
+                padding: 3px 0;
+            }
+
+            /* Modal */
+            .modal {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.65);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal.mostrar {
+                display: flex;
+            }
+
+            .modal-contenido {
+                background-color: #1e1e1e;
+                border-radius: 8px;
+                padding: 30px;
+                max-width: 600px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+                position: relative;
+                color: #eee;
+            }
+
+            .modal-cerrar {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #bbb;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-cerrar:hover {
+                color: white;
+            }
+
+            .modal h2 {
+                margin-bottom: 20px;
+                color: #fff;
+            }
+
+            .tabla-pedidos {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
+            .tabla-pedidos th {
+                background-color: #2a2a2a;
+                padding: 12px;
+                text-align: left;
+                border-bottom: 2px solid #3a3a3a;
+                font-weight: 600;
+                color: #ddd;
+            }
+
+            .tabla-pedidos td {
+                padding: 10px 12px;
+                border-bottom: 1px solid #333;
+                color: #ccc;
+            }
+
+            .total-acumulado {
+                text-align: right;
+                font-size: 18px;
+                font-weight: 600;
+                color: #0d6efd;
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 2px solid #333;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+
+                .columna-izquierda {
+                    width: 100%;
+                }
+
+                .area-mesas {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .mesa {
+                    width: 180px;
+                    height: 180px;
+                }
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!-- Columna Izquierda - Lista de Cervezas -->
+			<div class="columna-izquierda" id="columnaIzquierda">
+				<button class="btn-toggle" id="btnToggle">
+					Mostrar/Ocultar Lista de Cervezas
+				</button>
+				<h2>Lista de Cervezas</h2>
+				<table class="tabla-cervezas">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Precio</th>
+							<th>Graduación</th>
+							<th>Foto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Estrella Damm</td>
+							<td>3.0€</td>
+							<td>5.4%</td>
+							<td>
+								<div class="foto-cerveza">100x100</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Mahou Cinco Estrellas</td>
+							<td>3.2€</td>
+							<td>5.5%</td>
+							<td>
+								<div class="foto-cerveza">100x100</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Alhambra Reserva 1925</td>
+							<td>3.5€</td>
+							<td>6.4%</td>
+							<td>
+								<div class="foto-cerveza">100x100</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Heineken</td>
+							<td>3.0€</td>
+							<td>5.0%</td>
+							<td>
+								<div class="foto-cerveza">100x100</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Ambar Especial</td>
+							<td>2.8€</td>
+							<td>5.2%</td>
+							<td>
+								<div class="foto-cerveza">100x100</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Columna Derecha -->
+			<div class="columna-derecha">
+				<!-- Barra de Control -->
+				<div class="barra-control">
+					<select id="selectCerveza">
+						<option>Estrella Damm</option>
+						<option>Mahou Cinco Estrellas</option>
+						<option>Alhambra Reserva 1925</option>
+						<option>Heineken</option>
+						<option>Ambar Especial</option>
+					</select>
+					<select id="selectCantidad">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+					<select id="selectMesa">
+						<option>Mesa 1</option>
+						<option>Mesa 2</option>
+						<option>Mesa 3</option>
+						<option>Mesa 4</option>
+						<option>Mesa 5</option>
+					</select>
+					<button class="btn-pedido" id="btnHacerPedido">Hacer Pedido</button>
+				</div>
+
+				<!-- Área de Mesas -->
+				<div class="area-mesas">
+					<div class="mesa" data-mesa="1">
+						<div class="mesa-label">Mesa 1</div>
+						<div class="pedidos-mesa">
+							<div class="pedido-item">Ambar Especial x2</div>
+							<div class="pedido-item">Estrella Damm x4</div>
+						</div>
+					</div>
+					<div class="mesa" data-mesa="2">
+						<div class="mesa-label">Mesa 2</div>
+						<div class="pedidos-mesa"></div>
+					</div>
+					<div class="mesa" data-mesa="3">
+						<div class="mesa-label">Mesa 3</div>
+						<div class="pedidos-mesa"></div>
+					</div>
+					<div class="mesa" data-mesa="4">
+						<div class="mesa-label">Mesa 4</div>
+						<div class="pedidos-mesa">
+							<div class="pedido-item">Mahou Cinco Estrellas x2</div>
+							<div class="pedido-item">Heineken x2</div>
+							<div class="pedido-item">Estrella Damm x2</div>
+						</div>
+					</div>
+					<div class="mesa" data-mesa="5">
+						<div class="mesa-label">Mesa 5</div>
+						<div class="pedidos-mesa"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal de Detalles de Pedidos /// Quitar display none-->
+		<div class="modal" id="modalPedidos" style="display: none;">
+			<div class="modal-contenido">
+				<button class="modal-cerrar" id="btnCerrarModal">&times;</button>
+				<h2>Pedidos de la Mesa</h2>
+				<table class="tabla-pedidos">
+					<thead>
+						<tr>
+							<th>Cerveza</th>
+							<th>Cantidad</th>
+							<th>Precio Unitario</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyPedidos">
+						<tr>
+							<td>Mahou Cinco Estrellas</td>
+							<td>2</td>
+							<td>3.2€</td>
+							<td>6.40€</td>
+						</tr>
+						<tr>
+							<td>Heineken</td>
+							<td>2</td>
+							<td>3.0€</td>
+							<td>6.00€</td>
+						</tr>
+						<tr>
+							<td>Estrella Damm</td>
+							<td>2</td>
+							<td>3.0€</td>
+							<td>6.00€</td>
+						</tr>
+						<tr>
+							<td>Ambar Especial</td>
+							<td>2</td>
+							<td>2.8€</td>
+							<td>5.60€</td>
+						</tr>
+						<tr>
+							<td>Ambar Especial</td>
+							<td>2</td>
+							<td>2.8€</td>
+							<td>5.60€</td>
+						</tr>
+						<tr>
+							<td>Ambar Especial</td>
+							<td>2</td>
+							<td>2.8€</td>
+							<td>5.60€</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="total-acumulado">Total Acumulado: 35.20 €</div>
+			</div>
+		</div>
+	</body>
+</html>
+
