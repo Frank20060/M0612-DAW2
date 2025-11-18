@@ -162,3 +162,5 @@ form.addEventListener("submit", e => {
   selectCerveza.value = "";
   cantidadInput.value = 1;
 });
+
+
