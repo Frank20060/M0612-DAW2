@@ -124,7 +124,24 @@ main{
 .ocupado{
     color: var(--alerta);
 }
-
+.mesaSeleccionada button{
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--texto);
+    color: var(--principal);
+    font-weight: 600;
+    font-family: 'Lato';
+    font-size: 16px;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+.mesaSeleccionada button:hover{
+    background-color: var(--texto-secundario);
+    font-size: 18px;
+    font-weight: 800;
+}
 
 /*Tabla cervezas*/
 .cartaCervezas{
@@ -172,7 +189,7 @@ img {
 
 .salon {
     flex: 1; 
-    height: 100%;
+    height: 75vh;
     width: 65vw;
     padding: 30px ;
     display: flex;
@@ -260,3 +277,4 @@ img {
 .rowForm button:hover {
     background-color: var(--texto-secundario);
 }
+
