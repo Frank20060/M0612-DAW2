@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examen getsion de reservas del gimnasio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Gestión de Reservas del Gimnasio</h1>
+      <button id="mostrarOcultar">Mostrar/Ocultar Lista de Actividades</button>
+    </header>
+    <main>
+      <div class="panelActividades">
+        <div class="listaActividades">
+          <table>
+            <caption>
+              Lista de actividades
+            </caption>
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Duración (min)</th>
+                <th>Intensidad</th>
+                <th>Foto</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="panelReservasActividades">
+          <h2>Reservas y franjas horarias</h2>
+          <div class="labels">
+            <label for="actividad">Actividad</label>
+            <label for="numPersonas">Número de personas</label>
+            <label for="franjaHoraria">Franja horaria</label>
+          </div>
+          <div class="selects">
+            <select name="actividad" id="actividad">
+              <!-- 
+                    <option value="${actividades[i].actividad}">${actividades[i].actividad}</option>
+                -->
+            </select>
+            <select name="numPersonas" id="numPersonas">
+              <option value="1">1 persona</option>
+              <option value="2">2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+            </select>
+            <select name="franjaHoraria" id="franjaHoraria">
+              <!-- 
+                    <option value="${zonaHoraria[i].horario}">${zonaHoraria[i].horario}</option>
+                -->
+            </select>
+          </div>
+          <button id="registroReserva">Registrar Reserva</button>
+          <div class="reservas">
+            <!-- 
+                <div id="${zonaHoraria[i].horario}">
+                <p>${zonaHoraria[i].horario}</p>
+                <p>${mensaje}</p>
+                <hr>
+                <p>Reservas: </p>
+                <p>${mensaje2}</p>
+                </div> 
+            -->
+          </div>
+        </div>
+        <dialog id="modal">
+          <!-- 
+                <h2>Detalles de reservas para las ${valorFranjaHoraria}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre de la actividad: </th>
+                            <th>Numero de personas: </th>
+                            <th>Duracion de la actividad: </th>
+                            <th>Carga total de minutos: </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${reserva.actividad}</td>
+                            <td>${reserva.personas} personas</td>
+                            <td>${duracion} minutos</td>
+                            <td>${cargaTotalMinutos} de duración</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="total-acumulado">Total acumulado de carga de minutos para esta franja: <strong>${totalAcumulado} minutos</strong></p>
+                <button id="cerrarModal">Cerrar</button>
+            -->
+        </dialog>
+      </div>
+    </main>
+    <footer></footer>
+    <script type="module" src="src/scripts/index.js"></script>
+  </body>
+</html>

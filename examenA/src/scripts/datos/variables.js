@@ -1,0 +1,11 @@
+export const botonMostrarOcultar = document.querySelector("#mostrarOcultar");
+export const tbody = document.querySelector("tbody");
+export const listaActividades = document.querySelector(".listaActividades");
+export const actividad = document.querySelector("#actividad");
+export const franjaHoraria = document.querySelector("#franjaHoraria");
+export const panelReservas = document.querySelector(".reservas");
+export const numPersonas = document.querySelector("#numPersonas");
+export const divReservas = document.querySelector(".reservas");
+export const botonRegistrarReserva = document.querySelector("#registroReserva");
+export const modal = document.querySelector("#modal");
+export const cerrarModal = document.querySelector("#cerrarModal");
