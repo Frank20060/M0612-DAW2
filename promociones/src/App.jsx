@@ -1,6 +1,7 @@
 import { SelectorPromocion } from '../componentes/SelectorPromocion'
 import { ListaAlumno } from '../componentes/ListaAlumno'
-import './App.css'
+
+
 
 export function App(){
 
@@ -20,7 +21,7 @@ export function App(){
     {
       nombre: "Ciro",
       apellido: "Martínez",
-      promo:"23/24",
+      promo:"24/25",
       grupo:"DAW",
       foto:"https://pokemon.gishan.cc/static/i/pokemon/shiny-kabuto.png"  
     }
@@ -31,11 +32,11 @@ export function App(){
 
 
   return(
-    <>
+    <div className='bg-red-500'>
       <h1>Promociones</h1>  
       <SelectorPromocion datosPromo={datosPromo}/>
       <ListaAlumno datosAlumnos={alumnosFiltradosPromo}/>
-    </>
+    </div>
   )
 
 
