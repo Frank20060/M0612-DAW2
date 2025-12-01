@@ -1,11 +1,14 @@
 import { SelectorPromocion } from '../componentes/SelectorPromocion'
+import { SelectorGrupos } from '../componentes/SelectorGrupo'
 import { ListaAlumno } from '../componentes/ListaAlumno'
 import { use, useState } from 'react'
+import { BuscarNombre } from '../componentes/BuscarNombre'
 
 
 
 export function App() {
   const datosPromo = ["24/25", "25/26", "26/27", "27/28"]
+  const datosGrupo = ["DAW", "SMX"] 
 
   const datosAlumnos = [
     {
@@ -20,7 +23,7 @@ export function App() {
       nombre: "Ciro",
       apellido: "Martínez",
       promo: "25/26",
-      grupo: "DAW",
+      grupo: "SMX",
       foto: "https://pokemon.gishan.cc/static/i/pokemon/shiny-kabuto.png",
     },
   ]
@@ -28,23 +31,48 @@ export function App() {
 
  const [datos, setDatos] = useState(datosAlumnos) 
  const [promocion, setPromocion] = useState()
+ const [grupo, setGrupo] = useState()
+ const [nombre, setNombre] = useState()
   
 
   function controlPromocion(e){
 
     setPromocion(datosPromo[e.target.value])
-
+    document.querySelector("#grupo").value = 'default'
+    setGrupo("")
     if(e.target.value == 'default'){
       setDatos(datosAlumnos)
     }else{
-      
-      setDatos(datosAlumnos.filter(alumno => alumno.promo == datosPromo[e.target.value]))
-      
+      setDatos(datosAlumnos.filter(alumno => alumno.promo == datosPromo[e.target.value])) 
+    }
+  }
+
+  function controlGrupo(e){
+    
+    setGrupo(datosGrupo[e.target.value])
+    document.querySelector("#promocion").value = 'default'
+    setPromocion("")
+    if(e.target.value == 'default'){
+      setDatos(datosAlumnos)
+    }else{
+      setDatos(datosAlumnos.filter(alumno => alumno.grupo == datosGrupo[e.target.value]))
     }
 
-    
+  }
 
+  function bucarNombre(e){
 
+    document.querySelector("#promocion").value = 'default'
+    document.querySelector("#grupo").value = 'default'
+    setGrupo("")
+    setPromocion("")
+    setNombre(e.target.value)
+
+    if(nombre == ""){
+      setDatos(datosAlumnos)  
+    }else{
+      setDatos(datosAlumnos.filter(alumno => alumno.nombre.toLowerCase().includes(e.target.value.toLowerCase())))
+    }
 
   }
 
@@ -66,16 +94,40 @@ export function App() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-300">
               Filtro
             </h2>
-            <SelectorPromocion datosPromo={datosPromo} controlPromocion={controlPromocion}/>
+            <div className='flex flex-col gap-3'>
+              <SelectorPromocion datosPromo={datosPromo} controlPromocion={controlPromocion}/>
+              <SelectorGrupos datosGrupo={datosGrupo} controlGrupo={controlGrupo}/>
+              <BuscarNombre bucarNombre={bucarNombre}/>
+            </div>
+            
 
           </div>
           <div className="text-right">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
               Promoción actual
-            </p>
-            <h1 className="mt-1 inline-block bg-linear-to-r from-indigo-400 via-sky-400 to-emerald-300  bg-clip-text text-2xl font-extrabold text-transparent transition-all duration-200 hover:scale-[1.02] hover:drop-shadow-[0_0_18px_rgba(56,189,248,0.6)]">
-              {promocion || "—"}
-            </h1>
+              </p>
+              <h1 className="mt-1 inline-block bg-linear-to-r from-indigo-400 via-sky-400 to-emerald-300  bg-clip-text text-2xl font-extrabold text-transparent transition-all duration-200 hover:scale-[1.02] hover:drop-shadow-[0_0_18px_rgba(56,189,248,0.6)]">
+                {promocion || "—"}
+              </h1>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+              Grupo actual
+              </p>
+              <h1 className="mt-1 inline-block bg-linear-to-r from-indigo-400 via-sky-400 to-emerald-300  bg-clip-text text-2xl font-extrabold text-transparent transition-all duration-200 hover:scale-[1.02] hover:drop-shadow-[0_0_18px_rgba(56,189,248,0.6)]">
+                {grupo  || "—"}
+              </h1>
+            </div>
+
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+              Nombre buscado
+              </p>
+              <h1 className="mt-1 inline-block bg-linear-to-r from-indigo-400 via-sky-400 to-emerald-300  bg-clip-text text-2xl font-extrabold text-transparent transition-all duration-200 hover:scale-[1.02] hover:drop-shadow-[0_0_18px_rgba(56,189,248,0.6)]">
+                {nombre  || "—"}
+              </h1>
+            </div>
           </div>
         </section>
 
