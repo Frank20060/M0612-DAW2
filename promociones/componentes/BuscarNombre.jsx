@@ -1,5 +1,5 @@
 
-export function BuscarNombre({bucarNombre}) {
+export function BuscarNombre({nombre, bucarNombre}) {
   return (
     <form
       action="#"
@@ -31,7 +31,7 @@ export function BuscarNombre({bucarNombre}) {
           </svg>
         </span>
 
-        <input onChange={bucarNombre}
+        <input onChange={bucarNombre} value={nombre}
           type="text"
           id="buscarNombre"
           placeholder="Buscar por nombre o apellido..."

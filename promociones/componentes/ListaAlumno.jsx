@@ -1,5 +1,5 @@
 import { Alumno } from "./Alumno.jsx"
-import { Avatar } from "./avatar"
+import { Avatar } from "./Avatar"
 
 
 

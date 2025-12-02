@@ -7,74 +7,120 @@ import { BuscarNombre } from '../componentes/BuscarNombre'
 
 
 export function App() {
-  const datosPromo = ["24/25", "25/26", "26/27", "27/28"]
-  const datosGrupo = ["DAW", "SMX"] 
+  const datosPromo = ["24/25", "25/26", "26/27", "27/28"];
+const datosGrupo = ["DAW", "SMX"];
 
-  const datosAlumnos = [
-    {
-      nombre: "Frank",
-      apellido: "Villar",
-      promo: "24/25",
-      grupo: "DAW",
-      foto:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6sW6rDX-kjIB0XnNI_GfEVfn0ezg4bGndw&s",
-    },
-    {
-      nombre: "Ciro",
-      apellido: "Martínez",
-      promo: "25/26",
-      grupo: "SMX",
-      foto: "https://pokemon.gishan.cc/static/i/pokemon/shiny-kabuto.png",
-    },
-  ]
+const datosAlumnos = [
+  {
+    nombre: "Frank",
+    apellido: "Villar",
+    promo: "24/25",
+    grupo: "DAW",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6sW6rDX-kjIB0XnNI_GfEVfn0ezg4bGndw&s",
+  },
+  {
+    nombre: "Ciro",
+    apellido: "Martínez",
+    promo: "25/26",
+    grupo: "SMX",
+    foto: "https://pokemon.gishan.cc/static/i/pokemon/shiny-kabuto.png",
+  },
+  {
+    nombre: "Lucía",
+    apellido: "Fernández",
+    promo: "26/27",
+    grupo: "DAW",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjhF3oFELIBjl30U3hZb5Sw9X-TU5Gv9Z8Hw&s",
+    // Bulbasaur artwork (Google Imágenes redirigiendo a pokemondb/artwork).[web:1]
+  },
+  {
+    nombre: "Álvaro",
+    apellido: "Santos",
+    promo: "27/28",
+    grupo: "SMX",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ2QVlZ4WkPfaAB1zX9EkjLrIszqUQNNY9bA&s",
+    // Charmander artwork (Google Imágenes redirigiendo a pokemondb/artwork).[web:6]
+  },
+  {
+    nombre: "María",
+    apellido: "López",
+    promo: "24/25",
+    grupo: "SMX",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa3vtwQ_-sP6pjNeAkd0b5X1YjN6V2z7sTmQ&s",
+    // Squirtle artwork (Google Imágenes redirigiendo a pokemondb/artwork).[web:7]
+  },
+  {
+    nombre: "Diego",
+    apellido: "Ruiz",
+    promo: "25/26",
+    grupo: "DAW",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjzqba_5zKkVH3yG4xDCfo5vW8ax9A8tc-Vw&s",
+    // Pikachu artwork (Google Imágenes con fuente Poké-artwork).[web:15]
+  },
+  {
+    nombre: "Elena",
+    apellido: "Navarro",
+    promo: "26/27",
+    grupo: "SMX",
+    foto:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdI1yHk3jZlEfL1i6_U2-hTRvV_1AL4_6Mpg&s",
+    // Eevee artwork (Google Imágenes enlazando a archivos de Pokémon).[web:15]
+  },
+];
+
 
 
  const [datos, setDatos] = useState(datosAlumnos) 
- const [promocion, setPromocion] = useState()
- const [grupo, setGrupo] = useState()
- const [nombre, setNombre] = useState()
+ const [promocion, setPromocion] = useState("Todos")
+ const [grupo, setGrupo] = useState("Todos")
+ const [nombre, setNombre] = useState("")
   
 
-  function controlPromocion(e){
+ function controlPromocion(e) {
+  const value = e.target.value;
 
-    setPromocion(datosPromo[e.target.value])
-    document.querySelector("#grupo").value = 'default'
-    setGrupo("")
-    if(e.target.value == 'default'){
-      setDatos(datosAlumnos)
-    }else{
-      setDatos(datosAlumnos.filter(alumno => alumno.promo == datosPromo[e.target.value])) 
-    }
+  if (value === 'Todos') {
+    setPromocion('Todos');           // modo ver todo
+  } else {
+    setPromocion(datosPromo[value]); // índice → texto ("24/25"...)
   }
+}
 
-  function controlGrupo(e){
-    
-    setGrupo(datosGrupo[e.target.value])
-    document.querySelector("#promocion").value = 'default'
-    setPromocion("")
-    if(e.target.value == 'default'){
-      setDatos(datosAlumnos)
-    }else{
-      setDatos(datosAlumnos.filter(alumno => alumno.grupo == datosGrupo[e.target.value]))
-    }
+function controlGrupo(e) {
+  const value = e.target.value;
 
+  if (value === 'Todos') {
+    setGrupo('Todos');
+  } else {
+    setGrupo(datosGrupo[value]);     // índice → texto ("DAW"/"SMX")
   }
+}
 
-  function bucarNombre(e){
+function bucarNombre(e) {
+  setNombre(e.target.value.toLowerCase());
+}
 
-    document.querySelector("#promocion").value = 'default'
-    document.querySelector("#grupo").value = 'default'
-    setGrupo("")
-    setPromocion("")
-    setNombre(e.target.value)
 
-    if(nombre == ""){
-      setDatos(datosAlumnos)  
-    }else{
-      setDatos(datosAlumnos.filter(alumno => alumno.nombre.toLowerCase().includes(e.target.value.toLowerCase())))
-    }
+  const datosFiltrados = datosAlumnos.filter((d) => {
+    const okPromo =
+      promocion === 'Todos' || d.promo === promocion;
 
-  }
+    const okGrupo =
+      grupo === 'Todos' || d.grupo === grupo;
+
+    const okNombre =
+      nombre === '' ||
+      d.nombre.toLowerCase().includes(nombre);
+
+    return okPromo && okGrupo && okNombre;
+  });
+
+
 
 
   return (
@@ -97,7 +143,7 @@ export function App() {
             <div className='flex flex-col gap-3'>
               <SelectorPromocion datosPromo={datosPromo} controlPromocion={controlPromocion}/>
               <SelectorGrupos datosGrupo={datosGrupo} controlGrupo={controlGrupo}/>
-              <BuscarNombre bucarNombre={bucarNombre}/>
+              <BuscarNombre nombre={nombre} bucarNombre={bucarNombre}/>
             </div>
             
 
@@ -132,7 +178,7 @@ export function App() {
         </section>
 
         <section className="rounded-2xl bg-white/5 p-4 shadow-xl ring-1 ring-white/10 backdrop-blur">
-          <ListaAlumno datosAlumnos={datos} />
+          <ListaAlumno datosAlumnos={datosFiltrados} />
         </section>
       </main>
     </div>
