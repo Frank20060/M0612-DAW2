@@ -51,7 +51,7 @@ export function App() {
 
     const okNombre =
       nombre === '' ||
-      d.nombre.toLowerCase().includes(nombre);
+     (d.nombre +" "+ d.apellido ).toLowerCase().includes(nombre);
 
     return okPromo && okGrupo && okNombre;
   });
