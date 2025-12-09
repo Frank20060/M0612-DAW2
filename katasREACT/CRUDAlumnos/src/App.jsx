@@ -38,7 +38,7 @@ export function App() {
   //Control imput nombre
 
   function bucarNombre(e) {
-  setNombre(e.target.value.toLowerCase());
+    setNombre(e.target.value);
   }
 
   //aplicar Filtro
@@ -51,7 +51,7 @@ export function App() {
 
     const okNombre =
       nombre === '' ||
-      (d.nombre +" "+ d.apellido ).toLowerCase().includes(nombre);
+    (d.nombre +" "+ d.apellido ).toLowerCase().includes(nombre.toLowerCase());
 
     return okPromo && okGrupo && okNombre;
   });
