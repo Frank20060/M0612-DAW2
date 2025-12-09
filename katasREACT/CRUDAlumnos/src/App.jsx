@@ -1,9 +1,29 @@
-import { SelectorPromocion } from '../componentes/SelectorPromocion'
-import { SelectorGrupos } from '../componentes/SelectorGrupo'
-import { ListaAlumno } from '../componentes/ListaAlumno'
+import { SelectorPromocion } from './componentes/SelectorPromocion'
+import { SelectorGrupos } from './componentes/SelectorGrupo'
+import { ListaAlumno } from './componentes/ListaAlumno'
 import { use, useState } from 'react'
-import { BuscarNombre } from '../componentes/BuscarNombre'
+import { BuscarNombre } from './componentes/BuscarNombre'
 import { datosAlumnos, datosGrupo, datosPromo } from '../datos'
+import { FormularioAlumno } from './componentes/FormularioAlumno'
+import { Login } from './componentes/Login'
+import { ButtonLogin } from './componentes/ButtonLogin'
+
+
+/*
+
+Copia de el array para que se refresque la app = 
+
+datos.push(contenido que quiero poner)    ///Ponemos en datos lo nuevo que queremos poner  
+nuevosDatos = {...datos}    ///Copia los datos  
+setDatos(nuevosDatos)       ///Los pone en el estado datos cambiando el puntero
+
+
+
+*/
+
+
+
+
 
 
 export function App() {
@@ -13,6 +33,9 @@ export function App() {
   const [promocion, setPromocion] = useState("Todos")
   const [grupo, setGrupo] = useState("Todos")
   const [nombre, setNombre] = useState("")
+
+  //Para abrir el modal de login
+  const [showLogin, setShowLogin] = useState(false);
 
   //Control select promociones
   function controlPromocion(e) {
@@ -62,13 +85,17 @@ export function App() {
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
-        <header className="flex flex-col gap-2">
-          <h1 className="text-4xl font-extrabold tracking-tight">
-            Panel de alumnos
-          </h1>
-          <p className="text-sm text-slate-300">
-            Filtra por promoción y revisa a tus panas.
-          </p>
+        <header className="flex flex-row gap-2 justify-between">
+          <div className="flex flex-col gap-2" >
+            <h1 className="text-4xl font-extrabold tracking-tight">
+              Panel de alumnos
+            </h1>
+            <p className="text-sm text-slate-300">
+              Filtra por promoción y revisa a tus panas.
+            </p>
+          </div>
+          <ButtonLogin onClick={() => setShowLogin(true)}/>
+
         </header>
 
         <section className="flex flex-col gap-4 rounded-2xl bg-white/5 p-5 shadow-lg ring-1 ring-white/10 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-xl sm:flex-row sm:items-center sm:justify-between">
@@ -112,10 +139,14 @@ export function App() {
             </div>
           </div>
         </section>
-
         <section className="rounded-2xl bg-white/5 p-4 shadow-xl ring-1 ring-white/10 backdrop-blur">
           <ListaAlumno datosAlumnos={datosFiltrados} />
         </section>
+
+        <section className='flex flex-row gap-7'>
+          {showLogin && <Login onClose={() => setShowLogin(false)} />}
+        </section>
+
       </main>
     </div>
   )

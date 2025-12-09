@@ -1,0 +1,76 @@
+Cosas que tengo que ir haciendo
+
+
+Lo primero leer el enunciado.
+
+
+
+He creado las cosillas (el form, el login y el archivo (vacio) donde se guardaran las funciones que modifican el localStorage)
+
+1.---Formulario Añadir/Editar:----
+
+---
+Mode crear: Afegeix un nou alumne a la base de dades
+Mode editar: Modifica les dades d’un alumne existent
+Validació dels camps obligatoris
+Botó per cancel·lar l’acció
+
+----
+Props (cosas que entran desde app):
+alumno: Objecte amb les dades de l’alumne (per mode edició, null per mode creació)
+onSubmit: Funció callback que s’executa en enviar el formulari  (al igual la meto en el form)
+onCancel: Funció callback que s’executa en cancel·lar (al igual la meto en el form)
+
+
+2.---LogIn----  (va con email de usuario)
+
+----
+
+Validar credencials (pots definir un usuari admin per defecte)
+Identificar si l’usuari és administrador
+Guardar l’estat d’autenticació en localStorage
+
+---
+
+onLogin: Funció callback que s’executa quan l’usuari s’autentica correctament
+
+
+3.----info Admin (opcional)----
+
+
+Component que mostra informació sobre l’estat d’autenticació
+Ha de mostrar si l’usuari està logueat com a administrador o no
+Ha de permetre fer logout   
+
+
+4. -----Apppppppppp (Cosas que hay que darle)----
+
+
+----- Gestió d’autenticació:
+    Carregar l’estat d’autenticació des de localStorage en muntar el component
+    Gestionar l’estat esAdmin (boolean)
+    Gestionar l’estat usuarioLogueado (boolean)
+    Persistir l’estat d’autenticació en localStorage quan canvia
+----- Gestió de dades:
+    Carregar les dades dels alumnes des de localStorage (si existeixen) o des del JSON inicial
+    Persistir les dades dels alumnes en localStorage cada vegada que es modifiquen
+----- Funcions CRUD:
+    crearAlumno: Afegeix un nou alumne a la llista
+    editarAlumno: Modifica les dades d’un alumne existent
+    eliminarAlumno: Elimina un alumne de la llista
+----- Gestió del formulari:
+    Estat per controlar si el formulari està obert
+    Estat per controlar quin alumne s’està editant (o null si es crea un nou alumne)
+    Funció per obrir el formulari en mode crear
+    Funció per obrir el formulari en mode editar
+    Funció per tancar el formulari
+
+
+5.-----alumnosService------ (Lo q controla la info de el localStorage)
+export const alumnosService = {
+  getAll: () => { /* carregar des de localStorage */ },
+  saveAll: (alumnos) => { /* guardar a localStorage */ },
+  create: (alumno) => { /* crear i persistir */ },
+  update: (id, datos) => { /* actualitzar i persistir */ },
+  delete: (id) => { /* eliminar i persistir */ }
+};
