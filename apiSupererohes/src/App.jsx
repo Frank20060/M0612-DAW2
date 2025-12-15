@@ -87,14 +87,33 @@ function App() {
 
       <div id="infoSuperHeroe" className="w-full max-w-md">
         {/* Estados: cargando, error o resultado */}
-        {loading && (
-          <div className="flex items-center gap-3">
-            <div
-              className="w-8 h-8 border-4 border-slate-700 border-t-indigo-400 rounded-full animate-spin"
-              role="status"
-              aria-label="Cargando"
-            />
-            <p className="text-slate-300">Cargando...</p>
+       {loading && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div
+                className="w-8 h-8 border-4 border-slate-700 border-t-indigo-400 rounded-full animate-spin"
+                role="status"
+                aria-label="Cargando"
+              />
+              <p className="text-slate-300">Cargando...</p>
+            </div>
+
+            <div className="mt-4 rounded-2xl bg-slate-800/70 p-4 shadow-inner border border-white/6 animate-pulse">
+              <div className="flex gap-4">
+                <div className="w-32 h-32 bg-slate-700 rounded-xl" />
+                <div className="flex-1 space-y-3 py-1">
+                  <div className="h-5 bg-slate-700 rounded w-3/4" />
+                  <div className="h-4 bg-slate-700 rounded w-1/2" />
+                  <div className="h-3 bg-slate-700 rounded w-1/3" />
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <div className="h-3 bg-slate-700 rounded w-full" />
+                    <div className="h-3 bg-slate-700 rounded w-full" />
+                    <div className="h-3 bg-slate-700 rounded w-full" />
+                    <div className="h-3 bg-slate-700 rounded w-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
         {error && !loading && (
