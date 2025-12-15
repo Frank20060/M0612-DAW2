@@ -13,8 +13,8 @@ function App() {
   // Maneja el envío del formulario: valida, consulta la API y guarda el resultado
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const query = search.trim()
-    if (!query) return // no hacemos nada si la búsqueda está vacía
+    const busquedaSuper = search.trim()
+    if (!busquedaSuper) return // no hacemos nada si la búsqueda está vacía
 
     // reset y estado de carga
     setLoading(true)
@@ -24,7 +24,7 @@ function App() {
     try {
       // Llamada a la API de superhéroes
       const res = await fetch(
-        `https://superheroapi.com/api.php/${token}/search/${query}`
+        `https://superheroapi.com/api.php/${token}/search/${busquedaSuper}`
       )
       const data = await res.json()
 
@@ -34,7 +34,7 @@ function App() {
       } else {
         // Intentamos encontrar un nombre exactamente igual (ignora mayúsculas)
         const found = data.results.find(
-          (superH) => superH.name.toLowerCase() === query.toLowerCase()
+          (superH) => superH.name.toLowerCase() === busquedaSuper.toLowerCase()
         ) || data.results[0] // si no hay coincidencia exacta, tomamos el primero
 
         setHero(found)
@@ -51,7 +51,7 @@ function App() {
   // Genera una URL de avatar (Dicebear) a partir del nombre
   const getAvatarUrl = (name) => {
     if (!name) return ''
-    return `https://api.dicebear.com/9.x/micah/svg?seed=${encodeURIComponent(name)}`
+    return `https://api.dicebear.com/9.x/micah/svg?seed=${name}`
   }
 
   return (
@@ -88,9 +88,15 @@ function App() {
       <div id="infoSuperHeroe" className="w-full max-w-md">
         {/* Estados: cargando, error o resultado */}
         {loading && (
-          <p className="text-slate-300">Cargando...</p>
+          <div className="flex items-center gap-3">
+            <div
+              className="w-8 h-8 border-4 border-slate-700 border-t-indigo-400 rounded-full animate-spin"
+              role="status"
+              aria-label="Cargando"
+            />
+            <p className="text-slate-300">Cargando...</p>
+          </div>
         )}
-
         {error && !loading && (
           <p className="text-red-400">{error}</p>
         )}
