@@ -7,7 +7,7 @@ export function Login({ onClose }) {
   return (
     <div
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-100 animate-[fadeIn_200ms_ease-out]"
-        onC lick={onClose}
+        onClick={onClose}
     >
       <div
         className="w-full max-w-sm rounded-2xl bg-white/5 p-6 shadow-xl ring-1 ring-white/10 backdrop-blur"
