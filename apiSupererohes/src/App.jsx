@@ -108,13 +108,13 @@ function App() {
               <div className="flex-1">
                 <h2 className="text-xl font-bold mb-1">{hero.name}</h2>
                 <p className="text-sm text-slate-300">
-                  <span className="font-semibold">Nombre real:</span> {hero.biography?.['full-name'] || 'Desconocido'}
+                  <span className="font-semibold">Nombre real:</span> {hero.biography['full-name'] || 'Desconocido'}
                 </p>
                 <p className="text-sm text-slate-300">
-                  <span className="font-semibold">Publisher:</span> {hero.biography?.publisher || 'Desconocido'}
+                  <span className="font-semibold">Publisher:</span> {hero.biography.publisher || 'Desconocido'}
                 </p>
                 <p className="text-sm text-slate-300">
-                  <span className="font-semibold">Primera aparición:</span> {hero.biography?.['first-appearance'] || 'N/A'}
+                  <span className="font-semibold">Primera aparición:</span> {hero.biography['first-appearance'] || 'N/A'}
                 </p>
               </div>
             </div>
@@ -123,12 +123,12 @@ function App() {
             <div className="mt-4">
               <h3 className="font-semibold mb-1">Powerstats</h3>
               <ul className="grid grid-cols-2 gap-1 text-sm text-slate-300">
-                <li>Inteligencia: {hero.powerstats?.intelligence}</li>
-                <li>Fuerza: {hero.powerstats?.strength}</li>
-                <li>Velocidad: {hero.powerstats?.speed}</li>
-                <li>Durabilidad: {hero.powerstats?.durability}</li>
-                <li>Poder: {hero.powerstats?.power}</li>
-                <li>Combate: {hero.powerstats?.combat}</li>
+                <li>Inteligencia: {hero.powerstats.intelligence}</li>
+                <li>Fuerza: {hero.powerstats.strength}</li>
+                <li>Velocidad: {hero.powerstats.speed}</li>
+                <li>Durabilidad: {hero.powerstats.durability}</li>
+                <li>Poder: {hero.powerstats.power}</li>
+                <li>Combate: {hero.powerstats.combat}</li>
               </ul>
             </div>
           </div>
