@@ -116,14 +116,14 @@ function App() {
           <button
             type="submit"
             className="relative inline-flex items-center justify-center overflow-hidden rounded-2xl px-6 py-2.5 text-sm font-semibold
-                       text-slate-950 bg-gradient-to-r from-amber-400 via-emerald-400 to-sky-400
+                       text-slate-950 bg-linear-to-r from-amber-400 via-emerald-400 to-sky-400
                        shadow-[0_0_20px_rgba(56,189,248,0.7)]
                        transition-all duration-300
                        hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(56,189,248,0.95)]
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950
                        group"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-sky-500 via-indigo-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-screen" />
+            <span className="absolute inset-0 bg-linear-to-r from-sky-500 via-indigo-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-screen" />
             <span className="relative flex items-center gap-1">
               <span>Buscar</span>
               <span className="text-lg group-hover:translate-x-0.5 transition-transform">⚡</span>
