@@ -1,12 +1,49 @@
 import { HardDrive } from "lucide-react";
+import { datosPromo, datosGrupo } from '../../datos'
 
-export function FormularioAlumno({ onClose }) {
+export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formulario enviado");
-    // aquí podrías llamar a onClose() si quieres cerrar al guardar
-    // onClose();
-  };
+
+    const formData = new FormData(e.target);
+
+    const datosNuevo = {
+      nombre: (formData.get("nombre") || '').trim(),
+      apellido: (formData.get("apellido") || '').trim(),
+      promo: formData.get("promo") || '',
+      grupo: formData.get("grupo") || '',
+      foto: (formData.get("foto") || '').trim(),
+    };
+
+    console.log('Guardando alumno:', datosNuevo);
+
+    // Actualizamos el estado y guardamos inmediatamente en localStorage para evitar condiciones de carrera
+    setDatosAlumnos((prev) => {
+      const next = [...prev, datosNuevo];
+      try {
+        localStorage.setItem('alumnos', JSON.stringify(next));
+        console.log('Guardado en localStorage:', next);
+      } catch (err) {
+        console.error('Error guardando alumnos en localStorage:', err);
+      }
+      return next;
+    });
+
+    // Cerrar modal tras guardar
+    if (typeof onClose === 'function') onClose();
+      
+    };
+
+  /**
+   * 
+    Copia de el array para que se refresque la app = 
+    datos.push(contenido que quiero poner)    ///Ponemos en datos lo nuevo que queremos poner  
+    nuevosDatos = {...datos}    ///Copia los datos  
+    setDatos(nuevosDatos)       ///Los pone en el estado datos cambiando el puntero
+   * 
+  */
+  
+
 
   return (
     <div
@@ -42,36 +79,52 @@ export function FormularioAlumno({ onClose }) {
             ✕
           </button>
         </div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit} >
           <input
+            name="nombre"
             type="text"
             className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
             placeholder="Nombre"
+            required
+            id="inpNombre"
           />
           <input
+            name="apellido"
             type="text"
             className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
             placeholder="Apellidos"
+            required
+            id="inpApellido"
           />
+          <select
+            name="promo"
+            className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
+            required
+            id="inpPromo"
+          >
+            <option value="">Selecciona promoción</option>
+            {datosPromo.map((p) => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
+
+          <select
+            name="grupo"
+            className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
+            required
+            id="inpCiclo"
+          >
+            <option value="">Selecciona ciclo</option>
+            {datosGrupo.map((g) => (
+              <option key={g} value={g}>{g}</option>
+            ))}
+          </select>
           <input
-            type="email"
-            className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
-            placeholder="Email"
-          />
-          <input
-            type="number"
-            className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
-            placeholder="Promoción"
-          />
-          <input
-            type="text"
-            className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
-            placeholder="Ciclo"
-          />
-          <input
+            name="foto"
             type="text"
             className="bg-slate-900/60 text-slate-50 border border-slate-700/70 rounded-md px-3 py-2 text-sm placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400 transition"
             placeholder="URL imagen"
+            id="inpImg"
           />
 
           <button

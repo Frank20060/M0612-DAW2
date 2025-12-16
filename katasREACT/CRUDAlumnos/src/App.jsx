@@ -1,13 +1,12 @@
 import { SelectorPromocion } from './componentes/SelectorPromocion'
 import { SelectorGrupos } from './componentes/SelectorGrupo'
 import { ListaAlumno } from './componentes/ListaAlumno'
-import { use, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BuscarNombre } from './componentes/BuscarNombre'
-import { datosAlumnos, datosGrupo, datosPromo } from '../datos'
+import { datosAlumnosDB, datosGrupo, datosPromo } from '../datos'
 import { FormularioAlumno } from './componentes/FormularioAlumno'
 import { Login } from './componentes/Login'
 import { ButtonLogin } from './componentes/ButtonLogin'
-
 
 /*
 
@@ -33,9 +32,38 @@ export function App() {
   const [promocion, setPromocion] = useState("Todos")
   const [grupo, setGrupo] = useState("Todos")
   const [nombre, setNombre] = useState("")
-
+  const [showCrear, setShowCrear] = useState(false);
   //Para abrir el modal de login
   const [showLogin, setShowLogin] = useState(false);
+
+
+  const [datosAlumnos, setDatosAlumnos] = useState(() => {
+  const alumnosLS = localStorage.getItem('alumnos');
+  if (!alumnosLS) {
+    // No hay nada en localStorage → uso datos de ejemplo
+    return datosAlumnosDB;
+  }
+
+  try {
+    const parsed = JSON.parse(alumnosLS);
+    // Si no es un array o está vacío, vuelvo a usar los de ejemplo
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return datosAlumnosDB;
+    }
+    return parsed;
+  } catch (err) {
+    console.error('Error parseando alumnos, usando datos de ejemplo', err);
+    return datosAlumnosDB;
+  }
+});
+
+// Guardar siempre que cambie datosAlumnos
+useEffect(() => {
+  localStorage.setItem('alumnos', JSON.stringify(datosAlumnos));
+}, [datosAlumnos]);
+
+
+
 
   //Control select promociones
   function controlPromocion(e) {
@@ -140,12 +168,18 @@ export function App() {
           </div>
         </section>
         <section className="rounded-2xl bg-white/5 p-4 shadow-xl ring-1 ring-white/10 backdrop-blur">
-          <ListaAlumno datosAlumnos={datosFiltrados} />
+          {datosFiltrados.length === 0 ? (
+            <div className="p-6 text-center text-slate-300">No hay alumnos que coincidan con los filtros.</div>
+          ) : (
+            <ListaAlumno datosAlumnos={datosFiltrados} onCreate={() => setShowCrear(true)} />
+          )}
         </section>
 
         <section className='flex flex-row gap-7'>
           {showLogin && <Login onClose={() => setShowLogin(false)} />}
         </section>
+
+        {showCrear && <FormularioAlumno onClose={() => setShowCrear(false)} setDatosAlumnos={setDatosAlumnos} datosAlumnos={datosAlumnos}/>}
 
       </main>
     </div>

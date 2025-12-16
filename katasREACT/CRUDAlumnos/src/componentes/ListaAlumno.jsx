@@ -1,17 +1,15 @@
 import { Alumno } from "./Alumno.jsx"
 import { Avatar } from "./Avatar.jsx"
 import { ButtonCrear } from "./buttonCrear.jsx"
-import { use, useState } from 'react'
 
 
 
 //Para abrir el modal de crear / editar
 
 
-export function ListaAlumno({ datosAlumnos } = datosAlumnos) {
+export function ListaAlumno({ datosAlumnos, onCreate }) {
 
-
-  const [showCrear, setShowCrear] = useState(false);
+  const getAvatarUrl = (name) => `https://api.dicebear.com/9.x/big-smile/svg?seed=${name}`
 
 
   return (
@@ -20,7 +18,7 @@ export function ListaAlumno({ datosAlumnos } = datosAlumnos) {
         <h3 className="text-lg font-semibold text-slate-100">
           Alumnos ({datosAlumnos.length})
         </h3>
-        <ButtonCrear onClick={() => setShowCrear(true)} />
+        <ButtonCrear onClick={onCreate} />
       </div>
       
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -32,12 +30,12 @@ export function ListaAlumno({ datosAlumnos } = datosAlumnos) {
             promo={alumno.promo}
             grupo={alumno.grupo}
           >
-            <Avatar key={"avatarAlumno" + index} foto={alumno.foto} />
+            <Avatar key={"avatarAlumno" + index} foto={alumno.foto === "" ? getAvatarUrl(`${alumno.nombre} ${alumno.apellido}`) : alumno.foto} />
           </Alumno>
         ))}
       </div>
 
-        {showCrear && <FormularioAlumno onClose={() => setShowCrear(false)} />}
+        
       
     </div>
   )
