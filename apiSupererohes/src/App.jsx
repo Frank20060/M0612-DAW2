@@ -70,14 +70,14 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-slate-100 flex flex-col items-center px-4 py-10">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-indigo-950 text-slate-100 flex flex-col items-center px-4 py-10">
       <div className="w-full max-w-2xl">
         {/* Cabecera de la página */}
         <header className="text-center mb-8">
           <p className="text-xs tracking-[0.25em] uppercase text-indigo-300/80">
             Superhero Database
           </p>
-          <h1 className="mt-2 text-4xl font-black tracking-tight bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.55)]">
+          <h1 className="mt-2 text-4xl font-black tracking-tight bg-linear-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.55)]">
             Buscador de Superhéroes
           </h1>
           <p className="mt-2 text-sm text-slate-300/80">
@@ -186,7 +186,7 @@ function App() {
                   {/* Columna de avatar e identificador */}
                   <div className="flex flex-col items-center gap-2">
                     <div className="relative">
-                      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-sky-400/40 via-emerald-400/30 to-fuchsia-400/30 blur" />
+                      <div className="absolute -inset-1 rounded-3xl bg-linear-to-tr from-sky-400/40 via-emerald-400/30 to-fuchsia-400/30 blur" />
                       {/* Imagen generada con Dicebear */}
                       <img
                         src={getAvatarUrl(hero.name)}
@@ -227,7 +227,7 @@ function App() {
                 <div className="mt-5">
                   <h3 className="text-sm font-semibold text-slate-200 mb-2 flex items-center gap-2">
                     Powerstats
-                    <span className="h-px flex-1 bg-gradient-to-r from-sky-400/60 via-emerald-400/40 to-transparent" />
+                    <span className="h-px flex-1 bg-linear-to-r from-sky-400/60 via-emerald-400/40 to-transparent" />
                   </h3>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
@@ -248,7 +248,7 @@ function App() {
                       >
                         <span className="text-slate-200">{label}</span>
                         <span
-                          className={`inline-flex items-center justify-center rounded-full bg-gradient-to-r ${gradient}
+                          className={`inline-flex items-center justify-center rounded-full bg-linear-to-r ${gradient}
                                      px-2 py-0.5 text-[11px] font-bold text-slate-950 shadow-sm
                                      transition-transform duration-200 group-hover:scale-110`}
                         >
