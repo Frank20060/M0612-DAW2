@@ -2,14 +2,22 @@ import { BtnEliminar } from "./BtnEliminar.jsx"
 import { BtnEditar } from "./BtnEditar.jsx"
 import { CornerDownLeft } from "lucide-react"
 
-export function Alumno({ id, nombre, apellido, promo, grupo, children } = props) {
+export function Alumno({ id, nombre, apellido, promo, grupo, children, onEliminar, onEditar } = props) {
 
   function eliminar(){
-    console.log("Eliminar id:", id)
+    if (typeof onEliminar === 'function') {
+      onEliminar(id);
+    } else {
+      console.log("Eliminar id:", id)
+    }
   }
 
   function editar(){
-    console.log("Editar id:", id)
+    if (typeof onEditar === 'function') {
+      onEditar(id);
+    } else {
+      console.log("Editar id:", id)
+    }
   }
 
 

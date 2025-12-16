@@ -7,10 +7,9 @@ import { ButtonCrear } from "./buttonCrear.jsx"
 //Para abrir el modal de crear / editar
 
 
-export function ListaAlumno({ datosAlumnos, onCreate }) {
+export function ListaAlumno({ datosAlumnos, onCreate, onDelete }) {
 
   const getAvatarUrl = (name) => `https://api.dicebear.com/9.x/big-smile/svg?seed=${name}`
-
 
   return (
     <div className="space-y-4">
@@ -30,6 +29,7 @@ export function ListaAlumno({ datosAlumnos, onCreate }) {
             apellido={alumno.apellido}
             promo={alumno.promo}
             grupo={alumno.grupo}
+            onEliminar={() => onDelete(alumno.id)}
           >
             <Avatar key={"avatarAlumno" + index} foto={alumno.foto === "" ? getAvatarUrl(`${alumno.nombre} ${alumno.apellido}`) : alumno.foto} />
           </Alumno>

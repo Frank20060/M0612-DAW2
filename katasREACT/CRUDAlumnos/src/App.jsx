@@ -110,6 +110,21 @@ useEffect(() => {
 
 
 
+  // Eliminar alumno por id y persistir en localStorage
+  function eliminarAlumno(id) {
+    if (!window.confirm('¿Eliminar alumno?')) return;
+    setDatosAlumnos((prev) => {
+      const next = prev.filter(a => a.id !== id);
+      try {
+        localStorage.setItem('alumnos', JSON.stringify(next));
+        console.log('Alumno eliminado id:', id);
+      } catch (err) {
+        console.error('Error guardando alumnos en localStorage tras eliminar:', err);
+      }
+      return next;
+    });
+  }
+
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50 ">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
@@ -171,7 +186,7 @@ useEffect(() => {
           {datosFiltrados.length === 0 ? (
             <div className="p-6 text-center text-slate-300">No hay alumnos que coincidan con los filtros.</div>
           ) : (
-            <ListaAlumno datosAlumnos={datosFiltrados} onCreate={() => setShowCrear(true)} />
+            <ListaAlumno datosAlumnos={datosFiltrados} onCreate={() => setShowCrear(true)} onDelete={eliminarAlumno} />
           )}
         </section>
 
