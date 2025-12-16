@@ -15,11 +15,13 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
       foto: (formData.get("foto") || '').trim(),
     };
 
-    console.log('Guardando alumno:', datosNuevo);
+    console.log('Guardando alumno (sin id):', datosNuevo);
 
-    // Actualizamos el estado y guardamos inmediatamente en localStorage para evitar condiciones de carrera
+    // Calculamos id incremental basado en los anteriores (si no hay, se pone 1)
     setDatosAlumnos((prev) => {
-      const next = [...prev, datosNuevo];
+      const maxId = prev.reduce((m, a) => Math.max(m, a?.id || 0), 0);
+      const item = { ...datosNuevo, id: maxId + 1 };
+      const next = [...prev, item];
       try {
         localStorage.setItem('alumnos', JSON.stringify(next));
         console.log('Guardado en localStorage:', next);

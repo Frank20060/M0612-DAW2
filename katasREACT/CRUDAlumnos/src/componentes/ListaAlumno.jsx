@@ -24,7 +24,8 @@ export function ListaAlumno({ datosAlumnos, onCreate }) {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {datosAlumnos.map((alumno, index) => (
           <Alumno
-            key={"alumno" + index}
+            key={alumno.id ?? "alumno" + index}
+            id={alumno.id}
             nombre={alumno.nombre}
             apellido={alumno.apellido}
             promo={alumno.promo}

@@ -3,6 +3,7 @@ export const datosGrupo = ["DAW", "SMX"];
 
 export const datosAlumnosDB = [
   {
+    id: 1,
     nombre: "Frank",
     apellido: "Villar",
     promo: "24/25",
@@ -11,6 +12,7 @@ export const datosAlumnosDB = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6sW6rDX-kjIB0XnNI_GfEVfn0ezg4bGndw&s",
   },
   {
+    id: 2,
     nombre: "Ciro",
     apellido: "Martínez",
     promo: "25/26",
@@ -18,6 +20,7 @@ export const datosAlumnosDB = [
     foto: "https://pokemon.gishan.cc/static/i/pokemon/shiny-kabuto.png",
   },
   {
+    id: 3,
     nombre: "Lucía",
     apellido: "Fernández",
     promo: "26/27",
@@ -26,6 +29,7 @@ export const datosAlumnosDB = [
       "",
   },
   {
+    id: 4,
     nombre: "Álvaro",
     apellido: "Santos",
     promo: "27/28",
@@ -34,6 +38,7 @@ export const datosAlumnosDB = [
       "",
   },
   {
+    id: 5,
     nombre: "María",
     apellido: "López",
     promo: "24/25",
@@ -42,6 +47,7 @@ export const datosAlumnosDB = [
       ""
   },
   {
+    id: 6,
     nombre: "Diego",
     apellido: "Ruiz",
     promo: "25/26",
@@ -50,6 +56,7 @@ export const datosAlumnosDB = [
       ""
   },
   {
+    id: 7,
     nombre: "Elena",
     apellido: "Navarro",
     promo: "26/27",

@@ -1,7 +1,8 @@
-export function BtnEditar(){
+export function BtnEditar({editar}){
     return(
         <button
         className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 ease-in-out delay-75 hover:bg-blue-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 active:scale-95 transition-all duration-200"
+        onClick={editar}
         >
         <svg
             className="h-5 w-5 mr-1 self-center items-center"

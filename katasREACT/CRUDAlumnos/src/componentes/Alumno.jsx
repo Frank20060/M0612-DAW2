@@ -1,7 +1,18 @@
 import { BtnEliminar } from "./BtnEliminar.jsx"
 import { BtnEditar } from "./BtnEditar.jsx"
+import { CornerDownLeft } from "lucide-react"
 
-export function Alumno({ nombre, apellido, promo, grupo, children, controls } = props) {
+export function Alumno({ id, nombre, apellido, promo, grupo, children } = props) {
+
+  function eliminar(){
+    console.log("Eliminar id:", id)
+  }
+
+  function editar(){
+    console.log("Editar id:", id)
+  }
+
+
   return (
     <article className="group flex flex-col justify-between items-center gap-3 rounded-2xl border border-white/10 bg-white/10 p-4 text-center shadow-lg backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:border-indigo-400/70 hover:bg-white/15 hover:shadow-2xl h-full">
       <div>
@@ -19,8 +30,8 @@ export function Alumno({ nombre, apellido, promo, grupo, children, controls } = 
 
       {/*Esto solo se deveria de ver cuando se esta con una cuenta de admin */}
       <div className="flex flex-row gap-3 mt-5">
-        <BtnEliminar />
-        <BtnEditar />
+        <BtnEliminar eliminar={eliminar}/>
+        <BtnEditar editar={editar}/>
       </div>
 
     </article>

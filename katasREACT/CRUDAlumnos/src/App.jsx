@@ -111,7 +111,7 @@ useEffect(() => {
 
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50 ">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
         <header className="flex flex-row gap-2 justify-between">
           <div className="flex flex-col gap-2" >
