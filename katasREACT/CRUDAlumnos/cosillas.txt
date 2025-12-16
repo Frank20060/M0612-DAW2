@@ -49,6 +49,11 @@ Resumen: este documento registra lo implementado y lo pendiente en el proyecto *
 
 
 
+Se pueden eliminar los alumnos del local storage con su boton (hay que poner que cuando sea el usuario rol user que no se vean, con un display none mismo)
+
+
+
+
 
 
 
