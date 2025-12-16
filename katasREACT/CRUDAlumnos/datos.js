@@ -62,11 +62,11 @@ export const datosAlumnosDB = [
 
 export const usersApp =[
   {
-    nombre: "Admin",
+    nombre: "admin@gmail.com",
     pas: "Admin"
   },
   {
-    nombre:"NormalUser",
-    pas:"1234 "
+    nombre:"user@gmail.com",
+    pas:"1234"
   }
 ]
