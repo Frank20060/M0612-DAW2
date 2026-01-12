@@ -1,73 +1,80 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 function App() {
   // Token de la API (en un proyecto real debería ir en variables de entorno)
-  const token = "b3a37cd5767744781e571fa4c127621c"
+  const token = "b3a37cd5767744781e571fa4c127621c";
 
   // Estado del texto que escribe el usuario en el input
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
   // Estado donde guardaremos el superhéroe seleccionado (objeto de la API)
-  const [hero, setHero] = useState(null)
+  const [hero, setHero] = useState(null);
   // Estado para guardar mensajes de error (no encontrado, fallo de red, etc.)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
   // Estado para saber si estamos esperando la respuesta de la API
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   // Función que se ejecuta al enviar el formulario
   const handleSubmit = async (e) => {
     // Evita que el formulario recargue la página por defecto
-    e.preventDefault()
+    e.preventDefault();
 
     // Limpiamos espacios al principio/final del texto buscado
-    const busquedaSuper = search.trim()
+    const busquedaSuper = search.trim();
 
     // Si el input está vacío, no hacemos nada
-    if (!busquedaSuper) return
+    if (!busquedaSuper) return;
 
     // Antes de llamar a la API: activamos "cargando",
     // limpiamos errores anteriores y el héroe anterior
-    setLoading(true)
-    setError(null)
-    setHero(null)
+    setLoading(true);
+    setError(null);
+    setHero(null);
 
     try {
       // Llamada a la API de superhéroes usando fetch
       const res = await fetch(
         `https://superheroapi.com/api.php/${token}/search/${busquedaSuper}`
-      )
+      );
 
       // Convertimos la respuesta a JSON
-      const data = await res.json()
+      const data = await res.json();
 
       // Comprobamos si la API ha devuelto un error o no hay resultados
-      if (data.response === 'error' || !data.results || data.results.length === 0) {
-        setError('No se ha encontrado ningún superhéroe con ese nombre.')
+      if (
+        data.response === "error" ||
+        !data.results ||
+        data.results.length === 0
+      ) {
+        setError("No se ha encontrado ningún superhéroe con ese nombre.");
       } else {
         // Intentamos buscar un héroe cuyo nombre coincida exactamente
         // (ignorando mayúsculas/minúsculas)
         const found =
           data.results.find(
-            (superH) => superH.name.toLowerCase() === busquedaSuper.toLowerCase()
-          ) || data.results[0] // si no, usamos el primer resultado
+            (superH) =>
+              superH.name.toLowerCase() === busquedaSuper.toLowerCase()
+          ) || data.results[0]; // si no, usamos el primer resultado
 
         // Guardamos el héroe encontrado en el estado
-        setHero(found)
+        setHero(found);
       }
     } catch (err) {
       // Si hay un error de red o algo falla en el fetch
-      setError('Error al conectar con la API.')
+      setError("Error al conectar con la API.");
     } finally {
       // En cualquier caso (éxito o error) quitamos el estado de "cargando"
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Dada una cadena (nombre del héroe), genera la URL del avatar de Dicebear
   // Usamos encodeURIComponent por si el nombre tiene espacios o caracteres especiales
   const getAvatarUrl = (name) => {
-    if (!name) return ''
-    return `https://api.dicebear.com/9.x/micah/svg?seed=${encodeURIComponent(name)}`
-  }
+    if (!name) return "";
+    return `https://api.dicebear.com/9.x/micah/svg?seed=${encodeURIComponent(
+      name
+    )}`;
+  };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-indigo-950 text-slate-100 flex flex-col items-center px-4 py-10">
@@ -126,7 +133,9 @@ function App() {
             <span className="absolute inset-0 bg-linear-to-r from-sky-500 via-indigo-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-screen" />
             <span className="relative flex items-center gap-1">
               <span>Buscar</span>
-              <span className="text-lg group-hover:translate-x-0.5 transition-transform">⚡</span>
+              <span className="text-lg group-hover:translate-x-0.5 transition-transform">
+                ⚡
+              </span>
             </span>
           </button>
         </form>
@@ -141,7 +150,9 @@ function App() {
                   role="status"
                   aria-label="Cargando"
                 />
-                <p className="text-slate-300">Buscando héroe en el multiverso...</p>
+                <p className="text-slate-300">
+                  Buscando héroe en el multiverso...
+                </p>
               </div>
 
               <div className="mt-4 rounded-3xl bg-white/5 p-4 shadow-2xl border border-white/10 backdrop-blur-lg animate-pulse">
@@ -195,7 +206,10 @@ function App() {
                       />
                     </div>
                     <span className="inline-flex items-center rounded-full border border-sky-400/40 bg-sky-500/10 px-3 py-0.5 text-[11px] font-medium tracking-wide text-sky-200/90">
-                      #{hero.id} • {hero.biography.alignment === 'good' ? 'Héroe' : 'Anti-héroe'}
+                      #{hero.id} •{" "}
+                      {hero.biography.alignment === "good"
+                        ? "Héroe"
+                        : "Anti-héroe"}
                     </span>
                   </div>
 
@@ -206,19 +220,25 @@ function App() {
                       <span className="text-lg">✨</span>
                     </h2>
                     <p className="text-sm text-slate-300">
-                      <span className="font-semibold text-sky-300">Nombre real:</span>{' '}
-                      {hero.biography['full-name'] || 'Desconocido'}
+                      <span className="font-semibold text-sky-300">
+                        Nombre real:
+                      </span>{" "}
+                      {hero.biography["full-name"] || "Desconocido"}
                     </p>
                     <p className="text-sm text-slate-300">
-                      <span className="font-semibold text-emerald-300">Publisher:</span>{' '}
-                      {hero.biography.publisher || 'Desconocido'}
+                      <span className="font-semibold text-emerald-300">
+                        Publisher:
+                      </span>{" "}
+                      {hero.biography.publisher || "Desconocido"}
                     </p>
                     <p className="text-sm text-slate-300">
-                      <span className="font-semibold text-fuchsia-300">Primera aparición:</span>{' '}
-                      {hero.biography['first-appearance'] || 'N/A'}
+                      <span className="font-semibold text-fuchsia-300">
+                        Primera aparición:
+                      </span>{" "}
+                      {hero.biography["first-appearance"] || "N/A"}
                     </p>
                     <p className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-400">
-                      {hero.biography['place-of-birth'] || 'Origen desconocido'}
+                      {hero.biography["place-of-birth"] || "Origen desconocido"}
                     </p>
                   </div>
                 </div>
@@ -232,12 +252,36 @@ function App() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                     {[
-                      ['Inteligencia', hero.powerstats.intelligence, 'from-sky-400/80 to-sky-500/60'],
-                      ['Fuerza', hero.powerstats.strength, 'from-amber-400/80 to-orange-500/70'],
-                      ['Velocidad', hero.powerstats.speed, 'from-emerald-400/80 to-teal-500/70'],
-                      ['Durabilidad', hero.powerstats.durability, 'from-fuchsia-400/80 to-pink-500/70'],
-                      ['Poder', hero.powerstats.power, 'from-indigo-400/80 to-purple-500/70'],
-                      ['Combate', hero.powerstats.combat, 'from-rose-400/80 to-red-500/70'],
+                      [
+                        "Inteligencia",
+                        hero.powerstats.intelligence,
+                        "from-sky-400/80 to-sky-500/60",
+                      ],
+                      [
+                        "Fuerza",
+                        hero.powerstats.strength,
+                        "from-amber-400/80 to-orange-500/70",
+                      ],
+                      [
+                        "Velocidad",
+                        hero.powerstats.speed,
+                        "from-emerald-400/80 to-teal-500/70",
+                      ],
+                      [
+                        "Durabilidad",
+                        hero.powerstats.durability,
+                        "from-fuchsia-400/80 to-pink-500/70",
+                      ],
+                      [
+                        "Poder",
+                        hero.powerstats.power,
+                        "from-indigo-400/80 to-purple-500/70",
+                      ],
+                      [
+                        "Combate",
+                        hero.powerstats.combat,
+                        "from-rose-400/80 to-red-500/70",
+                      ],
                     ].map(([label, value, gradient]) => (
                       // Card individual de cada stat con hover
                       <div
@@ -265,14 +309,16 @@ function App() {
           {/* Mensaje inicial cuando no hay héroe, error ni carga */}
           {!hero && !loading && !error && (
             <p className="mt-4 text-center text-sm text-slate-400">
-              Busca un nombre como <span className="text-sky-300 font-semibold">Batman</span> o{' '}
-              <span className="text-emerald-300 font-semibold">Spider-Man</span> para empezar.
+              Busca un nombre como{" "}
+              <span className="text-sky-300 font-semibold">Batman</span> o{" "}
+              <span className="text-emerald-300 font-semibold">Spider-Man</span>{" "}
+              para empezar.
             </p>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,5 +1,5 @@
 import { HardDrive } from "lucide-react";
-import { datosPromo, datosGrupo } from '../../datos'
+import { datosPromo, datosGrupo } from "../../datos";
 
 export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
   const handleSubmit = (e) => {
@@ -8,14 +8,14 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
     const formData = new FormData(e.target);
 
     const datosNuevo = {
-      nombre: (formData.get("nombre") || '').trim(),
-      apellido: (formData.get("apellido") || '').trim(),
-      promo: formData.get("promo") || '',
-      grupo: formData.get("grupo") || '',
-      foto: (formData.get("foto") || '').trim(),
+      nombre: (formData.get("nombre") || "").trim(),
+      apellido: (formData.get("apellido") || "").trim(),
+      promo: formData.get("promo") || "",
+      grupo: formData.get("grupo") || "",
+      foto: (formData.get("foto") || "").trim(),
     };
 
-    console.log('Guardando alumno (sin id):', datosNuevo);
+    console.log("Guardando alumno (sin id):", datosNuevo);
 
     // Calculamos id incremental basado en los anteriores (si no hay, se pone 1)
     setDatosAlumnos((prev) => {
@@ -23,18 +23,17 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
       const item = { ...datosNuevo, id: maxId + 1 };
       const next = [...prev, item];
       try {
-        localStorage.setItem('alumnos', JSON.stringify(next));
-        console.log('Guardado en localStorage:', next);
+        localStorage.setItem("alumnos", JSON.stringify(next));
+        console.log("Guardado en localStorage:", next);
       } catch (err) {
-        console.error('Error guardando alumnos en localStorage:', err);
+        console.error("Error guardando alumnos en localStorage:", err);
       }
       return next;
     });
 
     // Cerrar modal tras guardar
-    if (typeof onClose === 'function') onClose();
-      
-    };
+    if (typeof onClose === "function") onClose();
+  };
 
   /**
    * 
@@ -44,8 +43,6 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
     setDatos(nuevosDatos)       ///Los pone en el estado datos cambiando el puntero
    * 
   */
-  
-
 
   return (
     <div
@@ -81,7 +78,7 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
             ✕
           </button>
         </div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit} >
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <input
             name="nombre"
             type="text"
@@ -106,7 +103,9 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
           >
             <option value="">Selecciona promoción</option>
             {datosPromo.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
           </select>
 
@@ -118,7 +117,9 @@ export function FormularioAlumno({ onClose, setDatosAlumnos, datosAlumnos }) {
           >
             <option value="">Selecciona ciclo</option>
             {datosGrupo.map((g) => (
-              <option key={g} value={g}>{g}</option>
+              <option key={g} value={g}>
+                {g}
+              </option>
             ))}
           </select>
           <input

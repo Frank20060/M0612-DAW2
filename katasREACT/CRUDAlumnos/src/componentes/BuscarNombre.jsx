@@ -1,10 +1,6 @@
-
-export function BuscarNombre({nombre, bucarNombre}) {
+export function BuscarNombre({ nombre, bucarNombre }) {
   return (
-    <form
-      action="#"
-      className="w-full max-w-md"
-    >
+    <form action="#" className="w-full max-w-md">
       <label
         htmlFor="buscarNombre"
         className="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-300"
@@ -31,7 +27,9 @@ export function BuscarNombre({nombre, bucarNombre}) {
           </svg>
         </span>
 
-        <input onChange={bucarNombre} value={nombre}
+        <input
+          onChange={bucarNombre}
+          value={nombre}
           type="text"
           id="buscarNombre"
           placeholder="Buscar por nombre o apellido..."
@@ -39,5 +37,5 @@ export function BuscarNombre({nombre, bucarNombre}) {
         />
       </div>
     </form>
-  )
+  );
 }

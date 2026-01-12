@@ -8,8 +8,7 @@ export const datosAlumnosDB = [
     apellido: "Villar",
     promo: "24/25",
     grupo: "DAW",
-    foto:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6sW6rDX-kjIB0XnNI_GfEVfn0ezg4bGndw&s",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd6sW6rDX-kjIB0XnNI_GfEVfn0ezg4bGndw&s",
   },
   {
     id: 2,
@@ -25,8 +24,7 @@ export const datosAlumnosDB = [
     apellido: "Fernández",
     promo: "26/27",
     grupo: "DAW",
-    foto:
-      "",
+    foto: "",
   },
   {
     id: 4,
@@ -34,8 +32,7 @@ export const datosAlumnosDB = [
     apellido: "Santos",
     promo: "27/28",
     grupo: "SMX",
-    foto:
-      "",
+    foto: "",
   },
   {
     id: 5,
@@ -43,8 +40,7 @@ export const datosAlumnosDB = [
     apellido: "López",
     promo: "24/25",
     grupo: "SMX",
-    foto:
-      ""
+    foto: "",
   },
   {
     id: 6,
@@ -52,8 +48,7 @@ export const datosAlumnosDB = [
     apellido: "Ruiz",
     promo: "25/26",
     grupo: "DAW",
-    foto:
-      ""
+    foto: "",
   },
   {
     id: 7,
@@ -61,19 +56,17 @@ export const datosAlumnosDB = [
     apellido: "Navarro",
     promo: "26/27",
     grupo: "SMX",
-    foto:
-      ""
+    foto: "",
   },
 ];
 
-
-export const usersApp =[
+export const usersApp = [
   {
     nombre: "admin@gmail.com",
-    pas: "Admin"
+    pas: "Admin",
   },
   {
-    nombre:"user@gmail.com",
-    pas:"1234"
-  }
-]
+    nombre: "user@gmail.com",
+    pas: "1234",
+  },
+];
