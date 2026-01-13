@@ -7,17 +7,14 @@ import { datosAlumnosDB, datosGrupo, datosPromo } from "../datos";
 import { FormularioAlumno } from "./componentes/FormularioAlumno";
 import { Login } from "./componentes/Login";
 import { ButtonLogin } from "./componentes/ButtonLogin";
+import { Logout } from "./componentes/Logout";
 
 /*
-
 Copia de el array para que se refresque la app = 
 
 datos.push(contenido que quiero poner)    ///Ponemos en datos lo nuevo que queremos poner  
 nuevosDatos = {...datos}    ///Copia los datos  
 setDatos(nuevosDatos)       ///Los pone en el estado datos cambiando el puntero
-
-
-
 */
 
 export function App() {
@@ -31,9 +28,22 @@ export function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [Rol, setRol] = useState("invitado");
 
+  useEffect(() => {
+    const userLS = localStorage.getItem("user");
+    if (!userLS) {
+      console.log("No hay usuario en localStorage");
+    } else {
+      const user = JSON.parse(userLS);
+      console.log("Usuario en localStorage:", user);
+      setIsLoggedIn(true);
+      setRol(user.rol);
+    }
+  }, []); ///Solo al montar
+
+
   //Estado datos alumnos con localStorage
   if (isLoggedIn)()=>{
-    const userLS = localStorage.getItem("user");
+    
     console.log("Usuario en localStorage:", JSON.parse(userLS));
 
     const user = JSON.parse(userLS);
@@ -41,6 +51,14 @@ export function App() {
     console.log("Rol del usuario:", rol);
     
 
+  }
+
+  const logOut = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    setRol("invitado");
+    alert("Has cerrado sesión");
   }
 
 
@@ -161,9 +179,17 @@ export function App() {
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
         <header className="flex flex-row gap-2 justify-between">
           <div className="flex flex-col gap-2">
-            <h1 className="text-4xl font-extrabold tracking-tight">
-              Panel de alumnos
-            </h1>
+            { !isLoggedIn &&
+              <h1 className="text-4xl font-extrabold tracking-tight">
+                Panel de alumnos
+              </h1>
+              
+            }
+            { isLoggedIn &&
+              <h1 className="text-4xl font-extrabold tracking-tight">
+                Panel de alumnos -- {Rol.toLocaleUpperCase()}
+              </h1>
+            }
             <p className="text-sm text-slate-300">
               Filtra por promoción y revisa a tus panas.
             </p>
@@ -175,9 +201,9 @@ export function App() {
           }
           { //Si esta log muestra el rol
             isLoggedIn && (
-              <div className="flex flex-col items-end">
-                <p className="text-sm text-slate-300">Sesión iniciada como {Rol}</p>
-              </div>
+              
+              <Logout onClick={logOut}/>
+              
             )
           }
 
