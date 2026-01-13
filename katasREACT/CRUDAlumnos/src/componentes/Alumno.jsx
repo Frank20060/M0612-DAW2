@@ -1,5 +1,6 @@
 import { BtnEliminar } from "./BtnEliminar.jsx";
 import { BtnEditar } from "./BtnEditar.jsx";
+import { CornerDownLeft } from "lucide-react";
 
 export function Alumno({
   id,
@@ -44,7 +45,6 @@ export function Alumno({
       {/*Esto solo se deveria de ver cuando se esta con una cuenta de admin */}
       <div className="flex flex-row gap-3 mt-5">
         <BtnEliminar eliminar={eliminar} />
-        {/*Abre el modal de añadir pero con editar en vez de añadir*/}
         <BtnEditar editar={editar} />
       </div>
     </article>

@@ -28,12 +28,6 @@ export function App() {
   const [showCrear, setShowCrear] = useState(false);
   //Para abrir el modal de login
   const [showLogin, setShowLogin] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  //Estado para saber si es crear o editar
-  const [typeForm, setTypeForm] = useState("crear");
-  const[alumno, setAlumno] = useState(null);
-
 
   const [datosAlumnos, setDatosAlumnos] = useState(() => {
     const alumnosLS = localStorage.getItem("alumnos");
@@ -120,25 +114,6 @@ export function App() {
     });
   }
 
-  function editarAlumno(id) {
-    console.log("Editar alumno id:", id);
-    /*Se tiene que abrir el modal de editar con los datos del alumno y luego mandarlo y que se cree*/
-    setShowCrear(true);
-    
-    /*Poner los datos de el id de el alumno en el formulario*/
-    setAlumno(datosAlumnos.find((a) => a.id === id))
-    if (alumno) {
-      // Aquí puedes usar los datos del alumno para llenar el formulario
-      console.log("Datos del alumno:", alumno);
-    }
-    setTypeForm("editar");
-    console.log("Tipo de formulario:", typeForm);
-
-
-
-  }
-
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50 ">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
@@ -151,7 +126,7 @@ export function App() {
               Filtra por promoción y revisa a tus panas.
             </p>
           </div>
-          <ButtonLogin onClick={() => setShowLogin(true)}/>
+          <ButtonLogin onClick={() => setShowLogin(true)} />
         </header>
 
         <section className="flex flex-col gap-4 rounded-2xl bg-white/5 p-5 shadow-lg ring-1 ring-white/10 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-xl sm:flex-row sm:items-center sm:justify-between">
@@ -209,24 +184,19 @@ export function App() {
               datosAlumnos={datosFiltrados}
               onCreate={() => setShowCrear(true)}
               onDelete={eliminarAlumno}
-              onEdit={editarAlumno}
             />
           )}
         </section>
 
         <section className="flex flex-row gap-7">
-          {showLogin && <Login onClose={() => setShowLogin(false)} setIsLoggedIn={setIsLoggedIn} />}
+          {showLogin && <Login onClose={() => setShowLogin(false)} />}
         </section>
 
         {showCrear && (
           <FormularioAlumno
-            onClose={() => {
-              setShowCrear(false);
-              setTypeForm("crear"); //Como norma ponemos que cuando se cierre el modal vuelva a crear
-            }}
+            onClose={() => setShowCrear(false)}
             setDatosAlumnos={setDatosAlumnos}
-            datoAlumnoEditar={alumno}
-            typeForm={typeForm}
+            datosAlumnos={datosAlumnos}
           />
         )}
       </main>
