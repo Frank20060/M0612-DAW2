@@ -29,6 +29,23 @@ export function App() {
   //Para abrir el modal de login
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [Rol, setRol] = useState("invitado");
+
+  //Estado datos alumnos con localStorage
+  if (isLoggedIn)()=>{
+    const userLS = localStorage.getItem("user");
+    console.log("Usuario en localStorage:", JSON.parse(userLS));
+
+    const user = JSON.parse(userLS);
+    rol = user.rol;
+    console.log("Rol del usuario:", rol);
+    
+
+  }
+
+
+
+
 
   //Estado para saber si es crear o editar
   const [typeForm, setTypeForm] = useState("crear");
@@ -151,7 +168,19 @@ export function App() {
               Filtra por promoción y revisa a tus panas.
             </p>
           </div>
-          <ButtonLogin onClick={() => setShowLogin(true)}/>
+          { ///Si no esta log (invitado) muestra el boton de login
+            !isLoggedIn && (
+              <ButtonLogin onClick={() => setShowLogin(true)} />
+            )
+          }
+          { //Si esta log muestra el rol
+            isLoggedIn && (
+              <div className="flex flex-col items-end">
+                <p className="text-sm text-slate-300">Sesión iniciada como {Rol}</p>
+              </div>
+            )
+          }
+
         </header>
 
         <section className="flex flex-col gap-4 rounded-2xl bg-white/5 p-5 shadow-lg ring-1 ring-white/10 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-xl sm:flex-row sm:items-center sm:justify-between">
@@ -210,12 +239,13 @@ export function App() {
               onCreate={() => setShowCrear(true)}
               onDelete={eliminarAlumno}
               onEdit={editarAlumno}
+              Rol={Rol}
             />
           )}
         </section>
 
         <section className="flex flex-row gap-7">
-          {showLogin && <Login onClose={() => setShowLogin(false)} setIsLoggedIn={setIsLoggedIn} />}
+          {showLogin && <Login onClose={() => setShowLogin(false)} setIsLoggedIn={setIsLoggedIn} setRol={setRol} />}
         </section>
 
         {showCrear && (

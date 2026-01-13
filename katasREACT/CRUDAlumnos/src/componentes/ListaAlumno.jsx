@@ -4,7 +4,7 @@ import { ButtonCrear } from "./buttonCrear.jsx";
 
 //Para abrir el modal de crear / editar
 
-export function ListaAlumno({ datosAlumnos, onCreate, onDelete, onEdit }) {
+export function ListaAlumno({ datosAlumnos, onCreate, onDelete, onEdit, Rol }) {
   const getAvatarUrl = (name) =>
     `https://api.dicebear.com/9.x/big-smile/svg?seed=${name}`;
 
@@ -14,7 +14,7 @@ export function ListaAlumno({ datosAlumnos, onCreate, onDelete, onEdit }) {
         <h3 className="text-lg font-semibold text-slate-100">
           Alumnos ({datosAlumnos.length})
         </h3>
-        <ButtonCrear onClick={onCreate} />
+        {Rol === "admin" && <ButtonCrear onClick={onCreate} />}
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -28,6 +28,7 @@ export function ListaAlumno({ datosAlumnos, onCreate, onDelete, onEdit }) {
             grupo={alumno.grupo}
             onEliminar={() => onDelete(alumno.id)}
             onEditar={() => onEdit(alumno.id)}
+            Rol={Rol}
           >
             <Avatar
               key={"avatarAlumno" + index}

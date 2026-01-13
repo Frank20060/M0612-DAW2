@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usersApp } from "../../datos";
 
-export function Login({ onClose, setIsLoggedIn }) {
+export function Login({ onClose, setIsLoggedIn,setRol }){
   //Estados login
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
@@ -13,17 +13,27 @@ export function Login({ onClose, setIsLoggedIn }) {
     const password = formData.get("password");
 
     console.log("Usuario:", username, "Contraseña:", password);
+    let user = null;
+    usersApp.forEach((u) => {
+      if (u.nombre === username && u.pas === password) {
+        user = u; // Guardamos el usuario que coincide
+      }
+    });
 
-    const user = usersApp.find(
-      (u) => u.nombre === username && u.pas === password //comprobar credenciales
-    );
 
     if (user) { //Si el usuario existe
       setIsLoggedIn(true);
       alert("Login exitoso");
+
+
+      /*Local storage por si acaso*/
+      localStorage.setItem("user", JSON.stringify(user));
+      setRol(user.rol);
+
     } else {
       alert("Usuario o contraseña incorrectos");
     }
+    onClose();
   };
 
   return (

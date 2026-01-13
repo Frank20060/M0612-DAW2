@@ -10,6 +10,7 @@ export function Alumno({
   children,
   onEliminar,
   onEditar,
+  Rol
 } = props) {
   function eliminar() {
     if (typeof onEliminar === "function") {
@@ -42,11 +43,14 @@ export function Alumno({
       </div>
 
       {/*Esto solo se deveria de ver cuando se esta con una cuenta de admin */}
-      <div className="flex flex-row gap-3 mt-5">
+      { Rol === "admin" &&
+
+        <div className="flex flex-row gap-3 mt-5">
         <BtnEliminar eliminar={eliminar} />
         {/*Abre el modal de añadir pero con editar en vez de añadir*/}
         <BtnEditar editar={editar} />
       </div>
+      }
     </article>
   );
 }

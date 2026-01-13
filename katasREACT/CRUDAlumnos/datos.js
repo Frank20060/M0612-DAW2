@@ -64,9 +64,11 @@ export const usersApp = [
   {
     nombre: "admin@gmail.com",
     pas: "Admin",
+    rol: "admin",
   },
   {
     nombre: "user@gmail.com",
     pas: "1234",
+    rol: "user",
   },
 ];
