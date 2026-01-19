@@ -169,11 +169,7 @@ export function App() {
     setTypeForm("editar");
     console.log("Tipo de formulario:", typeForm);
 
-
-
   }
-
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50 ">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">

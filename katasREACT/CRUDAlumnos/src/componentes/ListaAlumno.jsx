@@ -1,6 +1,6 @@
 import { Alumno } from "./Alumno.jsx";
 import { Avatar } from "./Avatar.jsx";
-import { ButtonCrear } from "./buttonCrear.jsx";
+import { ButtonCrear } from "./ButtonCrear.jsx";
 
 //Para abrir el modal de crear / editar
 
