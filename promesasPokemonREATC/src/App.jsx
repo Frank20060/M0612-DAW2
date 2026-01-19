@@ -117,14 +117,34 @@ function App() {
 
   function button2Click() {
     // Lógica para el botón 2 --- Async/await
+    console.clear();
+    setPokemons([]);
     console.log("Botón 2 clickeado");
+    const startTime = performance.now();
+    const fetchPokemon = async (id) => {
+      const response = await fetch(urlApi + id);
+      const pokemons = await response.json();
+      console.log(pokemons);
+      setPokemons((prev) => [...prev, pokemons]);
+      
+      if (id < 12) { // Recursividad/Bucle (hasta que llegue a 12 se va llamando a si mima)
+        fetchPokemon(id + 1);
+      } else { //Cuando acaba hace lo de el tiepo
+        const endTime = performance.now();
+        const elapsedTime = Math.round(endTime - startTime);
+        console.log(`Tiempo transcurrido: ${elapsedTime} ms`);
+        setTime2(elapsedTime);
+      }
+    };
+    fetchPokemon(1);
   }
 
   function button3Click() {
     // Lógica para el botón 3 --- Promise.All
+    console.clear();
     console.log("Botón 3 clickeado");
+    
   }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white p-8">
       <div className="max-w-6xl mx-auto">
