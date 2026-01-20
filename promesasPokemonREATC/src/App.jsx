@@ -134,7 +134,7 @@ function App() {
       console.log(pokemons);
       setPokemons((prev) => [...prev, pokemons]);
 
-      if (id < 1025) {
+      if (id < 12) {
         // Recursividad/Bucle (hasta que llegue a 12 se va llamando a si mima)
         fetchPokemon(id + 1);
       } else {
@@ -157,7 +157,7 @@ function App() {
     console.log("Botón 3 clickeado");
     const startTime = performance.now();
     const fetchPromises = [];
-    for (let i = 1; i <= 1025; i++) {
+    for (let i = 1; i <= 12; i++) {
       fetchPromises.push(fetch(urlApi + i).then((response) => response.json()));
     }
     Promise.all(fetchPromises)
