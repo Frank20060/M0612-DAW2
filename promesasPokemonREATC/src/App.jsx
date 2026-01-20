@@ -8,7 +8,9 @@ function App() {
   const [time1, setTime1] = useState(0);
   const [time2, setTime2] = useState(0);
   const [time3, setTime3] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   function button1Click() {
+    setIsLoading(true);
     setPokemons([]);
     // Lógica para el botón 1 --- .then/.catch/.finally
     console.clear();
@@ -100,6 +102,7 @@ function App() {
                                                       `Tiempo transcurrido: ${elapsedTime} ms`,
                                                     );
                                                     setTime1(elapsedTime);
+                                                    setIsLoading(false);
                                                   });
                                               });
                                           });
@@ -112,11 +115,15 @@ function App() {
               });
           });
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
   }
 
   function button2Click() {
     // Lógica para el botón 2 --- Async/await
+    setIsLoading(true);
     console.clear();
     setPokemons([]);
     console.log("Botón 2 clickeado");
@@ -126,14 +133,17 @@ function App() {
       const pokemons = await response.json();
       console.log(pokemons);
       setPokemons((prev) => [...prev, pokemons]);
-      
-      if (id < 12) { // Recursividad/Bucle (hasta que llegue a 12 se va llamando a si mima)
+
+      if (id < 1025) {
+        // Recursividad/Bucle (hasta que llegue a 12 se va llamando a si mima)
         fetchPokemon(id + 1);
-      } else { //Cuando acaba hace lo de el tiepo
+      } else {
+        //Cuando acaba hace lo de el tiepo
         const endTime = performance.now();
         const elapsedTime = Math.round(endTime - startTime);
         console.log(`Tiempo transcurrido: ${elapsedTime} ms`);
         setTime2(elapsedTime);
+        setIsLoading(false);
       }
     };
     fetchPokemon(1);
@@ -141,16 +151,38 @@ function App() {
 
   function button3Click() {
     // Lógica para el botón 3 --- Promise.All
+    setIsLoading(true);
     console.clear();
+    setPokemons([]);
     console.log("Botón 3 clickeado");
-    
+    const startTime = performance.now();
+    const fetchPromises = [];
+    for (let i = 1; i <= 1025; i++) {
+      fetchPromises.push(fetch(urlApi + i).then((response) => response.json()));
+    }
+    Promise.all(fetchPromises)
+      .then((results) => {
+        results.forEach((pokemon) => {
+          console.log(pokemon);
+        });
+        setPokemons(results);
+        const endTime = performance.now();
+        const elapsedTime = Math.round(endTime - startTime);
+        console.log(`Tiempo transcurrido: ${elapsedTime} ms`);
+        setTime3(elapsedTime);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white p-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-black text-white p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-6xl font-black mb-2 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent drop-shadow-lg">
+          <h1 className="text-6xl font-black mb-2 bg-linear-to-r from-red-500 to-red-600 bg-clip-text text-transparent drop-shadow-lg">
             ⚡ PokePromesas ⚡
           </h1>
           <p className="text-lg text-gray-300">
@@ -165,6 +197,7 @@ function App() {
           time1={time1}
           time2={time2}
           time3={time3}
+          isLoading={isLoading}
         />
         {/* Contenedor de cartas */}
         <DivCards pokemons={pokemons} />

@@ -37,7 +37,7 @@ export function DivCards({ pokemons }) {
       border: "hover:border-purple-500",
     },
     ground: {
-      gradient: "from-amber-800 to-yellow-700",
+      gradient: "from-amber-600 to-yellow-700",
       hover: "hover:shadow-amber-500/50",
       border: "hover:border-amber-500",
     },
@@ -57,12 +57,12 @@ export function DivCards({ pokemons }) {
       border: "hover:border-lime-500",
     },
     rock: {
-      gradient: "from-gray-700 to-stone-600",
+      gradient: "from-amber-900 to-stone-600",
       hover: "hover:shadow-stone-500/50",
       border: "hover:border-stone-500",
     },
     ghost: {
-      gradient: "from-indigo-700 to-purple-600",
+      gradient: "from-indigo-400 to-purple-500",
       hover: "hover:shadow-indigo-500/50",
       border: "hover:border-indigo-500",
     },
@@ -92,7 +92,7 @@ export function DivCards({ pokemons }) {
     const primaryType = pokemon.types[0]?.type?.name?.toLowerCase() || "normal";
     return (
       typeColorMap[primaryType] || {
-        gradient: "from-slate-700 to-slate-600",
+        gradient: "from-slate-400 to-slate-500",
         hover: "hover:shadow-gray-500/50",
         border: "hover:border-gray-500",
       }
@@ -108,20 +108,20 @@ export function DivCards({ pokemons }) {
 
       {pokemons.map((pokemon) => {
         const colors = getTypeColor(pokemon);
-        const isShiny = Math.random() < 0.01; // 1% de probabilidad de ser shiny
+        const isShiny = Math.random() < 1; // 1% de probabilidad de ser shiny
         const spriteUrl =
-          isShiny && pokemon.sprites.back_shiny
+          isShiny && pokemon.sprites.front_shiny
             ? pokemon.sprites.front_shiny
             : pokemon.sprites.front_default;
 
         return (
           <div
             key={pokemon.id}
-            className={`group bg-gradient-to-br ${colors.gradient} backdrop-blur-xl rounded-lg shadow-lg p-3 flex flex-col items-center ${colors.hover} hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 border border-slate-700 ${colors.border}`}
+            className={`group bg-linear-to-br ${colors.gradient} backdrop-blur-xl rounded-lg shadow-lg p-3 flex flex-col items-center ${colors.hover} hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 border border-slate-700 ${colors.border}`}
           >
             {/* Fondo decorativo */}
             <div
-              className="absolute inset-0 bg-gradient-to-tr opacity-0 group-hover:opacity-100 transition-opacity rounded-lg duration-300"
+              className="absolute inset-0 bg-linear-to-tr opacity-0 group-hover:opacity-100 transition-opacity rounded-lg duration-300"
               style={{
                 backgroundImage: `linear-gradient(to top right, ${colors.gradient.includes("red") ? "rgba(239, 68, 68, 0.15)" : "rgba(59, 130, 246, 0.15)"}, transparent)`,
               }}
@@ -138,7 +138,7 @@ export function DivCards({ pokemons }) {
               </div>
 
               {/* Nombre */}
-              <h2 className="text-lg font-black mb-2 capitalize text-white drop-shadow-xl [text-shadow:_0_2px_8px_rgba(0,0,0,0.8)]">
+              <h2 className="text-lg font-black mb-2 capitalize text-white drop-shadow-xl [text-shadow:0_2px_8px_rgba(0,0,0,0.8)]">
                 {isShiny && <span className="text-yellow-300">⭐ </span>}
                 {pokemon.name}
               </h2>
