@@ -108,7 +108,7 @@ export function DivCards({ pokemons }) {
 
       {pokemons.map((pokemon) => {
         const colors = getTypeColor(pokemon);
-        const isShiny = Math.random() < 1; // 1% de probabilidad de ser shiny
+        const isShiny = Math.random() < 0.01; // 1% de probabilidad de ser shiny
         const spriteUrl =
           isShiny && pokemon.sprites.front_shiny
             ? pokemon.sprites.front_shiny
