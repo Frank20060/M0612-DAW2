@@ -64,7 +64,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -79,7 +79,7 @@ export function App() {
           <div className="inline-block mb-4">
             <span className="text-5xl">🌤️</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-3 bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-400">
             El Tiempo en España
           </h1>
           <p className="text-white/60 text-lg">

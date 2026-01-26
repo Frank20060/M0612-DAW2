@@ -3,7 +3,7 @@ export function BotonBuscar({ buscarTiempo, isLoading }) {
     <button
       onClick={buscarTiempo}
       disabled={isLoading}
-      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-cyan-500/50 transition duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+      className="w-full bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-cyan-500/50 transition duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
     >
       {isLoading ? (
         <>

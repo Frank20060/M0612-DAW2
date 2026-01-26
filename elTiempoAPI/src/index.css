@@ -37,28 +37,6 @@
     animation-delay: 4s;
   }
 
-  /* Estilos base */
-  * {
-    @apply antialiased;
-  }
-
-  body {
-    @apply bg-slate-900;
-  }
-
-  /* Scrollbar personalizada */
-  ::-webkit-scrollbar {
-    @apply w-2;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-cyan-500/40 rounded-full hover:bg-cyan-500/60;
-  }
-
   .animate-in {
     animation: fadeIn 0.5s ease-out forwards;
   }

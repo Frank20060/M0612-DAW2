@@ -14,7 +14,7 @@ export function PantallaClima({ tiempo }) {
   return (
     <div className="space-y-6 mt-8 animate-in fade-in duration-500">
       {/* Header Principal */}
-      <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
+      <div className="bg-linear-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h2 className="text-4xl font-bold text-white mb-2">

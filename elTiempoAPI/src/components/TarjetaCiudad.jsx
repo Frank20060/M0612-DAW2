@@ -11,7 +11,7 @@ export function TarjetaCiudad({ ciudad }) {
   };
 
   return (
-    <div className="group bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:border-cyan-400/50 transition duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
+    <div className="group bg-linear-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:border-cyan-400/50 transition duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-white font-bold text-xl mb-1">{ciudad.name}</h3>
