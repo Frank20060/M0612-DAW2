@@ -1,0 +1,124 @@
+Cosas que tengo que ir haciendo (estado actual del proyecto)
+
+Resumen: este documento registra lo implementado y lo pendiente en el proyecto **CRUDAlumnos**.
+
+1. Formulario Añadir/Editar (Estado)
+- Implementado: Modo creación ✅ (añade alumno y persiste en localStorage inmediatamente).
+- Implementado: Inputs con `name` correctos (nombre, apellido, `promo` select, `grupo` select, `foto`) ✅
+- Implementado: `promo` y `grupo` usan `datosPromo` / `datosGrupo` para generar las opciones ✅
+- Validación básica: campos `required` en inputs/selects ✅
+- Cerrar modal al guardar (onClose) ✅
+- Pendiente: Modo edición (prellenado + actualizar registro existente) ❌
+
+2. Guardado y persistencia
+- Carga desde localStorage con validación y fallback a `datosAlumnosDB` ✅
+- Guardado inmediato en localStorage al crear (también guardamos desde `setDatosAlumnos`) ✅
+- Añadido `hasLoaded` para evitar que el primer render sobrescriba datos ✅
+- Pendiente: extraer lógica de localStorage a `alumnosService` (recomendado) ❌
+
+3. Listado / tarjetas
+- `ListaAlumno` muestra tarjetas (cards) con datos filtrados ✅
+- Si `foto` está vacío usamos Dicebear (`getAvatarUrl`) para generar avatar ✅
+- Añadidos controles visuales en cada tarjeta (zona `controls`) y componentes `BtnEditar` / `BtnEliminar` ✅
+- Pendiente: conectar `BtnEliminar` para eliminar alumno y persistir; `BtnEditar` para abrir formulario en modo edición ❌
+
+4. Filtrado / UI
+- Filtros por promoción, grupo y búsqueda por nombre implementados ✅
+- Mensaje cuando no hay resultados: "No hay alumnos que coincidan con los filtros." ✅
+
+5. Autenticación / Login
+- Componente `Login` y `ButtonLogin` presentes y muestran modal ✅
+- Pendiente: validar credenciales, gestionar estado `isAdmin` / `loggedIn` y persistir en localStorage ❌
+
+6. Pequeñas correcciones y mejoras realizadas
+- SVG: convertidos `stroke-width` → `strokeWidth`, `class` → `className` para compatibilidad JSX ✅
+- `ButtonCrear` y otros componentes arreglados para JSX y Tailwind ✅
+- `FormularioAlumno` ahora normaliza (trim) valores y evita `null` al guardar ✅
+
+7. Tareas recomendadas / siguientes pasos
+- Implementar `editarAlumno` (abrir modal prellenado, actualizar item y persistir).
+- Implementar `eliminarAlumno` con confirmación y persistencia.
+- Extraer la lógica de localStorage a `alumnosService` (getAll/saveAll/create/update/delete).
+- Implementar autenticación real (login, isAdmin) y mostrar controles solo a admins.
+- Mejorar validación del formulario (errores inline) y UX (focus, scroll a nuevo elemento).
+- Añadir tests básicos y mejorar accesibilidad (aria-labels, roles, teclado).
+
+---
+
+
+
+
+
+Se pueden eliminar los alumnos del local storage con su boton (hay que poner que cuando sea el usuario rol user que no se vean, con un display none mismo)
+
+
+
+
+
+
+
+Notas: este archivo se mantendrá como checklist del progreso. Si quieres, aplico ahora alguna de las tareas pendientes (editar, eliminar o mover LS a servicio).
+1.---Formulario Añadir/Editar:----
+
+---
+    VA    Mode crear: Afegeix un nou alumne a la base de dades
+Mode editar: Modifica les dades d’un alumne existent
+Validació dels camps obligatoris
+Botó per cancel·lar l’acció
+
+----
+Props (cosas que entran desde app):
+alumno: Objecte amb les dades de l’alumne (per mode edició, null per mode creació)
+onSubmit: Funció callback que s’executa en enviar el formulari  (al igual la meto en el form)
+onCancel: Funció callback que s’executa en cancel·lar (al igual la meto en el form)
+
+
+2.---LogIn----  (va con email de usuario)
+
+----
+
+Validar credencials (pots definir un usuari admin per defecte)
+Identificar si l’usuari és administrador
+Guardar l’estat d’autenticació en localStorage
+
+---
+
+onLogin: Funció callback que s’executa quan l’usuari s’autentica correctament
+
+
+3.----info Admin (opcional)----
+
+
+Component que mostra informació sobre l’estat d’autenticació
+Ha de mostrar si l’usuari està logueat com a administrador o no
+Ha de permetre fer logout   
+
+
+4. -----Apppppppppp (Cosas que hay que darle)----
+
+
+----- Gestió d’autenticació:
+    Carregar l’estat d’autenticació des de localStorage en muntar el component
+    Gestionar l’estat esAdmin (boolean)
+    Gestionar l’estat usuarioLogueado (boolean)
+    Persistir l’estat d’autenticació en localStorage quan canvia
+----- Funcions CRUD:
+    crearAlumno: Afegeix un nou alumne a la llista -----VA
+    editarAlumno: Modifica les dades d’un alumne existent
+    eliminarAlumno: Elimina un alumne de la llista
+----- Gestió del formulari:
+    Estat per controlar si el formulari està obert
+    Estat per controlar quin alumne s’està editant (o null si es crea un nou alumne)
+    Funció per obrir el formulari en mode crear
+    Funció per obrir el formulari en mode editar
+    Funció per tancar el formulari
+
+
+5.-----alumnosService------ (Lo q controla la info de el localStorage)          Ns, lo de crear lo he hecho en el formulario
+export const alumnosService = {
+  getAll: () => { /* carregar des de localStorage */ },
+  saveAll: (alumnos) => { /* guardar a localStorage */ },
+  create: (alumno) => { /* crear i persistir */ },
+  update: (id, datos) => { /* actualitzar i persistir */ },
+  delete: (id) => { /* eliminar i persistir */ }
+};
