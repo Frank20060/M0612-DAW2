@@ -100,8 +100,8 @@ export const estaLogueado = () => {
 
 //Tengo que cambiar los nombres de los apartados de elll json una vez esten en el local porque en la db tienen otros nombres
 
-/**
- * Ejemplo BD
+/*
+Ejemplo BD
 {
   "_id": {
     "$oid": "6978f3ae12526debe994cb8f"
@@ -131,4 +131,9 @@ ejemplo de lo que tengo yo
 }
 
 o cambio la db o cambio mi codigo, o lo pongo desde codigo
- */
+
+
+Hay que ponerlos en el datosAlumnos con setDatosAlumnos
+
+
+*/
