@@ -18,8 +18,8 @@ GET {{baseUrl}}/
 ### Obtener todos los alumnos
 GET {{baseUrl}}/api/alumnos
 
-### Obtener alumno por ID (reemplaza :id con un ID real) 507f1f77bcf86cd799439011
-GET {{baseUrl}}/api/alumnos/6978f3b912526debe994cb95
+### Obtener alumno por ID (reemplaza :id con un ID real)
+GET {{baseUrl}}/api/alumnos/507f1f77bcf86cd799439011
 
 ### Buscar alumnos por nombre o apellidos
 GET {{baseUrl}}/api/alumnos/buscar?q=Juan
@@ -47,13 +47,13 @@ Content-Type: {{contentType}}
 ### ============================================
 
 ### Actualizar alumno (reemplaza :id con un ID real)
-PUT {{baseUrl}}/api/alumnos/6978f3b912526debe994cb95
+PUT {{baseUrl}}/api/alumnos/507f1f77bcf86cd799439011
 Content-Type: {{contentType}}
 
 {
   "nombre": "Juan Carlos",
   "apellidos": "Pérez García",
-  "promocion": "2023",
+  "promocion": "2024",
   "ciclo": "DAW",
   "urlImagen": "https://i.pravatar.cc/150?img=2"
 }

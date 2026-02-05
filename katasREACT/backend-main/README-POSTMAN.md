@@ -31,11 +31,11 @@ La colección usa la variable `base_url` que puedes modificar en:
 
 ```json
 {
-  "nombre": "Juan",
-  "apellidos": "Pérez García",
-  "promocion": "2024",
-  "ciclo": "DAW",
-  "urlImagen": "https://via.placeholder.com/150"
+	"nombre": "Juan",
+	"apellidos": "Pérez García",
+	"promocion": "2024",
+	"ciclo": "DAW",
+	"urlImagen": "https://via.placeholder.com/150"
 }
 ```
 
@@ -95,14 +95,14 @@ El servidor debería estar disponible en `http://localhost:3000` (o el puerto co
 
 ```json
 {
-  "_id": "...",
-  "nombre": "Juan",
-  "apellidos": "Pérez García",
-  "promocion": "2024",
-  "ciclo": "DAW",
-  "urlImagen": "https://via.placeholder.com/150",
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "updatedAt": "2024-01-01T00:00:00.000Z"
+	"_id": "...",
+	"nombre": "Juan",
+	"apellidos": "Pérez García",
+	"promocion": "2024",
+	"ciclo": "DAW",
+	"urlImagen": "https://via.placeholder.com/150",
+	"createdAt": "2024-01-01T00:00:00.000Z",
+	"updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
 
@@ -110,7 +110,7 @@ El servidor debería estar disponible en `http://localhost:3000` (o el puerto co
 
 ```json
 {
-  "error": "Mensaje de error descriptivo"
+	"error": "Mensaje de error descriptivo"
 }
 ```
 

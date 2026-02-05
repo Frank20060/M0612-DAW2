@@ -101,28 +101,10 @@ export const estaLogueado = () => {
 //Tengo que cambiar los nombres de los apartados de elll json una vez esten en el local porque en la db tienen otros nombres
 
 /*
-Ejemplo BD
-{
-  "_id": {
-    "$oid": "6978f3ae12526debe994cb8f"
-  },
-  "nombre": "Ana",
-  "apellidos": "Sánchez Torres",
-  "promocion": "2023/2024",
-  "ciclo": "IEA",
-  "urlImagen": "",
-  "createdAt": {
-    "$date": "2026-01-27T17:19:42.570Z"
-  },
-  "updatedAt": {
-    "$date": "2026-01-27T17:19:42.570Z"
-  },
-  "__v": 0
-}
 
-ejemplo de lo que tengo yo 
+ejemplo de lo que tengo yo (Asi sa quedao)
 {
-  id: 3,
+  id: 6978f3ae12526debe994cb8f,
   nombre: "Lucía",
   apellido: "Fernández",
   promo: "26/27",
@@ -137,3 +119,15 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
 
 
 */
+
+//Get alumnos 
+
+export async function getAlumnosApi(){
+  try{
+    let res = await fetch("http://localhost:3000/api/alumnos") 
+    const datos = await res.json();
+    return datos
+  }catch{
+    console.log(("Error al cargar los alumnos"))
+  }
+}
