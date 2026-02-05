@@ -122,6 +122,18 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
 
 //Get alumnos
 
+
+/*
+    const res = await fetch("http://localhost:3000/api/alumnos", {
+      method: "POST", // esto indica que es POST
+      headers: {
+        "Content-Type": "application/json" // le decimos que enviamos JSON
+      },
+      body: JSON.stringify(nuevoAlumno) // los datos que queremos mandar
+    });
+ */
+
+
 export async function getAlumnosApi() {
   try {
     let res = await fetch("http://localhost:3000/api/alumnos");
@@ -147,3 +159,38 @@ export async function eliminarAlumnoBD(id) {
     console.log("Error al cargar los alumnos");
   }
 }
+
+export async function editarAlumnoBD(id, datosActu) {
+  try {
+    console.log(`http://localhost:3000/api/alumnos/${id}`)
+    let res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+      method: "PUT", 
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(datosActu)
+    });
+    const datos = await res.json();
+    return datos;
+  } catch {
+    console.log("Error al cargar los alumnos");
+  }
+}
+//crear alumnos
+export async function crearAlumnoBD(datosCrear) {
+  try {
+    console.log(`http://localhost:3000/api/alumnos`)
+    let res = await fetch(`http://localhost:3000/api/alumnos`, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(datosCrear)
+    });
+    const datos = await res.json();
+    return datos;
+  } catch {
+    console.log("Error al cargar los alumnos");
+  }
+}
+

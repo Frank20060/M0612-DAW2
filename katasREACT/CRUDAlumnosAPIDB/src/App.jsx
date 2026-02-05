@@ -16,6 +16,8 @@ import {
   cerrarSesionLS,
   getAlumnosApi,
   eliminarAlumnoBD,
+  editarAlumnoBD,
+  crearAlumnoBD
 } from "./service/funciones";
 
 export function App() {
@@ -87,7 +89,7 @@ export function App() {
     }
   };
 
-  //Eliminar el
+  //Eliminar alumno
 
   async function eliminarAlumnoApi(id) {
     const quiereEliminar = window.confirm(
@@ -101,7 +103,23 @@ export function App() {
     }
   }
 
+  //Editar alumno
+
+  async function EditarAlumnoApi(id, datosActualizados) {
+    
+    await editarAlumnoBD(id, datosActualizados);
+    cargarAlumnosApi();
   
+  }
+
+  async function crearAlumnoApi(datosActualizados) {
+    
+    await crearAlumnoBD(datosActualizados);
+    cargarAlumnosApi();
+  
+  }
+
+
 
 
   
@@ -231,9 +249,10 @@ export function App() {
               setShowCrear(false);
               setTypeForm("crear");
             }}
-            setDatosAlumnos={setDatosAlumnos}
             datoAlumnoEditar={alumno}
             typeForm={typeForm}
+            onEdit={EditarAlumnoApi}
+            onCreate={crearAlumnoApi}
           />
         )}
       </main>
