@@ -120,14 +120,30 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
 
 */
 
-//Get alumnos 
+//Get alumnos
 
-export async function getAlumnosApi(){
-  try{
-    let res = await fetch("http://localhost:3000/api/alumnos") 
+export async function getAlumnosApi() {
+  try {
+    let res = await fetch("http://localhost:3000/api/alumnos");
     const datos = await res.json();
-    return datos
-  }catch{
-    console.log(("Error al cargar los alumnos"))
+    return datos;
+  } catch {
+    console.log("Error al cargar los alumnos");
+  }
+}
+//Delete alumnos
+export async function eliminarAlumnoBD(id) {
+  try {
+    console.log(`http://localhost:3000/api/alumnos/${id}`)
+    let res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+      method: "DELETE", 
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const datos = await res.json();
+    return datos;
+  } catch {
+    console.log("Error al cargar los alumnos");
   }
 }

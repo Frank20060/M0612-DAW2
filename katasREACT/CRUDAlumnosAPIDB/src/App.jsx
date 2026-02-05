@@ -9,16 +9,16 @@ import { Login } from "./componentes/Login";
 import { ButtonLogin } from "./componentes/ButtonLogin";
 import { Logout } from "./componentes/Logout";
 import {
-  cargarAlumnos,      // XXXXXX local storage
-  guardarAlumnos,     // XXXXXX local storage
-  eliminarAlumnoLS,   // XXXXXX local storage
+  cargarAlumnos, // XXXXXX local storage
+  guardarAlumnos, // XXXXXX local storage
+  eliminarAlumnoLS, // XXXXXX local storage
   cargarUsuario,
   cerrarSesionLS,
-  getAlumnosApi
+  getAlumnosApi,
+  eliminarAlumnoBD,
 } from "./service/funciones";
 
 export function App() {
-
   // estados de filtros
   const [promocion, setPromocion] = useState("Todos");
   const [grupo, setGrupo] = useState("Todos");
@@ -40,6 +40,8 @@ export function App() {
   const [datosAlumnos, setDatosAlumnos] = useState([]);
   const [loadingAlumnos, setLoadingAlumnos] = useState(true);
 
+  const [tipoCRUD, setTipoCRUD] = useState(true); //true = API, False = no APi  (mas facil)
+
   // cargar usuario desde localStorage
   useEffect(() => {
     const user = cargarUsuario();
@@ -57,31 +59,52 @@ export function App() {
     alert("Has cerrado sesión");
   };
 
-  // cargar alumnos desde API
+  ////apiiiiii
+
+  // cargar alumnos desde API al empezar
   useEffect(() => {
-    const cargarAlumnosApi = async () => {
-      try {
-        const datos = await getAlumnosApi();
-
-        const alumnosFormateados = datos.map(a => ({
-          id: a._id ?? a.id,
-          nombre: a.nombre,
-          apellido: a.apellido,
-          promo: a.promo,
-          grupo: a.grupo,
-          foto: a.foto || ""
-        }));
-
-        setDatosAlumnos(alumnosFormateados);
-      } catch (error) {
-        console.error("Error cargando alumnos", error);
-      } finally {
-        setLoadingAlumnos(false);
-      }
-    };
-
     cargarAlumnosApi();
   }, []);
+  //Carga los datos de la api
+  const cargarAlumnosApi = async () => {
+    try {
+      const datos = await getAlumnosApi();
+
+      const alumnosFormateados = datos.map((a) => ({
+        id: a._id ?? a.id,
+        nombre: a.nombre,
+        apellido: a.apellido,
+        promo: a.promo,
+        grupo: a.grupo,
+        foto: a.foto || "",
+      }));
+
+      setDatosAlumnos(alumnosFormateados);
+    } catch (error) {
+      console.error("Error cargando alumnos", error);
+    } finally {
+      setLoadingAlumnos(false);
+    }
+  };
+
+  //Eliminar el
+
+  async function eliminarAlumnoApi(id) {
+    const quiereEliminar = window.confirm(
+      "¿Seguro que quieres eliminar este alumno?",
+    )
+    if (quiereEliminar) {
+      await eliminarAlumnoBD(id);
+      cargarAlumnosApi();
+    } else {
+      console.log("Eliminación cancelada");
+    }
+  }
+
+  
+
+
+  
 
   // guardar alumnos en localStorage (desactivado)
   // useEffect(() => {
@@ -146,7 +169,6 @@ export function App() {
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-50 ">
       <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
-
         {/* HEADER */}
         <header className="flex flex-row gap-2 justify-between">
           <div className="flex flex-col gap-2">
@@ -187,7 +209,7 @@ export function App() {
             <ListaAlumno
               datosAlumnos={datosFiltrados}
               onCreate={() => setShowCrear(true)}
-              onDelete={eliminarAlumno}
+              onDelete={tipoCRUD ? eliminarAlumnoApi : eliminarAlumno}
               onEdit={editarAlumno}
               Rol={Rol}
             />
@@ -214,7 +236,6 @@ export function App() {
             typeForm={typeForm}
           />
         )}
-
       </main>
     </div>
   );
