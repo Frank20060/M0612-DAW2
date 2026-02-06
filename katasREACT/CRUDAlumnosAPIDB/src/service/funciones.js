@@ -134,7 +134,7 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
  */
 export async function getAlumnosApi() {
   try {
-    const res = await fetch("http://localhost:3000/api/alumnos");
+    const res = await fetch("https://m0612-backend-alumnos.vercel.app/");
     const datos = await res.json();
 
     return datos.map(alumno => ({
