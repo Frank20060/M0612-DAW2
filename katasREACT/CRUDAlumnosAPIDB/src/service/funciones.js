@@ -160,6 +160,7 @@ export async function eliminarAlumnoBD(id) {
   }
 }
 
+
 export async function editarAlumnoBD(id, datosActu) {
   try {
     console.log(`http://localhost:3000/api/alumnos/${id}`)
@@ -176,6 +177,8 @@ export async function editarAlumnoBD(id, datosActu) {
     console.log("Error al cargar los alumnos");
   }
 }
+
+
 //crear alumnos
 export async function crearAlumnoBD(datosCrear) {
   try {
