@@ -1,4 +1,12 @@
-export const datosPromo = ["24/25", "25/26", "26/27", "27/28"];
+export const datosPromo = [
+  "2023-2024",
+  "2024-2025",
+  "2025-2026",
+  "2026-2027",
+  "2027-2028",
+  "2028-2029",
+  "2029-2030"
+];
 export const datosGrupo = ["DAW", "SMX", "IEA", "ARI"];
 
 export const datosAlumnosDB = [

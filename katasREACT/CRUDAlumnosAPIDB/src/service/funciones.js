@@ -132,68 +132,90 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
       body: JSON.stringify(nuevoAlumno) // los datos que queremos mandar
     });
  */
-
-
 export async function getAlumnosApi() {
   try {
-    let res = await fetch("http://localhost:3000/api/alumnos");
+    const res = await fetch("http://localhost:3000/api/alumnos");
     const datos = await res.json();
-    return datos;
+
+    return datos.map(alumno => ({
+      id: alumno._id,
+      nombre: alumno.nombre,
+      apellido: alumno.apellidos,
+      promo: alumno.promocion,
+      grupo: alumno.ciclo,
+      foto:
+        alumno.urlImagen && alumno.urlImagen.trim() !== ""
+          ? alumno.urlImagen
+          : `https://api.dicebear.com/9.x/big-smile/svg?seed=${alumno.nombre+alumno.apellido}`
+    }));
   } catch {
     console.log("Error al cargar los alumnos");
   }
 }
-//Delete alumnos
+
 export async function eliminarAlumnoBD(id) {
   try {
-    console.log(`http://localhost:3000/api/alumnos/${id}`)
-    let res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
-      method: "DELETE", 
+    const res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       }
     });
-    const datos = await res.json();
-    return datos;
+    return await res.json();
   } catch {
-    console.log("Error al cargar los alumnos");
+    console.log("Error al eliminar el alumno");
   }
 }
-
 
 export async function editarAlumnoBD(id, datosActu) {
   try {
-    console.log(`http://localhost:3000/api/alumnos/${id}`)
-    let res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
-      method: "PUT", 
+    const body = {
+      nombre: datosActu.nombre,
+      apellidos: datosActu.apellido,
+      promocion: datosActu.promo,
+      ciclo: datosActu.grupo,
+      urlImagen:
+        datosActu.foto && datosActu.foto.trim() !== ""
+          ? datosActu.foto
+          : `https://api.dicebear.com/9.x/big-smile/svg?seed=${datosActu.nombre}`
+    };
+
+    const res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
-      }, 
-      body: JSON.stringify(datosActu)
+      },
+      body: JSON.stringify(body)
     });
-    const datos = await res.json();
-    return datos;
+    return await res.json();
   } catch {
-    console.log("Error al cargar los alumnos");
+    console.log("Error al editar el alumno");
   }
 }
 
-
-//crear alumnos
 export async function crearAlumnoBD(datosCrear) {
   try {
-    console.log(`http://localhost:3000/api/alumnos`)
-    let res = await fetch(`http://localhost:3000/api/alumnos`, {
-      method: "POST", 
+    const body = {
+      nombre: datosCrear.nombre,
+      apellidos: datosCrear.apellido,
+      promocion: datosCrear.promo,
+      ciclo: datosCrear.grupo,
+      urlImagen:
+        datosCrear.foto && datosCrear.foto.trim() !== ""
+          ? datosCrear.foto
+          : `https://api.dicebear.com/9.x/big-smile/svg?seed=${datosCrear.nombre}`
+    };
+
+    const res = await fetch("http://localhost:3000/api/alumnos", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
-      }, 
-      body: JSON.stringify(datosCrear)
+      },
+      body: JSON.stringify(body)
     });
-    const datos = await res.json();
-    return datos;
+    return await res.json();
   } catch {
-    console.log("Error al cargar los alumnos");
+    console.log("Error al crear el alumno");
   }
 }
 
