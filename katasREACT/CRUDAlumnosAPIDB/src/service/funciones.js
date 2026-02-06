@@ -134,7 +134,7 @@ Hay que ponerlos en el datosAlumnos con setDatosAlumnos
  */
 export async function getAlumnosApi() {
   try {
-    const res = await fetch("https://m0612-backend-alumnos.vercel.app/");
+    const res = await fetch("https://m0612-backend-alumnos.vercel.app/api/alumnos");
     const datos = await res.json();
 
     return datos.map(alumno => ({
@@ -155,7 +155,7 @@ export async function getAlumnosApi() {
 
 export async function eliminarAlumnoBD(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+    const res = await fetch(`https://m0612-backend-alumnos.vercel.app/api/alumnos/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
@@ -180,7 +180,7 @@ export async function editarAlumnoBD(id, datosActu) {
           : `https://api.dicebear.com/9.x/big-smile/svg?seed=${datosActu.nombre}`
     };
 
-    const res = await fetch(`http://localhost:3000/api/alumnos/${id}`, {
+    const res = await fetch(`https://m0612-backend-alumnos.vercel.app/api/alumnos/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -206,7 +206,7 @@ export async function crearAlumnoBD(datosCrear) {
           : `https://api.dicebear.com/9.x/big-smile/svg?seed=${datosCrear.nombre}`
     };
 
-    const res = await fetch("http://localhost:3000/api/alumnos", {
+    const res = await fetch("https://m0612-backend-alumnos.vercel.app/api/alumnos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
