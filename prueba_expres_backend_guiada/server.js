@@ -5,6 +5,8 @@ nodemon (npm install -g nodemon, instalada en el equipo no en el proyecto): Herr
     - Para correr el servidor con nodemon, se puede usar el comando 'npm run dev' que hemos definido en el package.json, lo que ejecutará 'nodemon server.js' y mantendrá el servidor en ejecución mientras desarrollamos.
 */
 
+import 'dotenv/config';
+
 
 console.log("Hola servidor Express");
 
