@@ -8,15 +8,13 @@ nodemon (npm install -g nodemon, instalada en el equipo no en el proyecto): Herr
 dotenv: Permite cargar variables de entorno desde un archivo .env, lo que es útil para configurar el puerto del servidor y otras variables sensibles sin hardcodearlas en el código.
 */
 
-import 'dotenv/config';
-import connectDB from './config/db.js';
+import "dotenv/config";
+import connectDB from "./config/db.js";
 
 // ... definició d'app, rutes, middleware ...
 
 // Primer connectar a MongoDB; només quan la connexió és correcta, obrir el servidor HTTP
-connectDB()
-
-
+connectDB();
 
 const PORT = process.env.PORT; // Obtenemos el puerto del archivo .env o usamos el puerto 3000 por defecto
 
@@ -24,40 +22,40 @@ console.log("Hola servidor Express");
 
 import routerCerveza from "./routes/routerCerveza.js"; // Importamos el router para manejar las rutas relacionadas con la cerveza
 import routerVinito from "./routes/routeVinito.js"; // Importamos el router para manejar las rutas relacionadas con el vinito
-import express from 'express';
+import express from "express";
 //const express = require('express'); //Importamos el módulo Express para crear un servidor web
-const app = express();  // Creamos una instancia de la aplicación Express
+const app = express(); // Creamos una instancia de la aplicación Express
 
 //Midelware
 
 app.use(express.json()); // Middleware para parsear JSON en el body de las peticiones
 
 app.use("/api/birra", routerCerveza); // Middleware para manejar las rutas relacionadas con la cerveza, utilizando el router definido en routerCerveza
-app.use("/api/vinito", routerVinito); 
+app.use("/api/vinito", routerVinito);
 
-app.get("/", (req, res) => {   // Peticion GET a la raiz de el servidor Express
-    console.log("Hola mundo desde Express"); // Imprime un mensaje en la consola del servidor   
-    res.send("<h1 style='color: lightgreen; background-color: blue; width: fit-content; height: fit-content; padding: 10px;'>Bienvenido a mi api de Prueba Express</h1>"); // Envía una respuesta al cliente con el mensaje "Hola mundo desde Express"
-
-})
+app.get("/", (req, res) => {
+  // Peticion GET a la raiz de el servidor Express
+  console.log("Hola mundo desde Express"); // Imprime un mensaje en la consola del servidor
+  res.send(
+    "<h1 style='color: lightgreen; background-color: blue; width: fit-content; height: fit-content; padding: 10px;'>Bienvenido a mi api de Prueba Express</h1>",
+  ); // Envía una respuesta al cliente con el mensaje "Hola mundo desde Express"
+});
 app.get("/api", (req, res) => {
-    res.json(
-        {
-            message: "Bienvenido a mi api de Prueba Express",
-            version: "1.0.0",
-            rutas: {
-                cerveza: "/api/birra",
-                vinito: "/api/vinito"
-            }
-        });
-})
-
-/// Para ejecutar 'node server.js' en la terminal
-app.listen(PORT, () => { // El servidor escuchará en el puerto definido en el archivo .env
-    console.log(`Servidor Express escuchando en el puerto ${PORT}`);
+  res.json({
+    message: "Bienvenido a mi api de Prueba Express",
+    version: "1.0.0",
+    rutas: {
+      cerveza: "/api/birra",
+      vinito: "/api/vinito",
+    },
+  });
 });
 
-
+/// Para ejecutar 'node server.js' en la terminal
+app.listen(PORT, () => {
+  // El servidor escuchará en el puerto definido en el archivo .env
+  console.log(`Servidor Express escuchando en el puerto ${PORT}`);
+});
 
 /*
 
