@@ -1,5 +1,5 @@
 import express from 'express';
-import { leerTodosLosVinito, vinitoID } from '../controllers/controlador.vino.js';
+import { leerTodosLosVinito, vinitoID, createVino, updateVino, deleteVino  } from '../controllers/controlador.vino.js';
 const router = express.Router();
 
 router.get("/", (req, res)=>{
@@ -11,10 +11,14 @@ router.get("/todos", leerTodosLosVinito)
 
 router.get("/:id", vinitoID)
 
-router.post("/", (req, res)=>{
-    console.log("Has llamado a api/vinito con POST");
+router.post("/", createVino)
 
-})
+router.put("/:id", updateVino)
+
+router.delete("/:id", deleteVino)
+
+
+
 
 
 

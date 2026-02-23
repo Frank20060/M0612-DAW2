@@ -1,50 +1,45 @@
-import express from "express";
-
-/*
-Aqui se ponen las funciones que luego se llamaran desde las rutas, 
-para mantener el codigo organizado y separado por responsabilidades.
-
-*/
-const vinito = [
-  {
-    id: 1,
-    nombre: "Vinito tinto",
-    precio: 10,
-  },
-  {
-    id: 2,
-    nombre: "Vinito blanco",
-    precio: 12,
-  },
-  {
-    id: 3,
-    nombre: "Vinito rosado",
-    precio: 8,
-  },
-  {
-    id: 4,
-    nombre: "Vinito verde",
-    precio: 11,
-  },
+const vinos = [
+        { id: 1, name: "Vino Albino", description: "Un vino de mierda"},
+        { id: 2, name: "Vino Reserva", description: "Un vino decentillo"},
+        { id: 3, name: "Vino Gran Reserva", description: "Un asco, menudo vino más rancio" }
 ];
 
 export function leerTodosLosVinito(req, res) {
-  console.log("Has llamado a la función leerTodosLosVinito");
-  // Aquí iría la lógica para leer todos los vinito de la base de datos
-
-  console.log("Vinito leidos: ", vinito);
-  res.json(vinito);
+    res.json(vinos);
+    return vinos;
 }
 
 export function vinitoID(req, res) {
-  const id = req.params.id;
-  console.log("Has llamado a la función vinitoID con el id: ", id);
-  const vino = vinito.find((v) => v.id === parseInt(id));
-  if (vino) {
+    const id = parseInt(req.params.id);
+    const vino = vinos.find(v => v.id === id);
     res.json(vino);
-  } else {
-    res.status(404).json({ message: "Vinito no encontrado" });
-  }
 }
 
+export function createVino(req, res) {
+    const newVino = req.body;
+    vinos.push(newVino);
+    res.json({ message: "New vino created", vino: newVino });
+}
 
+export function updateVino(req, res) {
+    const id = parseInt(req.params.id);
+    const updatedVino = req.body;
+    const index = vinos.findIndex(v => v.id === id);
+    if (index !== -1) {
+        vinos[index] = { ...vinos[index], ...updatedVino };
+        res.json({ message: "Vino updated", vino: vinos[index] });
+    } else {
+        res.status(404).json({ message: "Vino not found" });
+    }
+}
+
+export function deleteVino(req, res) {
+    const id = parseInt(req.params.id);
+    const index = vinos.findIndex(v => v.id === id);
+    if (index !== -1) {
+        const deletedVino = vinos.splice(index, 1);
+        res.json({ message: "Vino deleted", vino: deletedVino[0] });
+    } else {
+        res.status(404).json({ message: "Vino not found" });
+    }
+}
