@@ -1,45 +1,54 @@
-const vinos = [
-        { id: 1, name: "Vino Tinto", description: "Vino tinto de calidad media, ideal para acompañar carnes rojas" },
-        { id: 2, name: "Vino Blanco", description: "Vino blanco fresco y afrutado, perfecto para maridar con pescados y mariscos" },
-        { id: 3, name: "Vino verde", description: "Vino verde fresco y ligero, ideal para acompañar platos de mariscos" }
-];
+
+import Vinito from "../models/Vinitos.js";
 
 export function leerTodosLosVinito(req, res) {
-    res.json(vinos);
-    return vinos;
+    Vinito.find()
+        .then(vinos => res.json({ vinos, total: vinos.length }))
+        .catch(err => res.status(500).json({ error: err.message }));
+
 }
 
 export function vinitoID(req, res) {
-    const id = parseInt(req.params.id);
-    const vino = vinos.find(v => v.id === id);
-    res.json(vino);
+    Vinito.findById(req.params.id)
+        .then(vino => {
+            if (!vino) {
+                return res.status(404).json({ error: "Vinito no encontrado" });
+            }
+            res.json(vino);
+        })
+        .catch(err => res.status(500).json({ error: err.message }));
 }
 
 export function createVino(req, res) {
     const newVino = req.body;
-    vinos.push(newVino);
-    res.json({ message: "New vino created", vino: newVino });
+    Vinito.create(newVino)
+        .then(vino => res.json({ message: "New vino created", vino }))
+        .catch(err => res.status(400).json({ error: err.message }));
 }
 
 export function updateVino(req, res) {
     const id = parseInt(req.params.id);
-    const updatedVino = req.body;
-    const index = vinos.findIndex(v => v.id === id);
-    if (index !== -1) {
-        vinos[index] = { ...vinos[index], ...updatedVino };
-        res.json({ message: "Vino updated", vino: vinos[index] });
-    } else {
-        res.status(404).json({ message: "Vino not found" });
-    }
+    const updatedData = req.body;
+    Vinito.findByIdAndUpdate(id, updatedData, { new: true, runValidators: true })
+        .then(vino => {
+            if (!vino) {
+                return res.status(404).json({ error: "Vinito no encontrado" });
+            }
+            res.json({ message: "Vinito updated", vino });
+        })
+        .catch(err => res.status(400).json({ error: err.message }));
 }
 
 export function deleteVino(req, res) {
     const id = parseInt(req.params.id);
-    const index = vinos.findIndex(v => v.id === id);
-    if (index !== -1) {
-        const deletedVino = vinos.splice(index, 1);
-        res.json({ message: "Vino deleted", vino: deletedVino[0] });
-    } else {
+    Vinito.findByIdAndDelete(id)
+        .then(vino => {
+            if (!vino) {
+                return res.status(404).json({ error: "Vinito no encontrado" });
+            }
+            res.json({ message: "Vinito deleted", vino });
+        })
+        .catch(err => res.status(500).json({ error: err.message }));
         res.status(404).json({ message: "Vino not found" });
     }
-}
+
