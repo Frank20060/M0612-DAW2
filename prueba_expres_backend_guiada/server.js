@@ -1,6 +1,7 @@
 /*
 Dependencias que vamos instalando
-express
+express: Es el framework web que utilizamos para crear el servidor y manejar las rutas. Nos permite definir endpoints y responder a las solicitudes HTTP de manera sencilla.
+
 nodemon (npm install -g nodemon, instalada en el equipo no en el proyecto): Herramienta que reinicia automáticamente el servidor cada vez que detecta cambios en el código, lo que facilita el desarrollo.
     - Para correr el servidor con nodemon, se puede usar el comando 'npm run dev' que hemos definido en el package.json, lo que ejecutará 'nodemon server.js' y mantendrá el servidor en ejecución mientras desarrollamos.
 
@@ -8,6 +9,14 @@ dotenv: Permite cargar variables de entorno desde un archivo .env, lo que es út
 */
 
 import 'dotenv/config';
+import connectDB from './config/db.js';
+
+// ... definició d'app, rutes, middleware ...
+
+// Primer connectar a MongoDB; només quan la connexió és correcta, obrir el servidor HTTP
+connectDB()
+
+
 
 const PORT = process.env.PORT; // Obtenemos el puerto del archivo .env o usamos el puerto 3000 por defecto
 
@@ -40,9 +49,6 @@ app.get("/api", (req, res) => {
             }
         });
 })
-
-
-
 
 /// Para ejecutar 'node server.js' en la terminal
 app.listen(PORT, () => { // El servidor escuchará en el puerto definido en el archivo .env
