@@ -9,7 +9,7 @@ dotenv: Permite cargar variables de entorno desde un archivo .env, lo que es út
 
 import 'dotenv/config';
 
-const PORT = process.env.PORT || 3000; // Obtenemos el puerto del archivo .env o usamos el puerto 3000 por defecto
+const PORT = process.env.PORT; // Obtenemos el puerto del archivo .env o usamos el puerto 3000 por defecto
 
 console.log("Hola servidor Express");
 
