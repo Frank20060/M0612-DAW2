@@ -1,7 +1,7 @@
 const vinos = [
-        { id: 1, name: "Vino Albino", description: "Un vino de mierda"},
-        { id: 2, name: "Vino Reserva", description: "Un vino decentillo"},
-        { id: 3, name: "Vino Gran Reserva", description: "Un asco, menudo vino más rancio" }
+        { id: 1, name: "Vino Tinto", description: "Vino tinto de calidad media, ideal para acompañar carnes rojas" },
+        { id: 2, name: "Vino Blanco", description: "Vino blanco fresco y afrutado, perfecto para maridar con pescados y mariscos" },
+        { id: 3, name: "Vino verde", description: "Vino verde fresco y ligero, ideal para acompañar platos de mariscos" }
 ];
 
 export function leerTodosLosVinito(req, res) {
