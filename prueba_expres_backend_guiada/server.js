@@ -3,10 +3,13 @@ Dependencias que vamos instalando
 express
 nodemon (npm install -g nodemon, instalada en el equipo no en el proyecto): Herramienta que reinicia automáticamente el servidor cada vez que detecta cambios en el código, lo que facilita el desarrollo.
     - Para correr el servidor con nodemon, se puede usar el comando 'npm run dev' que hemos definido en el package.json, lo que ejecutará 'nodemon server.js' y mantendrá el servidor en ejecución mientras desarrollamos.
+
+dotenv: Permite cargar variables de entorno desde un archivo .env, lo que es útil para configurar el puerto del servidor y otras variables sensibles sin hardcodearlas en el código.
 */
 
 import 'dotenv/config';
 
+const PORT = process.env.PORT || 3000; // Obtenemos el puerto del archivo .env o usamos el puerto 3000 por defecto
 
 console.log("Hola servidor Express");
 
@@ -42,8 +45,8 @@ app.get("/api", (req, res) => {
 
 
 /// Para ejecutar 'node server.js' en la terminal
-app.listen(3000, () => { // El servidor escuchará en el puerto 3000
-    console.log("Servidor Express escuchando en el puerto 3000");
+app.listen(PORT, () => { // El servidor escuchará en el puerto definido en el archivo .env
+    console.log(`Servidor Express escuchando en el puerto ${PORT}`);
 });
 
 
