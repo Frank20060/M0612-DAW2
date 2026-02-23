@@ -30,6 +30,8 @@ const app = express();  // Creamos una instancia de la aplicación Express
 
 //Midelware
 
+app.use(express.json()); // Middleware para parsear JSON en el body de las peticiones
+
 app.use("/api/birra", routerCerveza); // Middleware para manejar las rutas relacionadas con la cerveza, utilizando el router definido en routerCerveza
 app.use("/api/vinito", routerVinito); 
 

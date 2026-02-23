@@ -1,5 +1,5 @@
 ### Variables
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3001
 @apiUrl = {{baseUrl}}/api
 
 ### ============================================
@@ -23,7 +23,7 @@ GET {{apiUrl}}/birra
 GET {{apiUrl}}/birra/todos
 
 ### GET - Obtener cerveza por ID
-GET {{apiUrl}}/birra/1
+GET {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
 
 ### POST - Crear nueva cerveza
 POST {{apiUrl}}/birra
@@ -31,20 +31,20 @@ Content-Type: application/json
 
 {
   "nombre": "Cerveza Premium",
-  "descripcion": "Cerveza de alta calidad, ideal para los amantes de la cerveza artesanal",
+  "precio": 2.5
 }
 
 ### PUT - Actualizar cerveza
-PUT {{apiUrl}}/birra/1
+PUT {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
 Content-Type: application/json
 
 {
   "nombre": "Cerveza Premium Actualizada",
-  "descripcion": "Cerveza premium actualizada, ideal para los amantes de la cerveza artesanal",
+  "precio": 3.0
 }
 
 ### DELETE - Eliminar cerveza
-DELETE {{apiUrl}}/birra/4
+DELETE {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
 
 ### ============================================
 ### ENDPOINTS VINO - /api/vinito
@@ -65,7 +65,7 @@ Content-Type: application/json
 
 {
   "nombre": "Vino Tinto Reserva",
-  "descripcion": "Vino tinto de alta calidad, con notas de frutas rojas y un toque de roble",
+  "descripcion": "Vino tinto de alta calidad, con notas de frutas rojas y un toque de roble"
 }
 
 ### PUT - Actualizar vino
@@ -74,7 +74,7 @@ Content-Type: application/json
 
 {
   "nombre": "Vino Blanco Actualizado",
-  "descripcion": "Vino blanco fresco y afrutado, perfecto para maridar con pescados y mariscos",
+  "descripcion": "Vino blanco fresco y afrutado, perfecto para maridar con pescados y mariscos"
 }
 
 ### DELETE - Eliminar vino
