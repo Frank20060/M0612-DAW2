@@ -19,16 +19,20 @@ GET {{apiUrl}}
 
 ### GET - Obtener página de cerveza
 GET {{apiUrl}}/birra
+Authorization: Bearer {{token}}
 
 ### GET - Obtener todas las cervezas
 GET {{apiUrl}}/birra/todos
+Authorization: Bearer {{token}}
 
 ### GET - Obtener cerveza por ID
 GET {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
+Authorization: Bearer {{token}}
 
 ### POST - Crear nueva cerveza
 POST {{apiUrl}}/birra
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nombre": "Cerveza Premium",
@@ -38,6 +42,7 @@ Content-Type: application/json
 ### PUT - Actualizar cerveza
 PUT {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nombre": "Cerveza Premium Actualizada",
@@ -46,6 +51,7 @@ Content-Type: application/json
 
 ### DELETE - Eliminar cerveza
 DELETE {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
+Authorization: Bearer {{token}}
 
 ### ============================================
 ### ENDPOINTS VINO - /api/vinito
