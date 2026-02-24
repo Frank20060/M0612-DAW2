@@ -1,3 +1,4 @@
+```http
 ### Variables
 @baseUrl = http://localhost:3001
 @apiUrl = {{baseUrl}}/api
@@ -79,3 +80,46 @@ Content-Type: application/json
 
 ### DELETE - Eliminar vino
 DELETE {{apiUrl}}/vinito/4
+
+### ============================================
+### AUTENTICACIÓN - /api/auth
+### ============================================
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OWRmN2MwZjM4M2JiNzc4YzQ3YmFlMyIsImlhdCI6MTc3MTk2MDgyOSwiZXhwIjoxNzcyNTY1NjI5fQ.iseZHXBIzjKP3v_5xX9cUdPx6bjbTdZNTrbyA0zGIpI
+
+### POST - Registro de usuario (crear cuenta)
+POST {{apiUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "email": "ciro@example.com",
+  "password": "password123"
+}
+
+### POST - Login (obtiene JWT)
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "ciro@example.com",
+  "password": "password123"
+}
+
+### INSTRUCCIONES:
+# 1) Ejecuta la petición de Login y copia el valor de `token` del JSON de respuesta.
+# 2) Pega el token arriba en la variable `@token` (reemplaza el valor vacío).
+
+### GET - Obtener perfil (ruta protegida) — necesita header Authorization
+GET {{apiUrl}}/auth/perfil
+Authorization: Bearer {{token}}
+
+### PUT - Actualizar perfil (ruta protegida) — requiere Authorization
+PUT {{apiUrl}}/auth/perfil
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "frankakakakaka@example.com",
+  "password": "nuevaPass456"
+}
+

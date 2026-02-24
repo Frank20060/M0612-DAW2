@@ -7,7 +7,12 @@ import {
   deleteCerveza,
 } from "../controllers/controlador.cerveza.js";
 
+import { protegir } from '../middlewares/authMiddleware.js';
+
 const router = express.Router();
+
+router.use(protegir); // Aplica el middleware de protección a todas las rutas definidas en este router; solo usuarios autenticados podrán acceder a estas rutas
+//Ahora siempre que usemos rutas de rutasCerveas necesitas un token valido 
 
 router.get("/", (req, res) => {
   console.log("Has llamado a api/cerveza");

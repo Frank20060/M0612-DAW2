@@ -22,7 +22,9 @@ console.log("Hola servidor Express");
 
 import routerCerveza from "./routes/routerCerveza.js"; // Importamos el router para manejar las rutas relacionadas con la cerveza
 import routerVinito from "./routes/routeVinito.js"; // Importamos el router para manejar las rutas relacionadas con el vinito
+import authRoutes from './routes/authRoutes.js';
 import express from "express";
+
 //const express = require('express'); //Importamos el módulo Express para crear un servidor web
 const app = express(); // Creamos una instancia de la aplicación Express
 
@@ -30,6 +32,7 @@ const app = express(); // Creamos una instancia de la aplicación Express
 
 app.use(express.json()); // Middleware para parsear JSON en el body de las peticiones
 
+app.use('/api/auth', authRoutes);
 app.use("/api/birra", routerCerveza); // Middleware para manejar las rutas relacionadas con la cerveza, utilizando el router definido en routerCerveza
 app.use("/api/vinito", routerVinito);
 
@@ -56,19 +59,3 @@ app.listen(PORT, () => {
   // El servidor escuchará en el puerto definido en el archivo .env
   console.log(`Servidor Express escuchando en el puerto ${PORT}`);
 });
-
-/*
-
-Deveres:
-
-
-rutas de vino y cervezas para un crud basico:
-usar REST Client para probar las rutas
-CRUD: Create, Read, Update, Delete
-- Create: POST /api/vinito
-- Read: GET /api/vinito (para obtener todos los vinito) y GET /api/vinito/:id (para obtener un vinito por su id)
-- Update: PUT /api/vinito/:id (para actualizar un vinito por su id)
-- Delete: DELETE /api/vinito/:id (para eliminar un vinito por su id)
-
-lo mismo para las cervezas
-*/
