@@ -7,12 +7,10 @@ import {
   deleteCerveza,
 } from "../controllers/controlador.cerveza.js";
 
-import { protegir } from '../middlewares/authMiddleware.js';
+import { protegir, autoritzar } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.use(protegir); // Aplica el middleware de protección a todas las rutas definidas en este router; solo usuarios autenticados podrán acceder a estas rutas
-//Ahora siempre que usemos rutas de rutasCerveas necesitas un token valido 
 
 router.get("/", (req, res) => {
   console.log("Has llamado a api/cerveza");
@@ -21,14 +19,18 @@ router.get("/", (req, res) => {
   ); // Envía una respuesta al cliente con el mensaje "Hola mundo desde Express"
 });
 
-router.get("/todos", getCervezas);
 
-router.get("/:id", getCervezaById);
+//Ahora siempre que usemos rutas de rutasCerveas necesitas un token valido  a excepcion de el primer get
+router.use(protegir); // Aplica el middleware de protección a todas las rutas definidas en este router; solo usuarios autenticados podrán acceder a estas rutas
 
-router.post("/", createCerveza);
+router.get("/todos", autoritzar('admin'), getCervezas);
 
-router.put("/:id", updateCerveza);
+router.get("/:id",autoritzar('admin'),  getCervezaById);
 
-router.delete("/:id", deleteCerveza);
+router.post("/",autoritzar('admin'), createCerveza);
+
+router.put("/:id",autoritzar('admin'), updateCerveza);
+
+router.delete("/:id",autoritzar('admin'), deleteCerveza);
 
 export default router;

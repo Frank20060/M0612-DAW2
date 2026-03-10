@@ -24,4 +24,22 @@ const protegir = async (req, res, next) => { // Next te permite pasar al siguien
   }
 };
 
-export { protegir };
+const autoritzar = (...rols) => {
+  return (req, res, next) => {
+    // Si per error s'usa sense protegir, no hi haurà usuari
+    if (!req.usuari) {
+      return res.status(401).json({ error: 'No autenticat' });
+    }
+    // Si el rol de l'usuari no és un dels permesos, 403 Forbidden (sabem qui és, però no té permís)
+    if (!rols.includes(req.usuari.rol)) {
+      return res.status(403).json({
+        error: 'No tens permís per realitzar aquesta acció',
+        rol: req.usuari.rol,
+        rolsPermesos: rols
+      });
+    }
+    next();  // Rol correcte: continuar cap al controlador
+  };
+};
+
+export { protegir, autoritzar };

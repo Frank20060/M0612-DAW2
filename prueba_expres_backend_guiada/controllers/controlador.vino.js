@@ -1,54 +1,79 @@
-
 import Vinito from "../models/Vinitos.js";
 
-export function leerTodosLosVinito(req, res) {
-    Vinito.find()
-        .then(vinos => res.json({ vinos, total: vinos.length }))
-        .catch(err => res.status(500).json({ error: err.message }));
+// Listado: find() sin filtro devuelve todos; sort({ createdAt: -1 }) = mas nuevos primero
+const getVinos = async (req, res) => {
+  try {
+    const dades = await Vinito.find().sort({ createdAt: -1 });
+    res.json({ dades, total: dades.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
-}
-
-export function vinitoID(req, res) {
-    Vinito.findById(req.params.id)
-        .then(vino => {
-            if (!vino) {
-                return res.status(404).json({ error: "Vinito no encontrado" });
-            }
-            res.json(vino);
-        })
-        .catch(err => res.status(500).json({ error: err.message }));
-}
-
-export function createVino(req, res) {
-    const newVino = req.body;
-    Vinito.create(newVino)
-        .then(vino => res.json({ message: "New vino created", vino }))
-        .catch(err => res.status(400).json({ error: err.message }));
-}
-
-export function updateVino(req, res) {
-    const id = parseInt(req.params.id);
-    const updatedData = req.body;
-    Vinito.findByIdAndUpdate(id, updatedData, { new: true, runValidators: true })
-        .then(vino => {
-            if (!vino) {
-                return res.status(404).json({ error: "Vinito no encontrado" });
-            }
-            res.json({ message: "Vinito updated", vino });
-        })
-        .catch(err => res.status(400).json({ error: err.message }));
-}
-
-export function deleteVino(req, res) {
-    const id = parseInt(req.params.id);
-    Vinito.findByIdAndDelete(id)
-        .then(vino => {
-            if (!vino) {
-                return res.status(404).json({ error: "Vinito no encontrado" });
-            }
-            res.json({ message: "Vinito deleted", vino });
-        })
-        .catch(err => res.status(500).json({ error: err.message }));
-        res.status(404).json({ message: "Vino not found" });
+// Uno por id: findById devuelve null si no existe; MongoDB usa _id (ObjectId)
+const getVinoById = async (req, res) => {
+  try {
+    const vino = await Vinito.findById(req.params.id);
+    if (!vino) {
+      return res.status(404).json({ error: "Vino no encontrado", id: req.params.id });
     }
+    res.json(vino);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Crear: create() valida con el esquema y guarda en la coleccion
+const createVino = async (req, res) => {
+  try {
+    const nuevo = await Vinito.create(req.body);
+    res.status(201).json(nuevo);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Actualizar: new: true devuelve el documento ya actualizado; runValidators aplica reglas del esquema
+const updateVino = async (req, res) => {
+  try {
+    const actualizado = await Vinito.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!actualizado) {
+      return res.status(404).json({ error: "Vino no encontrado", id: req.params.id });
+    }
+    res.json(actualizado);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Borrar: findByIdAndDelete devuelve el documento eliminado o null
+const deleteVino = async (req, res) => {
+  try {
+    const eliminado = await Vinito.findByIdAndDelete(req.params.id);
+    if (!eliminado) {
+      return res.status(404).json({ error: "Vino no encontrado", id: req.params.id });
+    }
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Compatibilidad con nombres antiguos usados en las rutas actuales
+const leerTodosLosVinito = getVinos;
+const vinitoID = getVinoById;
+
+export {
+  getVinos,
+  getVinoById,
+  createVino,
+  updateVino,
+  deleteVino,
+  leerTodosLosVinito,
+  vinitoID,
+};
 

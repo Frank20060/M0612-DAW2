@@ -26,7 +26,7 @@ GET {{apiUrl}}/birra/todos
 Authorization: Bearer {{token}}
 
 ### GET - Obtener cerveza por ID
-GET {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
+GET {{apiUrl}}/birra/699ca391d278124389f43e06
 Authorization: Bearer {{token}}
 
 ### POST - Crear nueva cerveza
@@ -40,7 +40,7 @@ Authorization: Bearer {{token}}
 }
 
 ### PUT - Actualizar cerveza
-PUT {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
+PUT {{apiUrl}}/birra/69a730128df0bfbff5deb1b3
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -50,7 +50,7 @@ Authorization: Bearer {{token}}
 }
 
 ### DELETE - Eliminar cerveza
-DELETE {{apiUrl}}/birra/66b8c9f1a2b3c4d5e6f7g8h9
+DELETE {{apiUrl}}/birra/69a7300c8df0bfbff5deb1b0
 Authorization: Bearer {{token}}
 
 ### ============================================
@@ -59,15 +59,19 @@ Authorization: Bearer {{token}}
 
 ### GET - Obtener página de vino
 GET {{apiUrl}}/vinito
+Authorization: Bearer {{token}}
 
 ### GET - Obtener todos los vinos
 GET {{apiUrl}}/vinito/todos
+Authorization: Bearer {{token}}
 
 ### GET - Obtener vino por ID
-GET {{apiUrl}}/vinito/1
+GET {{apiUrl}}/vinito/699caacdd3ab04d4f6c8f4ca
+Authorization: Bearer {{token}}
 
 ### POST - Crear nuevo vino
 POST {{apiUrl}}/vinito
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -76,7 +80,8 @@ Content-Type: application/json
 }
 
 ### PUT - Actualizar vino
-PUT {{apiUrl}}/vinito/1
+PUT {{apiUrl}}/vinito/69a730ea9dcea9707f5b1206
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -85,13 +90,14 @@ Content-Type: application/json
 }
 
 ### DELETE - Eliminar vino
-DELETE {{apiUrl}}/vinito/4
+DELETE {{apiUrl}}/vinito/69a730ea9dcea9707f5b1206
+Authorization: Bearer {{token}}
 
 ### ============================================
 ### AUTENTICACIÓN - /api/auth
 ### ============================================
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OWRmN2MwZjM4M2JiNzc4YzQ3YmFlMyIsImlhdCI6MTc3MTk2MDgyOSwiZXhwIjoxNzcyNTY1NjI5fQ.iseZHXBIzjKP3v_5xX9cUdPx6bjbTdZNTrbyA0zGIpI
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTcyZTU3ZTYxNWZmMWY5NzEzMTgyNSIsImlhdCI6MTc3MjU2NDQ1MSwiZXhwIjoxNzczMTY5MjUxfQ.7EWCXyeNbdGkXc0m__HRNfngz7hRUjPrv03ppspYhRw
 
 ### POST - Registro de usuario (crear cuenta)
 POST {{apiUrl}}/auth/registro
