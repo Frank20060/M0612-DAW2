@@ -18,7 +18,7 @@ Projecte d'aplicació web per a la gestió d'una vinacoteca amb arquitectura des
 
 ### 2. Autenticació i Fitxers
 
-- [ ] **Multer:** Configurar el storage per a la pujada de fotos de perfil.
+
 - [ ] **JWT:** Implementar `login` (genera token) i `register` (guarda hash de password).
 - [ ] **Middlewares:**
   - `verifyToken`: Extraure i validar el JWT del header.

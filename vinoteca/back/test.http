@@ -1,0 +1,49 @@
+### Configuración de Variables
+@hostname = localhost
+@port = 8000
+@host = http://{{hostname}}:{{port}}/api
+@contentType = application/json
+
+### 1. REGISTRO DE USUARIO
+# @name registro
+POST {{host}}/auth/registro
+Content-Type: application/json
+
+{
+    "email": "admin@vinacoteca.cat",
+    "password": "admin1vinoteca2"
+}
+
+###
+
+### 2. LOGIN DE USUARIO
+# @name login
+POST {{host}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "admin@vinacoteca.cat",
+    "password": "mipasswordseguro"
+}
+
+### 3. ACTUALIZAR PERFIL (Ruta Protegida)
+# Importante: Copia el valor de "token" del login y pégalo aquí abajo
+@token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Yjg2MGE4ZjgzOTA5MmVjMTQ1Y2NmMSIsImlhdCI6MTc3MzY5MTA0OCwiZXhwIjoxNzc0Mjk1ODQ4fQ.tVtXZu4fz5PJ55umxpPFyoFMmUzrtY13WqvWYtDoF80"
+
+PUT {{host}}/auth/perfil
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+    "nombre": "Marc Actualizado",
+    "password": "nuevapassword123"
+}
+
+### 4. TEST LOGIN CON NUEVA PASSWORD
+POST {{host}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "admin@vinacoteca.cat",
+    "password": "nuevapassword123"
+}
