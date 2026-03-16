@@ -23,7 +23,7 @@ Content-Type: {{contentType}}
 
 {
     "email": "admin@vinacoteca.cat",
-    "password": "mipasswordseguro"
+    "password": "admin1vinoteca2"
 }
 
 ### 3. ACTUALIZAR PERFIL (Ruta Protegida)
