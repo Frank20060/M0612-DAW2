@@ -1,0 +1,15 @@
+const mongoose = require('mongoose');
+
+const usuarioSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  foto: { type: String }, // Aquí guardaremos la URL o ruta del archivo de Multer
+  rol: { 
+    type: String, 
+    enum: ['usuario', 'editor', 'admin'], 
+    default: 'usuario' 
+  }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Usuario', usuarioSchema);
