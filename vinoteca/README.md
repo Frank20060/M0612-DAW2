@@ -33,9 +33,10 @@ Projecte d'aplicació web per a la gestió d'una vinacoteca amb arquitectura des
   - `GET /api/cerveses`: Públic.
   - `POST/PUT/DELETE /api/cerveses`: Protegit (Editor/Admin).
 - [ ] **Rutes de Pedidos:**
-  - `POST /api/pedidos`: Usuari loguejat. Crea registre i dispara email.
+  - `POST /api/pedidos`: Usuari loguejat. Crea registre i dispara email. (protegir solo)
   - `GET /api/pedidos/me`: Llista de pedidos de l'usuari actual.
   - `GET /api/pedidos`: Llista global (Admin).
+
 - [ ] **Email (Nodemailer):** Crear funció per enviar correu al propietari quan es confirma un `POST /api/pedidos`.
 - [ ] **CORS:** Configurar per permetre l'origen de la URL del frontend.
 

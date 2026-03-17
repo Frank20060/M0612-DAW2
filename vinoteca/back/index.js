@@ -30,14 +30,19 @@ app.use((err, req, res, next) => {
 });
 
 // Endpoint de referència: GET /api retorna informació bàsica de l'API
+// Endpoint de referencia: GET /api
 app.get("/api", (req, res) => {
   res.json({
-    missatge: "API de vinoteca",
-    versio: "1.0",
-    endpoints: ["/api", "/api/vinoteca (a implementar)"],
+    mensaje: "Bienvenido a la API de Vinacoteca",
+    version: "1.0",
+    estado: "Operativo",
+    rutas_principales: {
+      auth: "/api/auth",
+      productos: "/api/vino"
+    },
+    autor: "Marc - Proyecto DAW"
   });
-});
-
+}); 
 
 // Endpoint de salut: GET /health per comprovar que el servidor està actiu (monitoratge, load balancers)
 app.get("/health", (req, res) => {

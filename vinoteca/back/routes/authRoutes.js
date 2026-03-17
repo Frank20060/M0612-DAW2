@@ -10,6 +10,24 @@ import { protegir } from '../middlewares/authMiddleware.js';
 // Crear un router d'Express; les rutes es muntaran sota /api/auth
 const router = express.Router();
 
+// En tu archivo de rutas de autenticación
+// Endpoint de referencia: GET /api/auth
+router.get("/", (req, res) => {
+  res.json({
+    seccion: "Autenticación y Gestión de Usuarios",
+    estado: "Módulo activo",
+    endpoints: [
+      { ruta: "/api/auth/registro", metodo: "POST", acceso: "Público", descripcion: "Registro de nuevo usuario con imagen de perfil" },
+      { ruta: "/api/auth/login", metodo: "POST", acceso: "Público", descripcion: "Autenticación y generación de token JWT" },
+      { ruta: "/api/auth/perfil", metodo: "PUT", acceso: "Privado", descripcion: "Actualizar datos del perfil (Nombre/Password)" }
+    ],
+    configuracion: {
+      token_tipo: "Bearer JWT",
+      expiracion: "24h"
+    }
+  });
+});
+
 // POST /api/auth/registro — crear compte nou; el pre('save') del model hasheja la contrasenya
 router.post('/registro', async (req, res) => {
   try {
