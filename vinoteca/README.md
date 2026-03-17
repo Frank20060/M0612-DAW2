@@ -26,7 +26,7 @@ Projecte d'aplicació web per a la gestió d'una vinacoteca amb arquitectura des
 
 ### 3. Funcionalitats de Negoci
 
-- [ ] **Rutes de Vins:**
+- [x] **Rutes de Vins:**
   - `GET /api/vins`: Públic.
   - `POST/PUT/DELETE /api/vins`: Protegit (Editor/Admin).
 - [ ] **Rutes de Cerveses:**

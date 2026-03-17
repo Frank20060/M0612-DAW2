@@ -6,13 +6,13 @@ import {
   updateVino,
   deleteVino,
 } from "../controladores/controlador.vino.js";
-import { protegir } from "../middlewares/authMiddleware.js";
+import { protegir, autoritzar } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  console.log("Has llamado a api/vinito");
+  console.log("Has llamado a api/vino");
   res.send(
-    "<h1 style='color: lightgreen; background-color: blue; width: fit-content; height: fit-content; padding: 10px;'>Vinito</h1>",
+    "<h1 style='color: lightgreen; background-color: blue; width: fit-content; height: fit-content; padding: 10px;'>Vino</h1>",
   ); // Envía una respuesta al cliente con el mensaje "Hola mundo desde Express"
 });
 
@@ -23,10 +23,10 @@ router.get("/todos", getVinos);
 
 router.get("/:id", getVinoById);
 
-router.post("/", createVino);
+router.post("/", protegir, autoritzar('admin', 'editor'), createVino);
 
-router.put("/:id", updateVino);
+router.put("/:id", protegir, autoritzar('admin', 'editor'), updateVino);
 
-router.delete("/:id", deleteVino);
+router.delete("/:id", protegir, autoritzar('admin', 'editor'), deleteVino);
 
 export default router;

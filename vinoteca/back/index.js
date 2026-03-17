@@ -53,6 +53,6 @@ app.listen(PORT, () => {
 app.use("/api/auth", authRoutes);
 
 //rutas vino
-app.use("/api/vinito", routerVinito);
+app.use("/api/vino", routerVinito);
 
 

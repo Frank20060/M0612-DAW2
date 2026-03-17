@@ -6,16 +6,16 @@
 
 ### 1. REGISTRO DE USUARIO
 POST {{host}}/auth/registro
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
     "email": "admin@vinacoteca.cat",
-    "password": "admin1vinoteca2"
+    "password": "admin1vinoteca2",
+    "rol": "admin"
 }
 
-###
-
 ### 2. LOGIN DE USUARIO
+# @name login
 POST {{host}}/auth/login
 Content-Type: {{contentType}}
 
@@ -24,9 +24,9 @@ Content-Type: {{contentType}}
     "password": "admin1vinoteca2"
 }
 
-### 3. ACTUALIZAR PERFIL (Ruta Protegida)
-# Importante: Copia el valor de "token" del login y pégalo aquí abajo
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Yjg2MGE4ZjgzOTA5MmVjMTQ1Y2NmMSIsImlhdCI6MTc3Mzc2Nzc2MiwiZXhwIjoxNzc0MzcyNTYyfQ.p_BukPPQUg54H5uv2GY1rDU62otrmA1xKM19rQpWFAk
+### 3. ACTUALIZAR PERFIL
+# Copia el token obtenido en el login aquí:
+@token = 
 
 PUT {{host}}/auth/perfil
 Authorization: Bearer {{token}}
@@ -37,64 +37,53 @@ Content-Type: {{contentType}}
     "password": "nuevapassword123"
 }
 
-### 4. TEST LOGIN CON NUEVA PASSWORD
-POST {{host}}/auth/login
+### --- SECCIÓN DE PRODUCTOS (Rutas de api/vino) ---
+
+### 5. BIENVENIDA (Test Visual)
+GET {{host}}/vino/
+
+### 6. OBTENER TODOS LOS PRODUCTOS (Pública)
+GET {{host}}/vino/todos
+
+### 7. OBTENER UN PRODUCTO POR ID (Pública)
+@vinoId = 69b9a52c704c98374c4aadab
+GET {{host}}/vino/{{vinoId}}
+
+### 8. CREAR UN NUEVO VINO (Protegida: Admin/Editor)
+POST {{host}}/vino/
+Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
 {
-    "email": "admin@vinacoteca.cat",
-    "password": "nuevapassword123"
+    "nombre": "Verde beti ",
+    "descripcion": "Vino verde de bodegas de Sevilla.",
+    "tipo_producto": "vino",
+    "graduacion": 33.5,
+    "precio": 75.00,
+    "stock": 100,
+    "detalles": {
+        "bodega": "Heliopolis",
+        "uva": "Uva de palmera",
+        "tipo_vino": "Verde",
+        "formato": "750ml"
+    }
 }
 
-
-### --- SECCIÓN DE VINOS (Rutas de api/vinito) ---
-
-### 5. BIENVENIDA A VINITO (Test Visual)
-GET {{host}}/vinito/
-# Devuelve el H1 azul y verde
-
-###
-
-### 6. OBTENER TODOS LOS VINOS
-GET {{host}}/vinito/todos
-# Si activas el middleware 'protegir', añade la línea:
-# Authorization: Bearer {{token}}
-
-###
-
-### 7. OBTENER UN VINO POR ID
-@vinoId = 65f123456789abc
-GET {{host}}/vinito/{{vinoId}}
-
-###
-
-### 8. CREAR UN NUEVO VINO
-POST {{host}}/vinito/
+### 9. ACTUALIZAR UN PRODUCTO (Protegida: Admin/Editor)
+PUT {{host}}/vino/{{vinoId}}
+Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
-# Authorization: Bearer {{token}}
 
-{
-    "nombre": "Reserva Python 2026",
-    "bodega": "K-Lagan Vineyards",
-    "uva": "BPA Noir",
-    "precio": 45.00,
-    "stock": 100
-}
-
-###
-
-### 9. ACTUALIZAR UN VINO
-PUT {{host}}/vinito/{{vinoId}}
-Content-Type: {{contentType}}
-# Authorization: Bearer {{token}}
-
-{
+{   
+    "nombre": "Reserva DAW 2026",
     "precio": 49.99,
-    "stock": 95
+    "stock": 95,
+    "detalles": {
+        "bodega": "K-Lagan Vineyards",
+        "uva": "BPA Noir modified"
+    }
 }
 
-###
-
-### 10. ELIMINAR UN VINO
-DELETE {{host}}/vinito/{{vinoId}}
-# Authorization: Bearer {{token}}
+### 10. ELIMINAR UN PRODUCTO (Protegida: Admin/Editor)
+DELETE {{host}}/vino/{{vinoId}}
+Authorization: Bearer {{token}}
