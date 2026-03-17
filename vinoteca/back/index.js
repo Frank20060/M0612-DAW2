@@ -4,6 +4,7 @@ import express from "express";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import routerVinito from "./routes/vinoRoutes.js";
+import routerCerveza from "./routes/cervezaRoutes.js";
 
 // Crear la instància de l'aplicació Express
 const app = express();
@@ -19,12 +20,10 @@ app.use(express.json());
 // Middleware per capturar errors de sintaxi JSON (p. ex. comes sobrants o cometes simples)
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-    return res
-      .status(400)
-      .json({
-        error:
-          "Format JSON invàlid. Revisa la sintaxi (cometes dobles, comes finals, etc.).",
-      });
+    return res.status(400).json({
+      error:
+        "Format JSON invàlid. Revisa la sintaxi (cometes dobles, comes finals, etc.).",
+    });
   }
   next();
 });
@@ -38,11 +37,12 @@ app.get("/api", (req, res) => {
     estado: "Operativo",
     rutas_principales: {
       auth: "/api/auth",
-      productos: "/api/vino"
+      vinos: "/api/vino",
+      cervezas: "/api/cerveza",
     },
-    autor: "Marc - Proyecto DAW"
+    autor: "Marc - Proyecto DAW",
   });
-}); 
+});
 
 // Endpoint de salut: GET /health per comprovar que el servidor està actiu (monitoratge, load balancers)
 app.get("/health", (req, res) => {
@@ -60,4 +60,5 @@ app.use("/api/auth", authRoutes);
 //rutas vino
 app.use("/api/vino", routerVinito);
 
-
+//rutas Cerveza
+app.use("/api/cerveza", routerCerveza);
