@@ -46,3 +46,55 @@ Content-Type: {{contentType}}
     "password": "nuevapassword123"
 }
 
+
+### --- SECCIÓN DE VINOS (Rutas de api/vinito) ---
+
+### 5. BIENVENIDA A VINITO (Test Visual)
+GET {{host}}/vinito/
+# Devuelve el H1 azul y verde
+
+###
+
+### 6. OBTENER TODOS LOS VINOS
+GET {{host}}/vinito/todos
+# Si activas el middleware 'protegir', añade la línea:
+# Authorization: Bearer {{token}}
+
+###
+
+### 7. OBTENER UN VINO POR ID
+@vinoId = 65f123456789abc
+GET {{host}}/vinito/{{vinoId}}
+
+###
+
+### 8. CREAR UN NUEVO VINO
+POST {{host}}/vinito/
+Content-Type: {{contentType}}
+# Authorization: Bearer {{token}}
+
+{
+    "nombre": "Reserva Python 2026",
+    "bodega": "K-Lagan Vineyards",
+    "uva": "BPA Noir",
+    "precio": 45.00,
+    "stock": 100
+}
+
+###
+
+### 9. ACTUALIZAR UN VINO
+PUT {{host}}/vinito/{{vinoId}}
+Content-Type: {{contentType}}
+# Authorization: Bearer {{token}}
+
+{
+    "precio": 49.99,
+    "stock": 95
+}
+
+###
+
+### 10. ELIMINAR UN VINO
+DELETE {{host}}/vinito/{{vinoId}}
+# Authorization: Bearer {{token}}

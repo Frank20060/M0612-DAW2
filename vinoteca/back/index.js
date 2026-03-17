@@ -1,8 +1,9 @@
 // Carregar variables d'entorn des del fitxer .env (process.env.PORT, etc.)
 import "dotenv/config";
 import express from "express";
-import authRoutes from "./routes/authRoutes.js";
 import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import routerVinito from "./routes/vinoRoutes.js";
 
 // Crear la instància de l'aplicació Express
 const app = express();
@@ -37,6 +38,7 @@ app.get("/api", (req, res) => {
   });
 });
 
+
 // Endpoint de salut: GET /health per comprovar que el servidor està actiu (monitoratge, load balancers)
 app.get("/health", (req, res) => {
   res.status(200).json({ estat: "ok" });
@@ -49,3 +51,8 @@ app.listen(PORT, () => {
 
 //rutas auth
 app.use("/api/auth", authRoutes);
+
+//rutas vino
+app.use("/api/vinito", routerVinito);
+
+
