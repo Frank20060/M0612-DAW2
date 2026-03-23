@@ -46,7 +46,7 @@ GET {{host}}/vino/
 GET {{host}}/vino/todos
 
 ### 7. OBTENER UN PRODUCTO POR ID (Pública)
-@vinoId = 69b9a52c704c98374c4aadab
+@vinoId = 69c173bd75a7b45f73dd43e0
 GET {{host}}/vino/{{vinoId}}
 
 ### 8. CREAR UN NUEVO VINO (Protegida: Admin/Editor)
@@ -57,7 +57,6 @@ Content-Type: {{contentType}}
 {
     "nombre": "Verde beti ",
     "descripcion": "Vino verde de bodegas de Sevilla.",
-    "tipo_producto": "vino",
     "graduacion": 33.5,
     "precio": 75.00,
     "stock": 100,
@@ -93,11 +92,11 @@ Authorization: Bearer {{token}}
 ### 11. BIENVENIDA CERVEZA (Test Visual)
 GET {{host}}/cerveza/
 
-### 12. OBTENER TODAS LAS CERVEZAS (Pública)
+### 12. OBTENER TODAS LAS CERVEZAS (Pública)    
 GET {{host}}/cerveza/todos
 
 ### 13. OBTENER UNA CERVEZA POR ID (Pública)
-@cervezaId = 69c170424948f2e148943d71
+@cervezaId = 69c173e875a7b45f73dd43e6
 GET {{host}}/cerveza/{{cervezaId}}
 
 ### 14. CREAR UNA NUEVA CERVEZA (Protegida: Admin/Editor)
@@ -108,7 +107,6 @@ Content-Type: {{contentType}}
 {
     "nombre": "Cerveza Artesanal",
     "descripcion": "Cerveza IPA muy lupulada.",
-    "tipo_producto": "cerveza",
     "graduacion": 6.5,
     "precio": 3.50,
     "stock": 200,
@@ -132,3 +130,15 @@ Content-Type: {{contentType}}
 ### 16. ELIMINAR UNA CERVEZA (Protegida: Admin/Editor)
 DELETE {{host}}/cerveza/{{cervezaId}}
 Authorization: Bearer {{token}}
+
+### 17. SUBIR IMAGEN A UNA CERVEZA (Protegida: Admin)
+PATCH {{host}}/cerveza/{{cervezaId}}/imatge
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="imatge"; filename="test_cerveza.png"
+Content-Type: image/png
+
+< ./test_cerveza.png
+------WebKitFormBoundary--

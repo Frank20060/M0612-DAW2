@@ -1,11 +1,9 @@
-import Producto from "../models/Producto.js";
+import Vino from "../models/Vino.js";
 
 // Listado: find() sin filtro devuelve todos; sort({ createdAt: -1 }) = mas nuevos primero
 const getVinos = async (req, res) => {
   try {
-    const dades = await Producto.find({ tipo_producto: "vino" }).sort({
-      createdAt: -1,
-    });
+    const dades = await Vino.find().sort({ createdAt: -1 });
     res.json({ dades, total: dades.length });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -15,7 +13,7 @@ const getVinos = async (req, res) => {
 // Uno por id: findById devuelve null si no existe; MongoDB usa _id (ObjectId)
 const getVinoById = async (req, res) => {
   try {
-    const vino = await Producto.findById(req.params.id);
+    const vino = await Vino.findById(req.params.id);
     if (!vino) {
       return res
         .status(404)
@@ -30,8 +28,7 @@ const getVinoById = async (req, res) => {
 // Crear: create() valida con el esquema y guarda en la coleccion
 const createVino = async (req, res) => {
   try {
-    // Forzamos que el tipo siempre sea 'vino', independientemente de lo que llegue en req.body
-    const nuevo = await Producto.create({ ...req.body, tipo_producto: "vino" });
+    const nuevo = await Vino.create(req.body);
     res.status(201).json(nuevo);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -41,7 +38,7 @@ const createVino = async (req, res) => {
 // Actualizar: new: true devuelve el documento ya actualizado; runValidators aplica reglas del esquema
 const updateVino = async (req, res) => {
   try {
-    const actualizado = await Producto.findByIdAndUpdate(
+    const actualizado = await Vino.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true },
@@ -60,7 +57,7 @@ const updateVino = async (req, res) => {
 // Borrar: findByIdAndDelete devuelve el documento eliminado o null
 const deleteVino = async (req, res) => {
   try {
-    const eliminado = await Producto.findByIdAndDelete(req.params.id);
+    const eliminado = await Vino.findByIdAndDelete(req.params.id);
     if (!eliminado) {
       return res
         .status(404)

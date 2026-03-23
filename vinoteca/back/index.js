@@ -5,6 +5,12 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import routerVinito from "./routes/vinoRoutes.js";
 import routerCerveza from "./routes/cervezaRoutes.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// __dirname per ES Modules (index.js sol estar a src/, uploads a l'arrel)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Crear la instància de l'aplicació Express
 const app = express();
@@ -16,6 +22,11 @@ connectDB();
 
 // Middleware global: interpreta el cos de les peticions en JSON i el posa a req.body
 app.use(express.json());
+
+// express.static: les peticions a /uploads/* es resolen servint fitxers de la carpeta uploads
+// Exemple: GET /uploads/123456-foto.jpg retorna el fitxer físic
+// Sense aquesta línia, el fitxer existiria al disc però no seria accessible per HTTP
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Middleware per capturar errors de sintaxi JSON (p. ex. comes sobrants o cometes simples)
 app.use((err, req, res, next) => {
@@ -40,7 +51,7 @@ app.get("/api", (req, res) => {
       vinos: "/api/vino",
       cervezas: "/api/cerveza",
     },
-    autor: "Marc - Proyecto DAW",
+    autor: "Frank - Proyecto DAW",
   });
 });
 

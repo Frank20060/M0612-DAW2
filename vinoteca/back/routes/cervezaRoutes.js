@@ -5,8 +5,10 @@ import {
   createCerveza,
   updateCerveza,
   deleteCerveza,
+  updateCervezaWithImage,
 } from "../controladores/controlador.cerveza.js";
 import { protegir, autoritzar } from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/upload.js";
 const router = express.Router();
 
 // Endpoint de referencia: GET /api/Cerveza
@@ -62,5 +64,7 @@ router.post("/", protegir, autoritzar("admin", "editor"), createCerveza);
 router.put("/:id", protegir, autoritzar("admin", "editor"), updateCerveza);
 
 router.delete("/:id", protegir, autoritzar("admin", "editor"), deleteCerveza);
+
+router.patch('/:id/imatge', protegir, autoritzar('admin'), upload.single('imatge'), updateCervezaWithImage);
 
 export default router;
