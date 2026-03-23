@@ -5,8 +5,10 @@ import {
   createVino,
   updateVino,
   deleteVino,
+  updateVinoWithImage,
 } from "../controladores/controlador.vino.js";
 import { protegir, autoritzar } from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/upload.js";
 const router = express.Router();
 
 // Endpoint de referencia: GET /api/vino
@@ -19,7 +21,8 @@ router.get("/", (req, res) => {
       { ruta: "/api/vino/:id", metodo: "GET", acceso: "Público", descripcion: "Obtener detalles de un producto por su ID" },
       { ruta: "/api/vino/", metodo: "POST", acceso: "Admin/Editor", descripcion: "Crear un nuevo producto (Requere Token)" },
       { ruta: "/api/vino/:id", metodo: "PUT", acceso: "Admin/Editor", descripcion: "Actualizar un producto existente (Requiere Token)" },
-      { ruta: "/api/vino/:id", metodo: "DELETE", acceso: "Admin/Editor", descripcion: "Eliminar un producto de la base de datos (Requiere Token)" }
+      { ruta: "/api/vino/:id", metodo: "DELETE", acceso: "Admin/Editor", descripcion: "Eliminar un producto de la base de datos (Requiere Token)" },
+      { ruta: "/api/vino/:id/imatge", metodo: "PATCH", acceso: "Admin", descripcion: "Subir imagen de un vino (Requiere Token)" }
     ]
   });
 });
@@ -37,4 +40,7 @@ router.put("/:id", protegir, autoritzar('admin', 'editor'), updateVino);
 
 router.delete("/:id", protegir, autoritzar('admin', 'editor'), deleteVino);
 
+router.patch('/:id/imatge', protegir, autoritzar('admin'), upload.single('imatge'), updateVinoWithImage);
+
 export default router;
+

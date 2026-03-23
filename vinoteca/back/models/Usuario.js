@@ -19,6 +19,10 @@ const usuarioSchema = new mongoose.Schema({
     type: String,
     enum: ['usuari', 'admin'],
     default: 'usuari'
+  },
+  imatge: {
+    type: String,
+    trim: true,
   }
 }, { timestamps: true });
 

@@ -69,4 +69,27 @@ const deleteVino = async (req, res) => {
   }
 };
 
-export { getVinos, getVinoById, createVino, updateVino, deleteVino };
+// Subir imagen: el fitxer arriba via Multer a req.file
+const updateVinoWithImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'Cap fitxer pujat' });
+    }
+
+    const pathImatge = 'uploads/' + req.file.filename;
+
+    const actualitzat = await Vino.findByIdAndUpdate(
+      req.params.id,
+      { imatge: pathImatge },
+      { new: true }
+    );
+    if (!actualitzat) {
+      return res.status(404).json({ error: 'Vino no encontrado' });
+    }
+    res.json(actualitzat);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export { getVinos, getVinoById, createVino, updateVino, deleteVino, updateVinoWithImage };

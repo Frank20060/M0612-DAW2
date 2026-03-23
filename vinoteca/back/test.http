@@ -1,10 +1,28 @@
-### Configuración de Variables
+### ============================================================
+### Configuració de Variables Globals
+### ============================================================
 @hostname = localhost
 @port = 8000
 @host = http://{{hostname}}:{{port}}/api
 @contentType = application/json
 
-### 1. REGISTRO DE USUARIO
+
+### ============================================================
+### SECCIÓ 0 — INFO / HEALTH
+### ============================================================
+
+### 0a. Benvinguda de l'API
+GET http://{{hostname}}:{{port}}/api
+
+### 0b. Health check (per monitoratge / load balancer)
+GET http://{{hostname}}:{{port}}/health
+
+
+### ============================================================
+### SECCIÓ 1 — AUTENTICACIÓ
+### ============================================================
+
+### 1. Registre d'usuari (sense imatge — JSON pur)
 POST {{host}}/auth/registro
 Content-Type: {{contentType}}
 
@@ -14,7 +32,30 @@ Content-Type: {{contentType}}
     "rol": "admin"
 }
 
-### 2. LOGIN DE USUARIO (Admin)
+### 2. Registre d'usuari amb imatge de perfil (multipart)
+POST {{host}}/auth/registro
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="email"
+
+nou@vinacoteca.cat
+------WebKitFormBoundary
+Content-Disposition: form-data; name="password"
+
+password123
+------WebKitFormBoundary
+Content-Disposition: form-data; name="rol"
+
+usuari
+------WebKitFormBoundary
+Content-Disposition: form-data; name="imatge"; filename="Kabuto_pf.webp"
+Content-Type: image/png
+
+< ./uploads/Kabuto_pf.webp
+------WebKitFormBoundary--
+
+### 3. Login (Admin) — captura automàtica del token
 # @name login
 POST {{host}}/auth/login
 Content-Type: {{contentType}}
@@ -24,114 +65,148 @@ Content-Type: {{contentType}}
     "password": "admin1vinoteca2"
 }
 
-### 3. ACTUALIZAR PERFIL
-# Copia el token obtenido en el login aquí:
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YjlhNGE2NzA0Yzk4Mzc0YzRhYWRhOCIsImlhdCI6MTc3NDI4NDg0MiwiZXhwIjoxNzc0ODg5NjQyfQ.A60UYsiLn0SqL8_WciP4C2--GHXJsvWx_7AR7z7hrjc
+### -- Token capturat del login (s'actualitza sol en cada login) --
+@token = {{login.response.body.token}}
 
+### 4. Actualitzar perfil (Protegida)
+# Camps vàlids: email, password  (el model NO té camp "nombre")
 PUT {{host}}/auth/perfil
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
 {
-    "nombre": "Marc Actualizado",
-    "password": "nuevapassword123"
+    "email": "admin@vinacoteca.cat",
+    "password": "novapassword456"
 }
 
-### --- SECCIÓN DE PRODUCTOS (Rutas de api/vino) ---
+### 5. Pujar imatge de perfil (Protegida)
+PATCH {{host}}/auth/perfil/imatge
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
 
-### 5. BIENVENIDA (Test Visual)
+------WebKitFormBoundary
+Content-Disposition: form-data; name="imatge"; filename="uploads/kabuto_pf.webp"
+Content-Type: image/png
+
+< ./uploads/kabuto_pf.webp
+
+------WebKitFormBoundary--
+
+
+### ============================================================
+### SECCIÓ 2 — VINS  (api/vino)
+### ============================================================
+
+### 6. Info del mòdul de vins (endpoint de referència)
 GET {{host}}/vino/
 
-### 6. OBTENER TODOS LOS PRODUCTOS (Pública)
+### 7. Llistat de tots els vins (Pública)
 GET {{host}}/vino/todos
 
-### 7. OBTENER UN PRODUCTO POR ID (Pública)
-@vinoId = 69c173bd75a7b45f73dd43e0
+### 8. Obtenir un vi per ID (Pública)
+# Substitueix pel _id real retornat al crear o llistar
+@vinoId = POSA_AQUI_ID_DEL_VI
 GET {{host}}/vino/{{vinoId}}
 
-### 8. CREAR UN NUEVO VINO (Protegida: Admin/Editor)
+### 9. Crear un nou vi (Protegida: admin / editor)
 POST {{host}}/vino/
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
 {
-    "nombre": "Verde beti ",
-    "descripcion": "Vino verde de bodegas de Sevilla.",
-    "graduacion": 33.5,
-    "precio": 75.00,
+    "nombre": "Ribera del Duero Reserva",
+    "descripcion": "Vi negre de cos complet de la Ribera del Duero.",
+    "graduacion": 14.5,
+    "precio": 22.50,
     "stock": 100,
     "detalles": {
-        "bodega": "Heliopolis",
-        "uva": "Uva de palmera",
-        "tipo_vino": "Verde",
+        "bodega": "Protos",
+        "uva": "Tempranillo",
+        "tipo_vino": "Negre",
         "formato": "750ml"
     }
 }
 
-### 9. ACTUALIZAR UN PRODUCTO (Protegida: Admin/Editor)
+### 10. Actualitzar un vi (Protegida: admin / editor)
 PUT {{host}}/vino/{{vinoId}}
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
-{   
-    "nombre": "Reserva DAW 2026",
-    "precio": 49.99,
+{
+    "nombre": "Ribera del Duero Reserva 2021",
+    "precio": 24.99,
     "stock": 95,
     "detalles": {
-        "bodega": "K-Lagan Vineyards",
-        "uva": "BPA Noir modified"
+        "bodega": "Protos",
+        "uva": "Tempranillo 100%"
     }
 }
 
-### 10. ELIMINAR UN PRODUCTO (Protegida: Admin/Editor)
+### 11. Pujar imatge d'un vi (Protegida: admin)
+PATCH {{host}}/vino/{{vinoId}}/imatge
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="imatge"; filename="test_vino.png"
+Content-Type: image/png
+
+< ./test_vino.png
+------WebKitFormBoundary--
+
+### 12. Eliminar un vi (Protegida: admin / editor)
 DELETE {{host}}/vino/{{vinoId}}
 Authorization: Bearer {{token}}
 
-### --- SECCIÓN DE PRODUCTOS (Rutas de api/cerveza) ---
 
-### 11. BIENVENIDA CERVEZA (Test Visual)
+### ============================================================
+### SECCIÓ 3 — CERVESES  (api/cerveza)
+### ============================================================
+
+### 13. Info del mòdul de cerveses (endpoint de referència)
 GET {{host}}/cerveza/
 
-### 12. OBTENER TODAS LAS CERVEZAS (Pública)    
+### 14. Llistat de totes les cerveses (Pública)
 GET {{host}}/cerveza/todos
 
-### 13. OBTENER UNA CERVEZA POR ID (Pública)
-@cervezaId = 69c173e875a7b45f73dd43e6
+### 15. Obtenir una cervesa per ID (Pública)
+# Substitueix pel _id real retornat al crear o llistar
+@cervezaId = POSA_AQUI_ID_DE_LA_CERVESA
 GET {{host}}/cerveza/{{cervezaId}}
 
-### 14. CREAR UNA NUEVA CERVEZA (Protegida: Admin/Editor)
+### 16. Crear una nova cervesa (Protegida: admin / editor)
 POST {{host}}/cerveza/
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
 {
-    "nombre": "Cerveza Artesanal",
-    "descripcion": "Cerveza IPA muy lupulada.",
-    "graduacion": 6.5,
-    "precio": 3.50,
+    "nombre": "Voll-Damm",
+    "descripcion": "Cervesa doble malta de Barcelona, amb caràcter maltós.",
+    "graduacion": 7.2,
+    "precio": 2.80,
     "stock": 200,
     "detalles": {
-        "estilo": "IPA",
+        "estilo": "Märzen / Doble Malta",
+        "amargor": "Moderat",
         "formato": "330ml"
     }
 }
 
-### 15. ACTUALIZAR UNA CERVEZA (Protegida: Admin/Editor)
+### 17. Actualitzar una cervesa (Protegida: admin / editor)
 PUT {{host}}/cerveza/{{cervezaId}}
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
-{   
-    "nombre": "Cerveza Artesanal Double IPA",
-    "precio": 4.99,
-    "stock": 150
+{
+    "nombre": "Voll-Damm Edició Especial",
+    "precio": 3.20,
+    "stock": 180,
+    "detalles": {
+        "amargor": "Alt"
+    }
 }
 
-### 16. ELIMINAR UNA CERVEZA (Protegida: Admin/Editor)
-DELETE {{host}}/cerveza/{{cervezaId}}
-Authorization: Bearer {{token}}
-
-### 17. SUBIR IMAGEN A UNA CERVEZA (Protegida: Admin)
+### 18. Pujar imatge d'una cervesa (Protegida: admin)
 PATCH {{host}}/cerveza/{{cervezaId}}/imatge
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
@@ -142,3 +217,7 @@ Content-Type: image/png
 
 < ./test_cerveza.png
 ------WebKitFormBoundary--
+
+### 19. Eliminar una cervesa (Protegida: admin / editor)
+DELETE {{host}}/cerveza/{{cervezaId}}
+Authorization: Bearer {{token}}

@@ -13,6 +13,10 @@ const vinoSchema = new mongoose.Schema(
       tipo_vino: String,
       formato: String,
     },
+    imatge: {
+      type: String,
+      trim: true,
+    },
   },
   { timestamps: true },
 );
