@@ -14,7 +14,7 @@ Content-Type: {{contentType}}
     "rol": "admin"
 }
 
-### 2. LOGIN DE USUARIO
+### 2. LOGIN DE USUARIO (Admin)
 # @name login
 POST {{host}}/auth/login
 Content-Type: {{contentType}}
@@ -26,7 +26,7 @@ Content-Type: {{contentType}}
 
 ### 3. ACTUALIZAR PERFIL
 # Copia el token obtenido en el login aquí:
-@token = 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YjlhNGE2NzA0Yzk4Mzc0YzRhYWRhOCIsImlhdCI6MTc3NDI4NDg0MiwiZXhwIjoxNzc0ODg5NjQyfQ.A60UYsiLn0SqL8_WciP4C2--GHXJsvWx_7AR7z7hrjc
 
 PUT {{host}}/auth/perfil
 Authorization: Bearer {{token}}
@@ -86,4 +86,49 @@ Content-Type: {{contentType}}
 
 ### 10. ELIMINAR UN PRODUCTO (Protegida: Admin/Editor)
 DELETE {{host}}/vino/{{vinoId}}
+Authorization: Bearer {{token}}
+
+### --- SECCIÓN DE PRODUCTOS (Rutas de api/cerveza) ---
+
+### 11. BIENVENIDA CERVEZA (Test Visual)
+GET {{host}}/cerveza/
+
+### 12. OBTENER TODAS LAS CERVEZAS (Pública)
+GET {{host}}/cerveza/todos
+
+### 13. OBTENER UNA CERVEZA POR ID (Pública)
+@cervezaId = 69c170424948f2e148943d71
+GET {{host}}/cerveza/{{cervezaId}}
+
+### 14. CREAR UNA NUEVA CERVEZA (Protegida: Admin/Editor)
+POST {{host}}/cerveza/
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+    "nombre": "Cerveza Artesanal",
+    "descripcion": "Cerveza IPA muy lupulada.",
+    "tipo_producto": "cerveza",
+    "graduacion": 6.5,
+    "precio": 3.50,
+    "stock": 200,
+    "detalles": {
+        "estilo": "IPA",
+        "formato": "330ml"
+    }
+}
+
+### 15. ACTUALIZAR UNA CERVEZA (Protegida: Admin/Editor)
+PUT {{host}}/cerveza/{{cervezaId}}
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{   
+    "nombre": "Cerveza Artesanal Double IPA",
+    "precio": 4.99,
+    "stock": 150
+}
+
+### 16. ELIMINAR UNA CERVEZA (Protegida: Admin/Editor)
+DELETE {{host}}/cerveza/{{cervezaId}}
 Authorization: Bearer {{token}}
