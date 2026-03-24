@@ -105,7 +105,7 @@ GET {{host}}/vino/todos
 
 ### 8. Obtenir un vi per ID (Pública)
 # Substitueix pel _id real retornat al crear o llistar
-@vinoId = POSA_AQUI_ID_DEL_VI
+@vinoId = 69c173bd75a7b45f73dd43e0
 GET {{host}}/vino/{{vinoId}}
 
 ### 9. Crear un nou vi (Protegida: admin / editor)
@@ -171,7 +171,7 @@ GET {{host}}/cerveza/todos
 
 ### 15. Obtenir una cervesa per ID (Pública)
 # Substitueix pel _id real retornat al crear o llistar
-@cervezaId = POSA_AQUI_ID_DE_LA_CERVESA
+@cervezaId = 69c173e875a7b45f73dd43e6
 GET {{host}}/cerveza/{{cervezaId}}
 
 ### 16. Crear una nova cervesa (Protegida: admin / editor)
@@ -220,4 +220,37 @@ Content-Type: image/png
 
 ### 19. Eliminar una cervesa (Protegida: admin / editor)
 DELETE {{host}}/cerveza/{{cervezaId}}
+Authorization: Bearer {{token}}
+
+### ============================================================
+### SECCIÓ 4 — PEDIDOS  (api/pedidos)
+### ============================================================
+
+### 20. Crear un pedido (Usuario logueado)
+POST {{host}}/pedidos/
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+    "productos": [
+        {
+            "producto_id": "{{vinoId}}",
+            "producto_modelo": "Vino",
+            "cantidad": 2
+        },
+        {
+            "producto_id": "{{cervezaId}}",
+            "producto_modelo": "Cerveza",
+            "cantidad": 1
+        }
+    ],
+    "total": 52.80
+}
+
+### 21. Obtener mis pedidos (Usuario logueado)
+GET {{host}}/pedidos/me
+Authorization: Bearer {{token}}
+
+### 22. Obtener todos los pedidos (Admin)
+GET {{host}}/pedidos/
 Authorization: Bearer {{token}}

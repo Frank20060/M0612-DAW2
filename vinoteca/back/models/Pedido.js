@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const pedidoSchema = new mongoose.Schema({
   usuario_id: { 
@@ -10,8 +10,13 @@ const pedidoSchema = new mongoose.Schema({
     {
       producto_id: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Producto', 
+        refPath: 'productos.producto_modelo', 
         required: true 
+      },
+      producto_modelo: {
+        type: String,
+        required: true,
+        enum: ['Vino', 'Cerveza']
       },
       cantidad: { type: Number, required: true, min: 1 }
     }
@@ -25,4 +30,4 @@ const pedidoSchema = new mongoose.Schema({
   fecha_creacion: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Pedido', pedidoSchema);
+export default mongoose.model('Pedido', pedidoSchema);
