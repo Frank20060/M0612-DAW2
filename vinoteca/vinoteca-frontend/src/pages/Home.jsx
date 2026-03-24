@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { vinosAPI, cervesesAPI } from '../api/axios'
-import ProductCard from '../components/ProductCard'
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { vinosAPI, cervesesAPI, IMG_URL } from "../api/axios";
+import ProductCard from "../components/ProductCard";
 
 export default function Home() {
-  const [featured, setFeatured] = useState([])
+  const [featured, setFeatured] = useState([]);
 
   useEffect(() => {
     const load = async () => {
@@ -12,18 +12,38 @@ export default function Home() {
         const [vR, cR] = await Promise.allSettled([
           vinosAPI.getAll(),
           cervesesAPI.getAll(),
-        ])
-        const vinos = vR.status === 'fulfilled' ? (vR.value.data.vinos || vR.value.data || []).slice(0, 2) : []
-        const cerveses = cR.status === 'fulfilled' ? (cR.value.data.cervesas || cR.value.data || []).slice(0, 2) : []
-        const vTagged = vinos.map((p) => ({ product: p, tipo: 'Vino' }))
-        const cTagged = cerveses.map((p) => ({ product: p, tipo: 'Cerveza' }))
-        setFeatured([...vTagged, ...cTagged].slice(0, 4))
+        ]);
+
+        // Helper para normalizar (igual que en Cataleg)
+        const normalize = (res) => {
+          const d = res.value.data;
+          const list = Array.isArray(d)
+            ? d
+            : d.dades || d.vinos || d.cervesas || d.data || [];
+          return list.map((p) => ({
+            ...p,
+            ...p.detalles,
+            imatge: p.imatge
+              ? p.imatge.startsWith("http")
+                ? p.imatge
+                : `${IMG_URL}/${p.imatge.replace(/\\/g, "/")}`
+              : null,
+          }));
+        };
+
+        const vinos =
+          vR.status === "fulfilled" ? normalize(vR).slice(0, 2) : [];
+        const cerveses =
+          cR.status === "fulfilled" ? normalize(cR).slice(0, 2) : [];
+        const vTagged = vinos.map((p) => ({ product: p, tipo: "Vino" }));
+        const cTagged = cerveses.map((p) => ({ product: p, tipo: "Cerveza" }));
+        setFeatured([...vTagged, ...cTagged].slice(0, 4));
       } catch {
         // silent fail
       }
-    }
-    load()
-  }, [])
+    };
+    load();
+  }, []);
 
   return (
     <div className="relative">
@@ -34,10 +54,23 @@ export default function Home() {
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-burgundy-900/20 blur-[120px]" />
           <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-cellar-700/30 blur-[80px]" />
           {/* Decorative lines */}
-          <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className="absolute inset-0 w-full h-full opacity-5"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <defs>
-              <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#c9a84c" strokeWidth="0.5"/>
+              <pattern
+                id="grid"
+                width="60"
+                height="60"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 60 0 L 0 0 0 60"
+                  fill="none"
+                  stroke="#c9a84c"
+                  strokeWidth="0.5"
+                />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -66,8 +99,18 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/cataleg" className="btn-primary text-sm px-8 py-3">
               Descobrir el Catàleg
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </svg>
             </Link>
             <Link to="/registre" className="btn-ghost text-sm px-8 py-3">
@@ -78,9 +121,21 @@ export default function Home() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-[9px] uppercase tracking-widest text-stone-600 font-body">Desplaça</span>
-          <svg className="w-4 h-4 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+          <span className="text-[9px] uppercase tracking-widest text-stone-600 font-body">
+            Desplaça
+          </span>
+          <svg
+            className="w-4 h-4 text-stone-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </div>
       </section>
@@ -89,16 +144,32 @@ export default function Home() {
       <section className="py-20 border-y border-stone-800/40">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12">
           {[
-            { icon: '🍷', title: 'Vins Seleccionats', desc: 'Curada selecció de vins de les millors denominacions d\'origen.' },
-            { icon: '🍺', title: 'Cerveses Artesanes', desc: 'Cerveses artesanals de productors locals i internacionals.' },
-            { icon: '🚚', title: 'Lliurament Exprés', desc: 'Entrega en 24–48 hores, amb embalatge segur i professional.' },
+            {
+              icon: "🍷",
+              title: "Vins Seleccionats",
+              desc: "Curada selecció de vins de les millors denominacions d'origen.",
+            },
+            {
+              icon: "🍺",
+              title: "Cerveses Artesanes",
+              desc: "Cerveses artesanals de productors locals i internacionals.",
+            },
+            {
+              icon: "🚚",
+              title: "Lliurament Exprés",
+              desc: "Entrega en 24–48 hores, amb embalatge segur i professional.",
+            },
           ].map((f) => (
             <div key={f.title} className="text-center group">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300 inline-block">
                 {f.icon}
               </div>
-              <h3 className="font-display text-xl text-stone-100 mb-2">{f.title}</h3>
-              <p className="text-sm text-stone-500 font-body leading-relaxed">{f.desc}</p>
+              <h3 className="font-display text-xl text-stone-100 mb-2">
+                {f.title}
+              </h3>
+              <p className="text-sm text-stone-500 font-body leading-relaxed">
+                {f.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -117,15 +188,29 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featured.map(({ product, tipo }) => (
-              <ProductCard key={`${tipo}-${product._id}`} product={product} tipo={tipo} />
+              <ProductCard
+                key={`${tipo}-${product._id}`}
+                product={product}
+                tipo={tipo}
+              />
             ))}
           </div>
 
           <div className="text-center mt-12">
             <Link to="/cataleg" className="btn-ghost">
               Veure tot el catàleg
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </svg>
             </Link>
           </div>
@@ -141,8 +226,8 @@ export default function Home() {
               Comença la teva col·lecció
             </h2>
             <p className="text-stone-400 font-body text-sm leading-relaxed mb-8 max-w-lg mx-auto">
-              Registra't i accedeix a comandes exclusives, historial de compres i
-              recomanacions personalitzades.
+              Registra't i accedeix a comandes exclusives, historial de compres
+              i recomanacions personalitzades.
             </p>
             <Link to="/registre" className="btn-primary px-8 py-3">
               Registrar-se ara · És gratuït
@@ -159,5 +244,5 @@ export default function Home() {
         </p>
       </footer>
     </div>
-  )
+  );
 }

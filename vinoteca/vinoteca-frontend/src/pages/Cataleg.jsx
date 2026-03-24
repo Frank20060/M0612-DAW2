@@ -1,67 +1,102 @@
-import { useState, useEffect, useMemo } from 'react'
-import { vinosAPI, cervesesAPI } from '../api/axios'
-import ProductCard from '../components/ProductCard'
+import { useState, useEffect, useMemo } from "react";
+import { vinosAPI, cervesesAPI, IMG_URL } from "../api/axios";
+import ProductCard from "../components/ProductCard";
 
-const FILTERS = ['Tots', 'Vins', 'Cerveses']
+const FILTERS = ["Tots", "Vins", "Cerveses"];
 
 export default function Cataleg() {
-  const [vinos, setVinos] = useState([])
-  const [cerveses, setCerveses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [filter, setFilter] = useState('Tots')
-  const [search, setSearch] = useState('')
-  const [sortBy, setSortBy] = useState('default')
+  const [vinos, setVinos] = useState([]);
+  const [cerveses, setCerveses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState("Tots");
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("default");
 
   useEffect(() => {
     const load = async () => {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
       try {
-        const [vR, cR] = await Promise.allSettled([vinosAPI.getAll(), cervesesAPI.getAll()])
+        const [vR, cR] = await Promise.allSettled([
+          vinosAPI.getAll(),
+          cervesesAPI.getAll(),
+        ]);
 
-        if (vR.status === 'fulfilled') {
-          const d = vR.value.data
-          setVinos(Array.isArray(d) ? d : d.vinos || d.data || [])
+        if (vR.status === "fulfilled") {
+          const d = vR.value.data;
+          // BUSCAMOS 'dades' (tu estructura real) o fallbacks
+          const raw = Array.isArray(d) ? d : d.dades || d.vinos || d.data || [];
+          // NORMALIZAMOS: Aplanamos detalles y arreglamos imagen
+          setVinos(
+            raw.map((v) => ({
+              ...v,
+              ...v.detalles,
+              imatge: v.imatge
+                ? v.imatge.startsWith("http")
+                  ? v.imatge
+                  : `${IMG_URL}/${v.imatge.replace(/\\/g, "/")}`
+                : null,
+            })),
+          );
         }
-        if (cR.status === 'fulfilled') {
-          const d = cR.value.data
-          setCerveses(Array.isArray(d) ? d : d.cervesas || d.cerveses || d.data || [])
+        if (cR.status === "fulfilled") {
+          const d = cR.value.data;
+          const raw = Array.isArray(d)
+            ? d
+            : d.dades || d.cervesas || d.cerveses || d.data || [];
+          setCerveses(
+            raw.map((c) => ({
+              ...c,
+              ...c.detalles,
+              imatge: c.imatge
+                ? c.imatge.startsWith("http")
+                  ? c.imatge
+                  : `${IMG_URL}/${c.imatge.replace(/\\/g, "/")}`
+                : null,
+            })),
+          );
         }
 
-        if (vR.status === 'rejected' && cR.status === 'rejected') {
-          setError('No s\'han pogut carregar els productes. Torna-ho a intentar.')
+        if (vR.status === "rejected" && cR.status === "rejected") {
+          setError(
+            "No s'han pogut carregar els productes. Torna-ho a intentar.",
+          );
         }
       } catch {
-        setError('Error de connexió. Verifica que el backend està actiu.')
+        setError("Error de connexió. Verifica que el backend està actiu.");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    load()
-  }, [])
+    };
+    load();
+  }, []);
 
   const allProducts = useMemo(() => {
-    const v = vinos.map((p) => ({ product: p, tipo: 'Vino' }))
-    const c = cerveses.map((p) => ({ product: p, tipo: 'Cerveza' }))
-    let merged = filter === 'Vins' ? v : filter === 'Cerveses' ? c : [...v, ...c]
+    const v = vinos.map((p) => ({ product: p, tipo: "Vino" }));
+    const c = cerveses.map((p) => ({ product: p, tipo: "Cerveza" }));
+    let merged =
+      filter === "Vins" ? v : filter === "Cerveses" ? c : [...v, ...c];
 
     if (search.trim()) {
-      const q = search.toLowerCase()
+      const q = search.toLowerCase();
       merged = merged.filter(
         ({ product }) =>
           product.nombre?.toLowerCase().includes(q) ||
           product.descripcion?.toLowerCase().includes(q) ||
-          product.detalles?.tipo?.toLowerCase().includes(q)
-      )
+          product.detalles?.tipo?.toLowerCase().includes(q),
+      );
     }
 
-    if (sortBy === 'price-asc') merged.sort((a, b) => (a.product.precio || 0) - (b.product.precio || 0))
-    if (sortBy === 'price-desc') merged.sort((a, b) => (b.product.precio || 0) - (a.product.precio || 0))
-    if (sortBy === 'name') merged.sort((a, b) => a.product.nombre?.localeCompare(b.product.nombre))
+    if (sortBy === "price-asc")
+      merged.sort((a, b) => (a.product.precio || 0) - (b.product.precio || 0));
+    if (sortBy === "price-desc")
+      merged.sort((a, b) => (b.product.precio || 0) - (a.product.precio || 0));
+    if (sortBy === "name")
+      merged.sort((a, b) => a.product.nombre?.localeCompare(b.product.nombre));
 
-    return merged
-  }, [vinos, cerveses, filter, search, sortBy])
+    return merged;
+  }, [vinos, cerveses, filter, search, sortBy]);
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-6 page-enter">
@@ -88,8 +123,8 @@ export default function Cataleg() {
                 onClick={() => setFilter(f)}
                 className={`text-xs uppercase tracking-widest px-5 py-2 rounded transition-all duration-200 font-body font-medium ${
                   filter === f
-                    ? 'bg-burgundy-800 text-stone-100'
-                    : 'text-stone-400 hover:text-stone-100'
+                    ? "bg-burgundy-800 text-stone-100"
+                    : "text-stone-400 hover:text-stone-100"
                 }`}
               >
                 {f}
@@ -99,8 +134,18 @@ export default function Cataleg() {
 
           {/* Search */}
           <div className="relative flex-1 max-w-xs">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
             </svg>
             <input
               type="text"
@@ -153,10 +198,15 @@ export default function Cataleg() {
           <div className="text-center py-20">
             <span className="text-6xl block mb-4">🔍</span>
             <p className="font-display text-2xl text-stone-400 mb-2">
-              {search ? 'Cap resultat per la teva cerca' : 'No hi ha productes disponibles'}
+              {search
+                ? "Cap resultat per la teva cerca"
+                : "No hi ha productes disponibles"}
             </p>
             {search && (
-              <button onClick={() => setSearch('')} className="btn-ghost text-xs mt-4">
+              <button
+                onClick={() => setSearch("")}
+                className="btn-ghost text-xs mt-4"
+              >
                 Esborrar cerca
               </button>
             )}
@@ -167,7 +217,8 @@ export default function Cataleg() {
         {!loading && allProducts.length > 0 && (
           <>
             <p className="text-xs text-stone-500 font-body uppercase tracking-widest mb-6">
-              {allProducts.length} {allProducts.length === 1 ? 'producte' : 'productes'}
+              {allProducts.length}{" "}
+              {allProducts.length === 1 ? "producte" : "productes"}
             </p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {allProducts.map(({ product, tipo }) => (
@@ -182,5 +233,5 @@ export default function Cataleg() {
         )}
       </div>
     </div>
-  )
+  );
 }
