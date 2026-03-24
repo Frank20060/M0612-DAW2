@@ -1,6 +1,7 @@
 // Carregar variables d'entorn des del fitxer .env (process.env.PORT, etc.)
 import "dotenv/config";
 import express from "express";
+import cors from 'cors';
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import routerVinito from "./routes/vinoRoutes.js";
@@ -20,6 +21,14 @@ const PORT = process.env.PORT || 8000;
 
 // Connectar a la base de dades
 connectDB();
+
+// Configuración de CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 
 // Middleware global: interpreta el cos de les peticions en JSON i el posa a req.body
 app.use(express.json());
