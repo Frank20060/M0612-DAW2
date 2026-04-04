@@ -13,7 +13,7 @@ export default function ProducteDetall() {
   const [qty, setQty] = useState(1);
 
   const tipoModel = tipo === "vino" ? "Vino" : "Cerveza";
-  const tipoLabel = tipo === "vino" ? "Vi" : "Cervesa";
+  const tipoLabel = tipo === "vino" ? "Vino" : "Cerveza";
   const emoji = tipo === "vino" ? "🍷" : "🍺";
 
   useEffect(() => {
@@ -26,9 +26,9 @@ export default function ProducteDetall() {
         setProduct(data.vino || data.cervesa || data.producte || data);
       } catch (err) {
         if (err.response?.status === 404) {
-          setError("Producte no trobat");
+          setError("Producto no encontrado");
         } else {
-          setError("Error en carregar el producte");
+          setError("Error al cargar el producto");
         }
       } finally {
         setLoading(false);
@@ -59,13 +59,13 @@ export default function ProducteDetall() {
         <div className="text-center">
           <p className="text-5xl mb-4">🍾</p>
           <h2 className="font-display text-3xl text-stone-300 mb-2">
-            {error || "Producte no trobat"}
+            {error || "Producto no encontrado"}
           </h2>
           <p className="text-stone-500 font-body text-sm mb-6">
-            Verifica que l'adreça és correcta o torna al catàleg.
+            Verifica que la dirección es correcta o vuelve al catálogo.
           </p>
           <Link to="/cataleg" className="btn-ghost">
-            Tornar al catàleg
+            Volver al catálogo
           </Link>
         </div>
       </div>
@@ -88,14 +88,14 @@ export default function ProducteDetall() {
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500 font-body mb-10">
           <Link to="/" className="hover:text-stone-300 transition-colors">
-            Inici
+            Inicio
           </Link>
           <span>/</span>
           <Link
             to="/cataleg"
             className="hover:text-stone-300 transition-colors"
           >
-            Catàleg
+            Catálogo
           </Link>
           <span>/</span>
           <span className="text-stone-300">{product.nombre}</span>
@@ -144,25 +144,25 @@ export default function ProducteDetall() {
             {/* Specs */}
             <div className="grid grid-cols-2 gap-3 mb-8">
               {product.graduacion && (
-                <Spec label="Graduació" value={`${product.graduacion}°`} />
+                <Spec label="Graduación" value={`${product.graduacion}°`} />
               )}
               {product.detalles?.tipo && (
-                <Spec label="Tipus" value={product.detalles.tipo} />
+                <Spec label="Tipo" value={product.detalles.tipo} />
               )}
               {product.detalles?.origen && (
                 <Spec label="Origen" value={product.detalles.origen} />
               )}
               {product.detalles?.anyada && (
-                <Spec label="Anyada" value={product.detalles.anyada} />
+                <Spec label="Añada" value={product.detalles.anyada} />
               )}
               {product.detalles?.maridatge && (
-                <Spec label="Maridatge" value={product.detalles.maridatge} />
+                <Spec label="Maridaje" value={product.detalles.maridatge} />
               )}
               {product.stock != null && (
                 <Spec
                   label="Stock"
                   value={
-                    product.stock > 0 ? `${product.stock} unitats` : "Esgotat"
+                    product.stock > 0 ? `${product.stock} unidades` : "Agotado"
                   }
                   warn={product.stock === 0}
                 />
@@ -205,7 +205,7 @@ export default function ProducteDetall() {
                   onClick={handleAddToCart}
                   className="btn-primary flex-1 justify-center py-3"
                 >
-                  Afegir al Carret
+                  Añadir al Carrito
                 </button>
               </div>
             )}
@@ -213,7 +213,7 @@ export default function ProducteDetall() {
             {product.stock === 0 && (
               <div className="border border-stone-800 rounded p-4 text-center">
                 <p className="text-stone-500 font-body text-sm">
-                  Aquest producte està esgotat temporalment
+                  Este producto está agotado temporalmente
                 </p>
               </div>
             )}

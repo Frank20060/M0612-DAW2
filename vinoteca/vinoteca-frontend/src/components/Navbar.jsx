@@ -46,22 +46,22 @@ export default function Navbar() {
               Vinacoteca
             </span>
             <span className="text-[9px] uppercase tracking-[0.3em] text-stone-500 font-body">
-              Vins · Cerveses · Artesanals
+              Vinos · Cervezas · Artesanales
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <NavLink to="/cataleg" className={navLinkClass}>Catàleg</NavLink>
+            <NavLink to="/cataleg" className={navLinkClass}>Catálogo</NavLink>
             {isEditor && (
               <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
             )}
             {!isAuthenticated ? (
               <>
-                <NavLink to="/login" className={navLinkClass}>Iniciar Sessió</NavLink>
+                <NavLink to="/login" className={navLinkClass}>Iniciar Sesión</NavLink>
                 <NavLink to="/registre" className={navLinkClass}>
                   <span className="border border-gold-500/40 text-gold-400 px-4 py-1.5 rounded hover:bg-gold-500/10 transition-colors">
-                    Registrar-se
+                    Registrarse
                   </span>
                 </NavLink>
               </>
@@ -88,7 +88,7 @@ export default function Navbar() {
                   onClick={handleLogout}
                   className="text-xs uppercase tracking-widest text-stone-400 hover:text-stone-100 transition-colors font-body font-medium"
                 >
-                  Sortir
+                  Salir
                 </button>
               </>
             )}
@@ -97,7 +97,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(true)}
               className="relative flex items-center gap-2 text-stone-300 hover:text-gold-400 transition-colors"
-              aria-label="Obrir carret"
+              aria-label="Abrir carrito"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
@@ -147,14 +147,14 @@ export default function Navbar() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden bg-cellar-900/98 backdrop-blur-md border-t border-stone-800/60 px-6 py-6 flex flex-col gap-5">
-            <MobileLink to="/cataleg" onClick={() => setMenuOpen(false)}>Catàleg</MobileLink>
+            <MobileLink to="/cataleg" onClick={() => setMenuOpen(false)}>Catálogo</MobileLink>
             {isEditor && (
               <MobileLink to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</MobileLink>
             )}
             {!isAuthenticated ? (
               <>
-                <MobileLink to="/login" onClick={() => setMenuOpen(false)}>Iniciar Sessió</MobileLink>
-                <MobileLink to="/registre" onClick={() => setMenuOpen(false)}>Registrar-se</MobileLink>
+                <MobileLink to="/login" onClick={() => setMenuOpen(false)}>Iniciar Sesión</MobileLink>
+                <MobileLink to="/registre" onClick={() => setMenuOpen(false)}>Registrarse</MobileLink>
               </>
             ) : (
               <>
@@ -163,7 +163,7 @@ export default function Navbar() {
                   onClick={handleLogout}
                   className="text-left text-xs uppercase tracking-widest text-stone-400 hover:text-stone-100 transition-colors font-body font-medium"
                 >
-                  Sortir
+                  Salir
                 </button>
               </>
             )}

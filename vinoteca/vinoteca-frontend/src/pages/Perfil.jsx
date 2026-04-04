@@ -47,10 +47,10 @@ export default function Perfil() {
       setUser(updated);
       localStorage.setItem("user", JSON.stringify(updated));
       setEditMode(false);
-      toast.success("Perfil actualitzat", { style: toastStyle });
+      toast.success("Perfil actualizado", { style: toastStyle });
     } catch (err) {
       const msg =
-        err.response?.data?.mensaje || "Error en actualitzar el perfil";
+        err.response?.data?.mensaje || "Error al actualizar el perfil";
       toast.error(msg, { style: toastStyle });
     } finally {
       setSaving(false);
@@ -60,9 +60,9 @@ export default function Perfil() {
   const imgSrc = getFullImageUrl(user?.imatge);
 
   const rolLabel =
-    { admin: "Administrador", editor: "Editor", usuari: "Usuari" }[user?.rol] ||
+    { admin: "Administrador", editor: "Editor", usuari: "Usuario", client: "Usuario" }[user?.rol] ||
     user?.rol ||
-    "Usuari";
+    "Usuario";
   const rolColor =
     { admin: "badge-gold", editor: "badge-burgundy" }[user?.rol] ||
     "badge bg-stone-800/40 text-stone-400 border border-stone-700/40";
@@ -95,7 +95,7 @@ export default function Perfil() {
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-3 mb-1">
               <h1 className="font-display text-3xl text-stone-100">
-                {user?.nombre || "Usuari"}
+                {user?.nombre || "Usuario"}
               </h1>
               <span className={rolColor}>{rolLabel}</span>
             </div>
@@ -107,7 +107,7 @@ export default function Perfil() {
               href="/dashboard"
               className="btn-ghost text-xs whitespace-nowrap"
             >
-              Anar al Dashboard →
+              Ir al Dashboard →
             </a>
           )}
         </div>
@@ -125,8 +125,8 @@ export default function Perfil() {
               }`}
             >
               {tab === "perfil"
-                ? "Dades Personals"
-                : `Les Meves Comandes (${pedidos.length})`}
+                ? "Datos Personales"
+                : `Mis Pedidos (${pedidos.length})`}
             </button>
           ))}
         </div>
@@ -151,7 +151,7 @@ export default function Perfil() {
             {editMode ? (
               <div className="space-y-4">
                 <div>
-                  <label className="label">Nom</label>
+                  <label className="label">Nombre</label>
                   <input
                     type="text"
                     value={form.nombre}
@@ -178,7 +178,7 @@ export default function Perfil() {
                     disabled={saving}
                     className="btn-primary text-xs py-2 disabled:opacity-60"
                   >
-                    {saving ? "Desant…" : "Desar Canvis"}
+                    {saving ? "Guardando…" : "Guardar Cambios"}
                   </button>
                   <button
                     onClick={() => {
@@ -190,18 +190,18 @@ export default function Perfil() {
                     }}
                     className="btn-ghost text-xs py-2"
                   >
-                    Cancel·lar
+                    Cancelar
                   </button>
                 </div>
               </div>
             ) : (
               <div className="space-y-4">
-                <InfoRow label="Nom" value={user?.nombre} />
+                <InfoRow label="Nombre" value={user?.nombre} />
                 <InfoRow label="Email" value={user?.email} />
                 <InfoRow label="Rol" value={rolLabel} />
                 <InfoRow
                   label="Foto de Perfil"
-                  value={user?.imatge ? "Carregada ✓" : "No configurada"}
+                  value={user?.imatge ? "Subida ✓" : "No configurada"}
                 />
               </div>
             )}
@@ -221,13 +221,13 @@ export default function Perfil() {
               <div className="text-center py-16">
                 <span className="text-5xl block mb-4">📦</span>
                 <p className="font-display text-2xl text-stone-400 mb-2">
-                  Encara no has fet cap comanda
+                  Todavía no has hecho ningún pedido
                 </p>
                 <p className="text-stone-500 font-body text-sm mb-6">
-                  Explora el catàleg i descobreix els nostres productes
+                  Explora el catálogo y descubre nuestros productos
                 </p>
                 <a href="/cataleg" className="btn-ghost text-xs">
-                  Anar al Catàleg
+                  Ir al Catálogo
                 </a>
               </div>
             ) : (
@@ -270,22 +270,22 @@ function PedidoCard({ pedido }) {
 
   const statusLabel =
     {
-      pendent: "Pendent",
-      processat: "Processat",
-      enviat: "Enviat",
-      entregat: "Entregat",
-      cancel·lat: "Cancel·lat",
+      pendent: "Pendiente",
+      processat: "Procesado",
+      enviat: "Enviado",
+      entregat: "Entregado",
+      cancel·lat: "Cancelado",
     }[pedido.estat || pedido.estado] ||
     pedido.estat ||
     pedido.estado ||
-    "Pendent";
+    "Pendiente";
 
   const statusColor =
     {
-      Pendent: "text-amber-400/80 border-amber-900/40",
-      Processat: "text-blue-400/80 border-blue-900/40",
-      Enviat: "text-purple-400/80 border-purple-900/40",
-      Entregat: "text-emerald-400/80 border-emerald-900/40",
+      Pendiente: "text-amber-400/80 border-amber-900/40",
+      Procesado: "text-blue-400/80 border-blue-900/40",
+      Enviado: "text-purple-400/80 border-purple-900/40",
+      Entregado: "text-emerald-400/80 border-emerald-900/40",
     }[statusLabel] || "text-stone-400 border-stone-700";
 
   return (
@@ -297,7 +297,7 @@ function PedidoCard({ pedido }) {
         <div className="flex items-center gap-4">
           <div>
             <p className="font-body text-sm text-stone-200 font-medium">
-              Comanda #{pedido._id?.slice(-6).toUpperCase() || "—"}
+              Pedido #{pedido._id?.slice(-6).toUpperCase() || "—"}
             </p>
             <p className="text-xs text-stone-500 font-body mt-0.5">{date}</p>
           </div>
@@ -331,7 +331,7 @@ function PedidoCard({ pedido }) {
       {open && pedido.productos && (
         <div className="border-t border-stone-800/60 px-5 py-4">
           <p className="text-[10px] uppercase tracking-widest text-stone-500 font-body mb-3">
-            Articles
+            Artículos
           </p>
           <div className="space-y-2">
             {pedido.productos.map((item, i) => (
@@ -343,7 +343,7 @@ function PedidoCard({ pedido }) {
                   {item.producto_id?.nombre ||
                     item.nombre ||
                     item.producto_id ||
-                    "Producte"}
+                    "Producto"}
                   <span className="text-stone-600 ml-1">
                     ({item.producto_modelo || item.tipo})
                   </span>

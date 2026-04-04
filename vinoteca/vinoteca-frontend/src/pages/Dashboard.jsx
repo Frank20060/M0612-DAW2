@@ -52,12 +52,12 @@ export default function Dashboard() {
         ]);
         if (vR.status === "fulfilled") {
           const d = vR.value.data;
-          setVinos(Array.isArray(d) ? d : d.vinos || d.data || []);
+          setVinos(Array.isArray(d) ? d : d.dades || d.vinos || d.data || []);
         }
         if (cR.status === "fulfilled") {
           const d = cR.value.data;
           setCerveses(
-            Array.isArray(d) ? d : d.cervesas || d.cerveses || d.data || [],
+            Array.isArray(d) ? d : d.dades || d.cervesas || d.cerveses || d.data || [],
           );
         }
       } catch {
@@ -82,7 +82,7 @@ export default function Dashboard() {
               : data.usuaris || data.users || data.data || [],
           );
         } catch (err) {
-          toast.error("Error en carregar usuaris", { style: toastStyle });
+          toast.error("Error al cargar usuarios", { style: toastStyle });
         } finally {
           setLoadingUsers(false);
         }
@@ -133,7 +133,7 @@ export default function Dashboard() {
 
   const handleSaveProduct = async () => {
     if (!productForm.nombre.trim()) {
-      toast.error("El nom és obligatori", { style: toastStyle });
+      toast.error("El nombre es obligatorio", { style: toastStyle });
       return;
     }
     setSavingProd(true);
@@ -156,7 +156,7 @@ export default function Dashboard() {
           fd.append("imatge", imageFile);
           await api.uploadImatge(editingProduct._id, fd);
         }
-        toast.success("Producte actualitzat", { style: toastStyle });
+        toast.success("Producto actualizado", { style: toastStyle });
       } else {
         const { data } = await api.create(payload);
         saved = data.vino || data.cervesa || data.producte || data;
@@ -167,7 +167,7 @@ export default function Dashboard() {
           await api.uploadImatge(saved._id, fd);
           saved.imatge = "pendent...";
         }
-        toast.success("Producte creat", { style: toastStyle });
+        toast.success("Producto creado", { style: toastStyle });
       }
 
       // Refresh lists
@@ -175,7 +175,7 @@ export default function Dashboard() {
       const d = refreshed.data;
       const list = Array.isArray(d)
         ? d
-        : d.vinos || d.cervesas || d.cerveses || d.data || [];
+        : d.dades || d.vinos || d.cervesas || d.cerveses || d.data || [];
       if (productTipo === "Vino") setVinos(list);
       else setCerveses(list);
 
@@ -184,7 +184,7 @@ export default function Dashboard() {
       const msg =
         err.response?.data?.mensaje ||
         err.response?.data?.error ||
-        "Error en desar";
+        "Error al guardar";
       toast.error(msg, { style: toastStyle });
     } finally {
       setSavingProd(false);
@@ -194,7 +194,7 @@ export default function Dashboard() {
   const handleDelete = async (product, tipo) => {
     if (
       !window.confirm(
-        `Eliminar "${product.nombre}"? Aquesta acció no es pot desfer.`,
+        `¿Eliminar "${product.nombre}"? Esta acción no se puede deshacer.`,
       )
     )
       return;
@@ -205,9 +205,9 @@ export default function Dashboard() {
       if (tipo === "Vino")
         setVinos((p) => p.filter((v) => v._id !== product._id));
       else setCerveses((p) => p.filter((c) => c._id !== product._id));
-      toast.success("Producte eliminat", { style: toastStyle });
+      toast.success("Producto eliminado", { style: toastStyle });
     } catch (err) {
-      toast.error("Error en eliminar", { style: toastStyle });
+      toast.error("Error al eliminar", { style: toastStyle });
     } finally {
       setDeletingId(null);
     }
@@ -221,9 +221,9 @@ export default function Dashboard() {
       setUsuaris((prev) =>
         prev.map((u) => (u._id === userId ? { ...u, rol: newRol } : u)),
       );
-      toast.success("Rol actualitzat", { style: toastStyle });
+      toast.success("Rol actualizado", { style: toastStyle });
     } catch (err) {
-      toast.error("Error en canviar el rol", { style: toastStyle });
+      toast.error("Error al cambiar el rol", { style: toastStyle });
     } finally {
       setUpdatingRol(null);
     }
@@ -231,8 +231,8 @@ export default function Dashboard() {
 
   // ── Tabs config ────────────────────────────────────────────────────────────
   const tabs = [
-    { id: "productes", label: "Productes" },
-    ...(isAdmin ? [{ id: "usuaris", label: "Usuaris" }] : []),
+    { id: "productes", label: "Productos" },
+    ...(isAdmin ? [{ id: "usuaris", label: "Usuarios" }] : []),
   ];
 
   return (
@@ -246,22 +246,22 @@ export default function Dashboard() {
           <h1 className="section-title mb-1">Dashboard</h1>
           <div className="gold-line" />
           <p className="text-stone-400 font-body text-sm mt-1">
-            Benvingut, {user?.nombre}. Gestiona el catàleg
-            {isAdmin ? " i els usuaris" : ""}.
+            Bienvenido, {user?.nombre}. Gestiona el catálogo
+            {isAdmin ? " y los usuarios" : ""}.
           </p>
         </div>
 
         {/* Stats strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          <StatCard label="Vins" value={vinos.length} icon="🍷" />
-          <StatCard label="Cerveses" value={cerveses.length} icon="🍺" />
+          <StatCard label="Vinos" value={vinos.length} icon="🍷" />
+          <StatCard label="Cervezas" value={cerveses.length} icon="🍺" />
           <StatCard
-            label="Total Productes"
+            label="Total Productos"
             value={vinos.length + cerveses.length}
             icon="📦"
           />
           {isAdmin && (
-            <StatCard label="Usuaris" value={usuaris.length || "—"} icon="👥" />
+            <StatCard label="Usuarios" value={usuaris.length || "—"} icon="👥" />
           )}
         </div>
 
@@ -287,7 +287,7 @@ export default function Dashboard() {
           <div className="space-y-10">
             {/* Vins section */}
             <ProductSection
-              title="Vins"
+              title="Vinos"
               emoji="🍷"
               products={vinos}
               tipo="Vino"
@@ -300,7 +300,7 @@ export default function Dashboard() {
 
             {/* Cerveses section */}
             <ProductSection
-              title="Cerveses"
+              title="Cervezas"
               emoji="🍺"
               products={cerveses}
               tipo="Cerveza"
@@ -325,7 +325,7 @@ export default function Dashboard() {
             ) : usuaris.length === 0 ? (
               <div className="text-center py-16">
                 <p className="font-display text-2xl text-stone-400">
-                  Cap usuari trobat
+                  Ningún usuario encontrado
                 </p>
               </div>
             ) : (
@@ -333,7 +333,7 @@ export default function Dashboard() {
                 <table className="w-full text-sm font-body">
                   <thead>
                     <tr className="border-b border-stone-800/60">
-                      {["Usuari", "Email", "Rol Actual", "Canviar Rol", ""].map(
+                      {["Usuario", "Email", "Rol Actual", "Cambiar Rol", ""].map(
                         (h) => (
                           <th
                             key={h}
@@ -374,7 +374,7 @@ export default function Dashboard() {
                             disabled={updatingRol === u._id}
                             className="input-field text-xs py-1.5 w-auto pr-8 disabled:opacity-50"
                           >
-                            <option value="usuari">Usuari</option>
+                            <option value="usuari">Usuario</option>
                             <option value="editor">Editor</option>
                             <option value="admin">Admin</option>
                           </select>
@@ -456,7 +456,7 @@ function ProductSection({
           </span>
         </h2>
         <button onClick={onAdd} className="btn-primary text-xs py-2">
-          + Nou {tipo === "Vino" ? "Vi" : "Cervesa"}
+          + Nuevo {tipo === "Vino" ? "Vino" : "Cerveza"}
         </button>
       </div>
 
@@ -469,10 +469,10 @@ function ProductSection({
       ) : products.length === 0 ? (
         <div className="glass-panel p-8 text-center border-dashed">
           <p className="text-stone-500 font-body text-sm">
-            No hi ha {title.toLowerCase()} al catàleg
+            No hay {title.toLowerCase()} en el catálogo
           </p>
           <button onClick={onAdd} className="btn-ghost text-xs mt-4">
-            Afegir el primer
+            Añadir el primero
           </button>
         </div>
       ) : (
@@ -480,7 +480,7 @@ function ProductSection({
           <table className="w-full text-sm font-body">
             <thead>
               <tr className="border-b border-stone-800/60">
-                {["Producte", "Preu", "Stock", "Graduació", "Accions"].map(
+                {["Producto", "Precio", "Stock", "Graduación", "Acciones"].map(
                   (h) => (
                     <th
                       key={h}
@@ -576,14 +576,14 @@ function ProductModal({
   onSave,
   onClose,
 }) {
-  const tipoLabel = tipo === "Vino" ? "Vi" : "Cervesa";
+  const tipoLabel = tipo === "Vino" ? "Vino" : "Cerveza";
   const [preview, setPreview] = useState(null);
 
   const handleImage = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      toast.error("Només s'accepten imatges", { style: toastStyle });
+      toast.error("Solo se aceptan imágenes", { style: toastStyle });
       return;
     }
     onImageChange(file);
@@ -601,9 +601,9 @@ function ProductModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-display text-2xl text-stone-100">
-            {editing ? `Editar ${tipoLabel}` : `Nou ${tipoLabel}`}
-          </h2>
+          <h3 className="font-display text-2xl text-stone-200">
+            {editing ? `Editar ${tipoLabel}` : `Nuevo ${tipoLabel}`}
+          </h3>
           <button
             onClick={onClose}
             className="text-stone-500 hover:text-stone-100 transition-colors"
@@ -627,7 +627,7 @@ function ProductModal({
         <div className="space-y-4">
           {/* Image */}
           <div>
-            <label className="label">Imatge del Producte</label>
+            <label className="label">Imagen del Producto</label>
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded bg-cellar-800 overflow-hidden flex items-center justify-center text-2xl flex-shrink-0">
                 {preview ? (
@@ -643,7 +643,7 @@ function ProductModal({
                 )}
               </div>
               <label className="btn-ghost text-xs cursor-pointer">
-                Seleccionar Imatge
+                Seleccionar Imagen
                 <input
                   type="file"
                   accept="image/*"
@@ -655,7 +655,7 @@ function ProductModal({
           </div>
 
           <div>
-            <label className="label">Nom *</label>
+            <label className="label">Nombre *</label>
             <input
               type="text"
               value={form.nombre}
@@ -670,19 +670,19 @@ function ProductModal({
           </div>
 
           <div>
-            <label className="label">Descripció</label>
+            <label className="label">Descripción</label>
             <textarea
               rows={3}
               value={form.descripcion}
               onChange={(e) => onFormChange("descripcion", e.target.value)}
-              placeholder="Descripció del producte…"
+              placeholder="Descripción del producto…"
               className="input-field resize-none"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="label">Preu (€)</label>
+              <label className="label">Precio (€)</label>
               <input
                 type="number"
                 step="0.01"
@@ -705,7 +705,7 @@ function ProductModal({
               />
             </div>
             <div>
-              <label className="label">Graduació (°)</label>
+              <label className="label">Graduación (°)</label>
               <input
                 type="number"
                 step="0.1"
@@ -721,17 +721,17 @@ function ProductModal({
           {/* Detalles */}
           <div className="border-t border-stone-800/60 pt-4">
             <p className="text-[10px] uppercase tracking-widest text-stone-500 font-body mb-3">
-              Detalls Addicionals
+              Detalles Adicionales
             </p>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="label">Tipus</label>
+                <label className="label">Tipo</label>
                 <input
                   type="text"
                   value={form.detalles.tipo}
                   onChange={(e) => onDetallesChange("tipo", e.target.value)}
                   placeholder={
-                    tipo === "Vino" ? "Negre, Blanc…" : "IPA, Stout…"
+                    tipo === "Vino" ? "Tinto, Blanco…" : "IPA, Stout…"
                   }
                   className="input-field text-xs"
                 />
@@ -749,7 +749,7 @@ function ProductModal({
               {tipo === "Vino" && (
                 <>
                   <div>
-                    <label className="label">Anyada</label>
+                    <label className="label">Añada</label>
                     <input
                       type="text"
                       value={form.detalles.anyada}
@@ -761,14 +761,14 @@ function ProductModal({
                     />
                   </div>
                   <div>
-                    <label className="label">Maridatge</label>
+                    <label className="label">Maridaje</label>
                     <input
                       type="text"
                       value={form.detalles.maridatge}
                       onChange={(e) =>
                         onDetallesChange("maridatge", e.target.value)
                       }
-                      placeholder="Carns vermelles…"
+                      placeholder="Carnes rojas…"
                       className="input-field text-xs"
                     />
                   </div>
@@ -779,23 +779,22 @@ function ProductModal({
 
           <div className="flex gap-3 pt-2">
             <button
-              onClick={onSave}
+              type="submit"
               disabled={saving}
-              className="btn-primary flex-1 justify-center py-3 disabled:opacity-60"
+              className="btn-primary py-2 px-8"
             >
-              {saving ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-cellar-950/30 border-t-cellar-950 rounded-full animate-spin" />
-                  Desant…
-                </>
-              ) : editing ? (
-                "Desar Canvis"
-              ) : (
-                "Crear Producte"
-              )}
+              {saving
+                ? "Guardando…"
+                : editing
+                  ? "Guardar Cambios"
+                  : "Crear Producto"}
             </button>
-            <button onClick={onClose} className="btn-ghost py-3 px-4">
-              Cancel·lar
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn-ghost py-2 px-6"
+            >
+              Cancelar
             </button>
           </div>
         </div>
@@ -810,7 +809,7 @@ function RolBadge({ rol }) {
     editor: "badge-burgundy",
     usuari: "badge bg-stone-800/40 text-stone-400 border border-stone-700/40",
   };
-  const labels = { admin: "Admin", editor: "Editor", usuari: "Usuari" };
+  const labels = { admin: "Admin", editor: "Editor", usuari: "Usuario" };
   const cls = map[rol] || map.usuari;
-  return <span className={cls}>{labels[rol] || rol || "Usuari"}</span>;
+  return <span className={cls}>{labels[rol] || rol || "Usuario"}</span>;
 }

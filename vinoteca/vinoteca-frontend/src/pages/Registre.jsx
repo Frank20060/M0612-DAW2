@@ -27,11 +27,11 @@ export default function Registre() {
     const file = e.target.files?.[0]
     if (!file) return
     if (!file.type.startsWith('image/')) {
-      toast.error('Només s\'accepten imatges', { style: toastStyle })
+      toast.error('Solo se aceptan imágenes', { style: toastStyle })
       return
     }
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('La imatge no pot superar 5 MB', { style: toastStyle })
+      toast.error('La imagen no puede superar los 5 MB', { style: toastStyle })
       return
     }
     setPhoto(file)
@@ -41,11 +41,11 @@ export default function Registre() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (form.password !== form.confirmPassword) {
-      toast.error('Les contrasenyes no coincideixen', { style: toastStyle })
+      toast.error('Las contraseñas no coinciden', { style: toastStyle })
       return
     }
     if (form.password.length < 6) {
-      toast.error('La contrasenya ha de tenir almenys 6 caràcters', { style: toastStyle })
+      toast.error('La contraseña debe tener al menos 6 caracteres', { style: toastStyle })
       return
     }
 
@@ -75,8 +75,8 @@ export default function Registre() {
           <Link to="/" className="inline-block font-display text-3xl text-gold-400 hover:text-gold-300 transition-colors mb-6">
             Vinacoteca
           </Link>
-          <h1 className="font-display text-4xl text-stone-100 font-light mb-2">Crea el teu compte</h1>
-          <p className="text-stone-500 font-body text-sm">Accedeix a comandes i contingut exclusiu</p>
+          <h1 className="font-display text-4xl text-stone-100 font-light mb-2">Crea tu cuenta</h1>
+          <p className="text-stone-500 font-body text-sm">Accede a pedidos y contenido exclusivo</p>
         </div>
 
         <div className="glass-panel p-8">
@@ -120,7 +120,7 @@ export default function Registre() {
 
             {/* Nombre */}
             <div>
-              <label className="label">Nom complet</label>
+              <label className="label">Nombre completo</label>
               <input
                 type="text"
                 name="nombre"
@@ -134,13 +134,13 @@ export default function Registre() {
 
             {/* Email */}
             <div>
-              <label className="label">Correu Electrònic</label>
+              <label className="label">Correo Electrónico</label>
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="tu@exemple.com"
+                placeholder="tu@ejemplo.com"
                 required
                 autoComplete="email"
                 className="input-field"
@@ -149,14 +149,14 @@ export default function Registre() {
 
             {/* Password */}
             <div>
-              <label className="label">Contrasenya</label>
+              <label className="label">Contraseña</label>
               <div className="relative">
                 <input
                   type={showPass ? 'text' : 'password'}
                   name="password"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="Mínim 6 caràcters"
+                  placeholder="Mínimo 6 caracteres"
                   required
                   className="input-field pr-12"
                 />
@@ -175,13 +175,13 @@ export default function Registre() {
 
             {/* Confirm password */}
             <div>
-              <label className="label">Confirmar Contrasenya</label>
+              <label className="label">Confirmar Contraseña</label>
               <input
                 type={showPass ? 'text' : 'password'}
                 name="confirmPassword"
                 value={form.confirmPassword}
                 onChange={handleChange}
-                placeholder="Repeteix la contrasenya"
+                placeholder="Repite la contraseña"
                 required
                 className="input-field"
               />
@@ -196,19 +196,19 @@ export default function Registre() {
               {loading ? (
                 <>
                   <span className="w-4 h-4 border-2 border-cellar-950/30 border-t-cellar-950 rounded-full animate-spin" />
-                  Creant compte…
+                  Creando cuenta…
                 </>
               ) : (
-                'Crear Compte'
+                'Crear Cuenta'
               )}
             </button>
           </form>
 
           <div className="mt-6 pt-6 border-t border-stone-800/60 text-center">
             <p className="text-stone-500 font-body text-sm">
-              Ja tens compte?{' '}
+              ¿Ya tienes cuenta?{' '}
               <Link to="/login" className="text-gold-400 hover:text-gold-300 transition-colors">
-                Inicia sessió
+                Inicia sesión
               </Link>
             </p>
           </div>

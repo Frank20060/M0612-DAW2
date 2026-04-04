@@ -38,9 +38,9 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-stone-800/60">
           <div>
-            <h2 className="font-display text-2xl text-stone-100">Carret</h2>
+            <h2 className="font-display text-2xl text-stone-100">Carrito</h2>
             <p className="text-xs text-stone-500 font-body mt-0.5 uppercase tracking-widest">
-              {itemCount} {itemCount === 1 ? 'article' : 'articles'}
+              {itemCount} {itemCount === 1 ? 'artículo' : 'artículos'}
             </p>
           </div>
           <button
@@ -58,13 +58,13 @@ export default function CartDrawer() {
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
               <span className="text-5xl">🍷</span>
-              <p className="font-display text-xl text-stone-400">El carret és buit</p>
-              <p className="text-xs text-stone-500 font-body">Afegeix vins o cerveses des del catàleg</p>
+              <p className="font-display text-xl text-stone-400">El carrito está vacío</p>
+              <p className="text-xs text-stone-500 font-body">Añade vinos o cervezas desde el catálogo</p>
               <button
                 onClick={() => { setIsOpen(false); navigate('/cataleg') }}
                 className="btn-ghost text-xs mt-2"
               >
-                Veure catàleg
+                Ver catálogo
               </button>
             </div>
           ) : (
@@ -89,7 +89,7 @@ export default function CartDrawer() {
 
             {!isAuthenticated && (
               <p className="text-xs text-stone-500 font-body text-center">
-                Has d'iniciar sessió per finalitzar la compra
+                Debes iniciar sesión para finalizar la compra
               </p>
             )}
 
@@ -101,12 +101,12 @@ export default function CartDrawer() {
               {checkingOut ? (
                 <>
                   <span className="w-4 h-4 border-2 border-cellar-950/30 border-t-cellar-950 rounded-full animate-spin" />
-                  Processant…
+                  Procesando…
                 </>
               ) : isAuthenticated ? (
-                'Finalitzar Compra'
+                'Finalizar Compra'
               ) : (
-                'Iniciar Sessió per Comprar'
+                'Iniciar Sesión para Comprar'
               )}
             </button>
           </div>

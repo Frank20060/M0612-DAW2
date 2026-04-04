@@ -82,7 +82,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px w-16 bg-gold-gradient" />
             <span className="text-[10px] uppercase tracking-[0.4em] text-gold-500 font-body">
-              Bodeges Artesanals des de 1987
+              Bodegas Artesanales desde 1987
             </span>
             <div className="h-px w-16 bg-gold-gradient" />
           </div>
@@ -92,13 +92,13 @@ export default function Home() {
             Vinacoteca
           </h1>
           <p className="font-display text-xl md:text-2xl text-stone-400 font-light italic mb-10">
-            L'art del vi i la cervesa artesanal
+            El arte del vino y la cerveza artesanal
           </p>
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/cataleg" className="btn-primary text-sm px-8 py-3">
-              Descobrir el Catàleg
+              Descubrir el Catálogo
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -114,7 +114,7 @@ export default function Home() {
               </svg>
             </Link>
             <Link to="/registre" className="btn-ghost text-sm px-8 py-3">
-              Crear Compte
+              Crear Cuenta
             </Link>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Home() {
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
           <span className="text-[9px] uppercase tracking-widest text-stone-600 font-body">
-            Desplaça
+            Desplaza
           </span>
           <svg
             className="w-4 h-4 text-stone-600"
@@ -146,18 +146,18 @@ export default function Home() {
           {[
             {
               icon: "🍷",
-              title: "Vins Seleccionats",
-              desc: "Curada selecció de vins de les millors denominacions d'origen.",
+              title: "Vinos Seleccionados",
+              desc: "Cuidadosa selección de vinos de las mejores denominaciones de origen.",
             },
             {
               icon: "🍺",
-              title: "Cerveses Artesanes",
-              desc: "Cerveses artesanals de productors locals i internacionals.",
+              title: "Cervezas Artesanales",
+              desc: "Cervezas artesanales de productores locales e internacionales.",
             },
             {
               icon: "🚚",
-              title: "Lliurament Exprés",
-              desc: "Entrega en 24–48 hores, amb embalatge segur i professional.",
+              title: "Entrega Exprés",
+              desc: "Entrega en 24–48 horas, con embalaje seguro y profesional.",
             },
           ].map((f) => (
             <div key={f.title} className="text-center group">
@@ -180,9 +180,9 @@ export default function Home() {
         <section className="py-24 px-6 max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500/70 font-body mb-3">
-              Selecció destacada
+              Selección destacada
             </p>
-            <h2 className="section-title">Els Nostres Favorits</h2>
+            <h2 className="section-title">Nuestros Favoritos</h2>
             <div className="gold-line mx-auto" />
           </div>
 
@@ -198,7 +198,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link to="/cataleg" className="btn-ghost">
-              Veure tot el catàleg
+              Ver todo el catálogo
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -223,14 +223,14 @@ export default function Home() {
           <div className="absolute inset-0 bg-burgundy-gradient opacity-5 rounded-xl" />
           <div className="relative z-10">
             <h2 className="font-display text-4xl md:text-5xl text-stone-100 font-light mb-4">
-              Comença la teva col·lecció
+              Empieza tu colección
             </h2>
             <p className="text-stone-400 font-body text-sm leading-relaxed mb-8 max-w-lg mx-auto">
-              Registra't i accedeix a comandes exclusives, historial de compres
-              i recomanacions personalitzades.
+              Regístrate y accede a pedidos exclusivos, historial de compras
+              y recomendaciones personalizadas.
             </p>
             <Link to="/registre" className="btn-primary px-8 py-3">
-              Registrar-se ara · És gratuït
+              Registrarse ahora · Es gratis
             </Link>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function Home() {
       <footer className="border-t border-stone-800/40 py-10 px-6 text-center">
         <p className="font-display text-xl text-stone-600 mb-2">Vinacoteca</p>
         <p className="text-xs text-stone-700 font-body uppercase tracking-widest">
-          © {new Date().getFullYear()} · Tots els drets reservats
+          © {new Date().getFullYear()} · Todos los derechos reservados
         </p>
       </footer>
     </div>

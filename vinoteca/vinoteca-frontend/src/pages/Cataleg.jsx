@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { vinosAPI, cervesesAPI, IMG_URL } from "../api/axios";
 import ProductCard from "../components/ProductCard";
 
-const FILTERS = ["Tots", "Vins", "Cerveses"];
+const FILTERS = ["Todos", "Vinos", "Cervezas"];
 
 export default function Cataleg() {
   const [vinos, setVinos] = useState([]);
@@ -60,11 +60,11 @@ export default function Cataleg() {
 
         if (vR.status === "rejected" && cR.status === "rejected") {
           setError(
-            "No s'han pogut carregar els productes. Torna-ho a intentar.",
+            "No se han podido cargar los productos. Vuelve a intentarlo.",
           );
         }
       } catch {
-        setError("Error de connexió. Verifica que el backend està actiu.");
+        setError("Error de conexión. Verifica que el backend esté activo.");
       } finally {
         setLoading(false);
       }
@@ -76,7 +76,7 @@ export default function Cataleg() {
     const v = vinos.map((p) => ({ product: p, tipo: "Vino" }));
     const c = cerveses.map((p) => ({ product: p, tipo: "Cerveza" }));
     let merged =
-      filter === "Vins" ? v : filter === "Cerveses" ? c : [...v, ...c];
+      filter === "Vinos" ? v : filter === "Cervezas" ? c : [...v, ...c];
 
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -104,12 +104,12 @@ export default function Cataleg() {
         {/* Header */}
         <div className="mb-12">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500/70 font-body mb-3">
-            Col·lecció completa
+            Colección completa
           </p>
-          <h1 className="section-title mb-2">Catàleg</h1>
+          <h1 className="section-title mb-2">Catálogo</h1>
           <div className="gold-line" />
           <p className="text-stone-400 font-body text-sm mt-2">
-            {vinos.length} vins · {cerveses.length} cerveses
+            {vinos.length} vinos · {cerveses.length} cervezas
           </p>
         </div>
 
@@ -149,7 +149,7 @@ export default function Cataleg() {
             </svg>
             <input
               type="text"
-              placeholder="Cercar productes…"
+              placeholder="Buscar productos…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="input-field pl-9"
@@ -162,10 +162,10 @@ export default function Cataleg() {
             onChange={(e) => setSortBy(e.target.value)}
             className="input-field w-fit text-xs uppercase tracking-wider pr-8"
           >
-            <option value="default">Ordenar per…</option>
-            <option value="name">Nom A–Z</option>
-            <option value="price-asc">Preu ↑</option>
-            <option value="price-desc">Preu ↓</option>
+            <option value="default">Ordenar por…</option>
+            <option value="name">Nombre A–Z</option>
+            <option value="price-asc">Precio ↑</option>
+            <option value="price-desc">Precio ↓</option>
           </select>
         </div>
 
@@ -199,15 +199,15 @@ export default function Cataleg() {
             <span className="text-6xl block mb-4">🔍</span>
             <p className="font-display text-2xl text-stone-400 mb-2">
               {search
-                ? "Cap resultat per la teva cerca"
-                : "No hi ha productes disponibles"}
+                ? "Ningún resultado para tu búsqueda"
+                : "No hay productos disponibles"}
             </p>
             {search && (
               <button
                 onClick={() => setSearch("")}
                 className="btn-ghost text-xs mt-4"
               >
-                Esborrar cerca
+                Borrar búsqueda
               </button>
             )}
           </div>
@@ -218,7 +218,7 @@ export default function Cataleg() {
           <>
             <p className="text-xs text-stone-500 font-body uppercase tracking-widest mb-6">
               {allProducts.length}{" "}
-              {allProducts.length === 1 ? "producte" : "productes"}
+              {allProducts.length === 1 ? "producto" : "productos"}
             </p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {allProducts.map(({ product, tipo }) => (

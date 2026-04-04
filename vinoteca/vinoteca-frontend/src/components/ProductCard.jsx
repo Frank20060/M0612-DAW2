@@ -13,15 +13,15 @@ export default function ProductCard({ product, tipo }) {
       ? getFullImageUrl(product.imatge)
       : null
 
-  const tipoLabel = tipo === 'Vino' ? 'Vi' : 'Cervesa'
+  const tipoLabel = tipo === 'Vino' ? 'Vino' : 'Cerveza'
   const tipoPath = tipo === 'Vino' ? 'vino' : 'cervesa'
   const emoji = tipo === 'Vino' ? '🍷' : '🍺'
 
   const stockBadge =
     product.stock === 0
-      ? { label: 'Esgotat', cls: 'text-stone-500 border-stone-700' }
+      ? { label: 'Agotado', cls: 'text-stone-500 border-stone-700' }
       : product.stock <= 5
-      ? { label: `${product.stock} restants`, cls: 'text-amber-500/80 border-amber-900/40' }
+      ? { label: `${product.stock} restantes`, cls: 'text-amber-500/80 border-amber-900/40' }
       : null
 
   return (
@@ -101,7 +101,7 @@ export default function ProductCard({ product, tipo }) {
             disabled={product.stock === 0}
             className="btn-ghost text-xs py-2 px-4 disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            {product.stock === 0 ? 'Esgotat' : 'Afegir'}
+            {product.stock === 0 ? 'Agotado' : 'Añadir'}
           </button>
         </div>
       </div>

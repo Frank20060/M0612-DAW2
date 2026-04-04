@@ -1,5 +1,5 @@
 import express from 'express';
-import { registro, login, actualitzarPerfil, pujarImatgePerfil } from '../controladores/controlador.auth.js';
+import { registro, login, getPerfil, actualitzarPerfil, pujarImatgePerfil } from '../controladores/controlador.auth.js';
 import { protegir } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/upload.js';
 
@@ -28,6 +28,9 @@ router.post('/registro', upload.single('imatge'), registro);
 
 // Login
 router.post('/login', login);
+
+// Obtener perfil (protegida)
+router.get('/perfil', protegir, getPerfil);
 
 // Actualizar perfil (protegida)
 router.put('/perfil', protegir, actualitzarPerfil);

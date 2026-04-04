@@ -60,6 +60,25 @@ const login = async (req, res) => {
   }
 };
 
+// GET /api/auth/perfil — obtener datos de usuario autenticado
+const getPerfil = async (req, res) => {
+  try {
+    const usuari = req.usuari;
+    res.json({
+      usuari: { 
+        id: usuari._id, 
+        nom: usuari.nombre || usuari.nom || usuari.email.split('@')[0], 
+        nombre: usuari.nombre || usuari.nom || usuari.email.split('@')[0], 
+        email: usuari.email, 
+        rol: usuari.rol, 
+        imatge: usuari.imatge 
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // PUT /api/auth/perfil — actualitzar dades de l'usuari autenticat
 const actualitzarPerfil = async (req, res) => {
   try {
@@ -112,4 +131,4 @@ const pujarImatgePerfil = async (req, res) => {
   }
 };
 
-export { registro, login, actualitzarPerfil, pujarImatgePerfil };
+export { registro, login, getPerfil, actualitzarPerfil, pujarImatgePerfil };

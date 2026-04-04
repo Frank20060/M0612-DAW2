@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
         console.log("🔐 [Auth] Verificando sesión con token existente...");
         const { data } = await authAPI.getPerfil();
         // Adaptamos la respuesta según lo que devuelva el backend
-        const userData = data.usuario || data.user || data;
+        const userData = data.usuari || data.usuario || data.user || data;
         console.log("✅ [Auth] Sesión restaurada:", userData);
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -75,7 +75,7 @@ export function AuthProvider({ children }) {
         const { token: t, usuario, usuari, user: u } = data;
         const userData = usuario || usuari || u || data;
         saveSession(t, userData);
-        toast.success(`Benvingut, ${userData.nombre || userData.email}!`, {
+        toast.success(`¡Bienvenido, ${userData.nombre || userData.email}!`, {
           style: toastStyle,
         });
         console.log("✅ [Auth] Login exitoso:", userData);
@@ -106,9 +106,9 @@ export function AuthProvider({ children }) {
         const userData = usuario || usuari || u || data;
         if (t) {
           saveSession(t, userData);
-          toast.success("Compte creat! Benvingut/da!", { style: toastStyle });
+          toast.success("¡Cuenta creada! ¡Bienvenido/a!", { style: toastStyle });
         } else {
-          toast.success("Compte creat! Ara pots iniciar sessió.", {
+          toast.success("¡Cuenta creada! Ahora puedes iniciar sesión.", {
             style: toastStyle,
           });
         }
@@ -131,7 +131,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     clearSession();
-    toast("Sessió tancada", {
+    toast("Sesión cerrada", {
       icon: "👋",
       style: toastStyle,
     });

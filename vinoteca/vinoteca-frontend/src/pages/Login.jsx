@@ -41,21 +41,21 @@ export default function Login() {
           <Link to="/" className="inline-block font-display text-3xl text-gold-400 hover:text-gold-300 transition-colors mb-6">
             Vinacoteca
           </Link>
-          <h1 className="font-display text-4xl text-stone-100 font-light mb-2">Benvingut</h1>
-          <p className="text-stone-500 font-body text-sm">Inicia sessió per accedir al teu compte</p>
+          <h1 className="font-display text-4xl text-stone-100 font-light mb-2">Bienvenido</h1>
+          <p className="text-stone-500 font-body text-sm">Inicia sesión para acceder a tu cuenta</p>
         </div>
 
         {/* Form card */}
         <div className="glass-panel p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="label">Correu Electrònic</label>
+              <label className="label">Correo Electrónico</label>
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="tu@exemple.com"
+                placeholder="tu@ejemplo.com"
                 required
                 autoComplete="email"
                 className="input-field"
@@ -63,7 +63,7 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="label">Contrasenya</label>
+              <label className="label">Contraseña</label>
               <div className="relative">
                 <input
                   type={showPass ? 'text' : 'password'}
@@ -102,19 +102,19 @@ export default function Login() {
               {loading ? (
                 <>
                   <span className="w-4 h-4 border-2 border-cellar-950/30 border-t-cellar-950 rounded-full animate-spin" />
-                  Verificant…
+                  Verificando…
                 </>
               ) : (
-                'Iniciar Sessió'
+                'Iniciar Sesión'
               )}
             </button>
           </form>
 
           <div className="mt-6 pt-6 border-t border-stone-800/60 text-center">
             <p className="text-stone-500 font-body text-sm">
-              No tens compte?{' '}
+              ¿No tienes cuenta?{' '}
               <Link to="/registre" className="text-gold-400 hover:text-gold-300 transition-colors">
-                Registra't aquí
+                Regístrate aquí
               </Link>
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function Login() {
 
         {/* Demo credentials hint */}
         <p className="text-center text-xs text-stone-700 font-body mt-4">
-          Credencials de prova disponibles al README
+          Credenciales de prueba disponibles en el README
         </p>
       </div>
     </div>

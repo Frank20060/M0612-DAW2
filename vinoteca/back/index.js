@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import routerVinito from "./routes/vinoRoutes.js";
 import routerCerveza from "./routes/cervezaRoutes.js";
 import pedidosRoutes from "./routes/pedidosRoutes.js";
+import usuarisRoutes from "./routes/usuarisRoutes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -86,3 +87,6 @@ app.use("/api/cerveza", routerCerveza);
 
 //rutas Pedidos
 app.use("/api/pedidos", pedidosRoutes);
+
+//rutas Usuaris
+app.use("/api/usuaris", usuarisRoutes);
