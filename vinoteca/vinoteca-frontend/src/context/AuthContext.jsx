@@ -72,8 +72,8 @@ export function AuthProvider({ children }) {
       try {
         const { data } = await authAPI.login({ email, password });
         // El backend puede devolver { token, usuario: {...} } o estructura similar
-        const { token: t, usuario, user: u } = data;
-        const userData = usuario || u || data;
+        const { token: t, usuario, usuari, user: u } = data;
+        const userData = usuario || usuari || u || data;
         saveSession(t, userData);
         toast.success(`Benvingut, ${userData.nombre || userData.email}!`, {
           style: toastStyle,
@@ -102,8 +102,8 @@ export function AuthProvider({ children }) {
       try {
         // registro acepta FormData para soportar subida de imagen
         const { data } = await authAPI.registro(formData);
-        const { token: t, usuario, user: u } = data;
-        const userData = usuario || u || data;
+        const { token: t, usuario, usuari, user: u } = data;
+        const userData = usuario || usuari || u || data;
         if (t) {
           saveSession(t, userData);
           toast.success("Compte creat! Benvingut/da!", { style: toastStyle });

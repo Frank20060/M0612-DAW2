@@ -16,10 +16,15 @@ const storage = multer.diskStorage({
     cb(null, dest);
   },
   filename: (req, file, cb) => {
-    // 2) Nom únic per evitar sobrescriure fitxers amb el mateix nom
-    //    Ex.: 1711200000000-foto cervesa.png -> 1711200000000-foto-cervesa.png
-    const unique = Date.now() + '-' + (file.originalname || 'fitxer');
-    cb(null, unique.replace(/\s/g, '-'));
+    // 2) Nom únic i sanejat per evitar problemes amb caràcters especials o accents
+    const original = file.originalname || 'fitxer';
+    const sanitized = original
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Elimina accents
+      .replace(/[^a-zA-Z0-9.\-_]/g, ""); // Manté només alfanumèrics i punt/guió
+    
+    const unique = Date.now() + '-' + sanitized;
+    cb(null, unique);
   }
 });
 

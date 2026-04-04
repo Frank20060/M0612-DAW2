@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
+import { getFullImageUrl } from '../api/axios'
 
 const API_BASE = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:8000'
 
@@ -70,11 +71,7 @@ export default function Navbar() {
                   <span className="flex items-center gap-2">
                     {user?.imatge ? (
                       <img
-                        src={
-                          user.imatge.startsWith('http')
-                            ? user.imatge
-                            : `${API_BASE}/${user.imatge}`
-                        }
+                        src={getFullImageUrl(user.imatge)}
                         alt={user.nombre}
                         className="w-6 h-6 rounded-full object-cover border border-stone-700"
                         onError={(e) => { e.target.style.display = 'none' }}

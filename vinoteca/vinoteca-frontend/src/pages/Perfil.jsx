@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { pedidosAPI, authAPI, IMG_URL } from "../api/axios";
+import { pedidosAPI, authAPI, IMG_URL, getFullImageUrl } from "../api/axios";
 import toast from "react-hot-toast";
 
 const toastStyle = {
@@ -57,11 +57,7 @@ export default function Perfil() {
     }
   };
 
-  const imgSrc = user?.imatge
-    ? user.imatge.startsWith("http")
-      ? user.imatge
-      : `${IMG_URL}/${user.imatge.replace(/\\/g, "/")}` // Reemplaza \ por / para Windows
-    : null;
+  const imgSrc = getFullImageUrl(user?.imatge);
 
   const rolLabel =
     { admin: "Administrador", editor: "Editor", usuari: "Usuari" }[user?.rol] ||

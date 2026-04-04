@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
-
+import { getFullImageUrl } from '../api/axios'
 const API_BASE = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:8000'
 
 export default function ProductCard({ product, tipo }) {
@@ -10,9 +10,7 @@ export default function ProductCard({ product, tipo }) {
 
   const imgSrc =
     product.imatge && !imgError
-      ? product.imatge.startsWith('http')
-        ? product.imatge
-        : `${API_BASE}/${product.imatge}`
+      ? getFullImageUrl(product.imatge)
       : null
 
   const tipoLabel = tipo === 'Vino' ? 'Vi' : 'Cervesa'
