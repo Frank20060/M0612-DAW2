@@ -4,7 +4,7 @@ import axios from "axios";
 // Se usa el puerto 8000 porque es el que está definido en back/index.js
 // MODIFICADO: Usamos rutas relativas para que funcione el Proxy de Vite y evite CORS
 export const API_URL = import.meta.env.VITE_API_URL || "/api";
-export const IMG_URL = "http://localhost:8000";
+export const IMG_URL = "https://m0612-vinoteca-frank.vercel.app";
 
 export const getFullImageUrl = (path) => {
   if (!path) return null;

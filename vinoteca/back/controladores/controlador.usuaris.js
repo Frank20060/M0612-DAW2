@@ -1,7 +1,7 @@
 import Usuario from "../models/Usuario.js";
 
 // GET /api/usuaris — obte tots els usuaris (només admin)
-export const getUsuaris = async (req, res) => {
+const getUsuaris = async (req, res) => {
   try {
     const usuaris = await Usuario.find().select('-password').sort({ createdAt: -1 }).lean();
     
@@ -18,7 +18,7 @@ export const getUsuaris = async (req, res) => {
 };
 
 // PATCH /api/usuaris/:id/rol — canvia el rol d'un usuari
-export const updateRolUsuari = async (req, res) => {
+const updateRolUsuari = async (req, res) => {
   try {
     const { id } = req.params;
     const { rol } = req.body;
@@ -45,3 +45,5 @@ export const updateRolUsuari = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export { getUsuaris, updateRolUsuari };
