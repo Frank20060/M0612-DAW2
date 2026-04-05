@@ -23,9 +23,14 @@ const PORT = process.env.PORT || 8000;
 // Connectar a la base de dades
 connectDB();
 
-// Configuración de CORS
+// Configuración de CORS (limpiando posible barra final de la variable de entorno)
+let frontendOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+if (frontendOrigin.endsWith('/')) {
+  frontendOrigin = frontendOrigin.slice(0, -1);
+}
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: frontendOrigin,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -71,10 +76,12 @@ app.get("/health", (req, res) => {
   res.status(200).json({ estat: "ok" });
 });
 
-// Iniciar el servidor; escolta peticions al port PORT
-app.listen(PORT, () => {
-  console.log(`Servidor escoltant a http://localhost:${PORT}`);
-});
+// Iniciar el servidor; escolta peticions al port PORT només si no estem en producción (Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Servidor escoltant a http://localhost:${PORT}`);
+  });
+}
 
 //rutas auth
 app.use("/api/auth", authRoutes);
@@ -90,3 +97,6 @@ app.use("/api/pedidos", pedidosRoutes);
 
 //rutas Usuaris
 app.use("/api/usuaris", usuarisRoutes);
+
+// Exportar l'aplicació per a Vercel Serverless Functions
+export default app;
