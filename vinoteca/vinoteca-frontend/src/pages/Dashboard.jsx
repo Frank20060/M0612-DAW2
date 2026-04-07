@@ -57,7 +57,9 @@ export default function Dashboard() {
         if (cR.status === "fulfilled") {
           const d = cR.value.data;
           setCerveses(
-            Array.isArray(d) ? d : d.dades || d.cervesas || d.cerveses || d.data || [],
+            Array.isArray(d)
+              ? d
+              : d.dades || d.cervesas || d.cerveses || d.data || [],
           );
         }
       } catch {
@@ -261,7 +263,11 @@ export default function Dashboard() {
             icon="📦"
           />
           {isAdmin && (
-            <StatCard label="Usuarios" value={usuaris.length || "—"} icon="👥" />
+            <StatCard
+              label="Usuarios"
+              value={usuaris.length || "—"}
+              icon="👥"
+            />
           )}
         </div>
 
@@ -333,16 +339,20 @@ export default function Dashboard() {
                 <table className="w-full text-sm font-body">
                   <thead>
                     <tr className="border-b border-stone-800/60">
-                      {["Usuario", "Email", "Rol Actual", "Cambiar Rol", ""].map(
-                        (h) => (
-                          <th
-                            key={h}
-                            className="text-left py-3 px-4 text-[10px] uppercase tracking-widest text-stone-500 font-medium"
-                          >
-                            {h}
-                          </th>
-                        ),
-                      )}
+                      {[
+                        "Usuario",
+                        "Email",
+                        "Rol Actual",
+                        "Cambiar Rol",
+                        "",
+                      ].map((h) => (
+                        <th
+                          key={h}
+                          className="text-left py-3 px-4 text-[10px] uppercase tracking-widest text-stone-500 font-medium"
+                        >
+                          {h}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-stone-800/40">
@@ -779,7 +789,8 @@ function ProductModal({
 
           <div className="flex gap-3 pt-2">
             <button
-              type="submit"
+              type="button"
+              onClick={onSave}
               disabled={saving}
               className="btn-primary py-2 px-8"
             >

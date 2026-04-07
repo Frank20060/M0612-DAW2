@@ -62,9 +62,16 @@ router.get("/:id", getCervezaById);
 router.post("/", protegir, autoritzar("admin", "editor"), createCerveza);
 
 router.put("/:id", protegir, autoritzar("admin", "editor"), updateCerveza);
+router.patch("/:id", protegir, autoritzar("admin", "editor"), updateCerveza);
 
 router.delete("/:id", protegir, autoritzar("admin", "editor"), deleteCerveza);
 
-router.patch('/:id/imatge', protegir, autoritzar('admin'), upload.single('imatge'), updateCervezaWithImage);
+router.patch(
+  "/:id/imatge",
+  protegir,
+  autoritzar("admin", "editor"),
+  upload.single("imatge"),
+  updateCervezaWithImage,
+);
 
 export default router;

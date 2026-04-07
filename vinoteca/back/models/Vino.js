@@ -7,12 +7,7 @@ const vinoSchema = new mongoose.Schema(
     graduacion: { type: Number, required: true },
     precio: { type: Number, required: true },
     stock: { type: Number, default: 0 },
-    detalles: {
-      bodega: String,
-      uva: String,
-      tipo_vino: String,
-      formato: String,
-    },
+    detalles: { type: mongoose.Schema.Types.Mixed, default: {} },
     imatge: {
       type: String,
       trim: true,
