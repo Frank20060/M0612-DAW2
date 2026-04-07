@@ -1,4 +1,5 @@
 import Cerveza from "../models/Cerveza.js";
+import { uploadToCloudinary } from '../middlewares/upload.js';
 
 // Listado: find() sin filtro devuelve todos; sort({ createdAt: -1 }) = mas nuevos primero
 const getCervezas = async (req, res) => {
@@ -69,23 +70,20 @@ const deleteCerveza = async (req, res) => {
   }
 };
 
-// El fitxer arriba via Multer a req.file (filename, path, mimetype, etc.)
+// El fitxer arriba via Multer a req.file.buffer (memoryStorage) i es puja a Cloudinary
 const updateCervezaWithImage = async (req, res) => {
   try {
-    // Si no arriba fitxer (camp incorrecte, filtre rebutjat, etc.), retornem error de client
     if (!req.file) {
       return res.status(400).json({ error: 'Cap fitxer pujat' });
     }
 
-    // IMPORTANT: desem només la ruta relativa, no la ruta absoluta del sistema operatiu
-    // Amb això el client podrà construir la URL pública: /uploads/<filename>
-    const pathImatge = 'uploads/' + req.file.filename;
+    // Pujar el buffer a Cloudinary → retorna URL https permanent
+    const urlImatge = await uploadToCloudinary(req.file.buffer, 'vinoteca/cervezas');
 
-    // Actualitzem només el camp imatge de la cervesa indicada per id
     const actualitzada = await Cerveza.findByIdAndUpdate(
       req.params.id,
-      { imatge: pathImatge },
-      { new: true }  // retornar el document amb el camp imatge ja actualitzat
+      { imatge: urlImatge },
+      { new: true }
     );
     if (!actualitzada) {
       return res.status(404).json({ error: 'Cervesa no trobada' });

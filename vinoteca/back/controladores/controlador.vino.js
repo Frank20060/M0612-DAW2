@@ -1,4 +1,5 @@
 import Vino from "../models/Vino.js";
+import { uploadToCloudinary } from '../middlewares/upload.js';
 
 // Listado: find() sin filtro devuelve todos; sort({ createdAt: -1 }) = mas nuevos primero
 const getVinos = async (req, res) => {
@@ -69,18 +70,19 @@ const deleteVino = async (req, res) => {
   }
 };
 
-// Subir imagen: el fitxer arriba via Multer a req.file
+// El fitxer arriba via Multer a req.file.buffer (memoryStorage) i es puja a Cloudinary
 const updateVinoWithImage = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Cap fitxer pujat' });
     }
 
-    const pathImatge = 'uploads/' + req.file.filename;
+    // Pujar el buffer a Cloudinary → retorna URL https permanent
+    const urlImatge = await uploadToCloudinary(req.file.buffer, 'vinoteca/vinos');
 
     const actualitzat = await Vino.findByIdAndUpdate(
       req.params.id,
-      { imatge: pathImatge },
+      { imatge: urlImatge },
       { new: true }
     );
     if (!actualitzat) {

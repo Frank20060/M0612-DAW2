@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Usuario from '../models/Usuario.js';
+import { uploadToCloudinary } from '../middlewares/upload.js';
 
 // Funció auxiliar per generar el JWT
 const generarToken = (id) => {
@@ -21,11 +22,12 @@ const registro = async (req, res) => {
       return res.status(400).json({ error: 'Aquest email ja està registrat' });
     }
 
-    // Preparar dades de l'usuari; si arriba fitxer, afegir la ruta de la imatge
+    // Preparar dades de l'usuari; si arriba fitxer, pujar-lo a Cloudinary
     const dades = { email, password };
     if (rol) dades.rol = rol;
     if (req.file) {
-      dades.imatge = 'uploads/' + req.file.filename;
+      const urlImatge = await uploadToCloudinary(req.file.buffer, 'vinoteca/usuarios');
+      dades.imatge = urlImatge;
     }
 
     const usuari = await Usuario.create(dades);
@@ -116,11 +118,12 @@ const pujarImatgePerfil = async (req, res) => {
       return res.status(400).json({ error: 'Cap fitxer pujat' });
     }
 
-    const pathImatge = 'uploads/' + req.file.filename;
+    // Pujar a Cloudinary
+    const urlImatge = await uploadToCloudinary(req.file.buffer, 'vinoteca/usuarios');
 
     const usuari = await Usuario.findByIdAndUpdate(
       req.usuari._id,
-      { imatge: pathImatge },
+      { imatge: urlImatge },
       { new: true }
     );
     res.json({
